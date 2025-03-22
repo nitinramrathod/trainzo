@@ -1,0 +1,182 @@
+'use client'
+import Button from '@/components/forms/Button'
+import Input from '@/components/forms/Input'
+import Select from '@/components/forms/Select'
+import PageHeader from '@/components/PageHeader'
+import { get } from '@/utils/services'
+import { useRouter } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
+const backendURL = "http://192.168.3.92:8080"
+
+interface FormTypes {
+    pkgName?: string | undefined,
+    duration?: string,
+    pkgDesc?: string,
+    pkgPrice?: any,
+    pkgDiscount?: string,
+    pkgDiscountedPrice?: string,
+}
+
+const CreateUser = ({ data }: any) => {
+    const [form, setForm] = useState<FormTypes>({})
+    const [isEdit, setIsEdit] = useState(false);
+    const [dropdown, setDropdown] = useState<{ packages?: any[] }>({});
+    const router = useRouter();
+
+    const handleInputChange = (e: any) => {
+        const { name, value } = e.target;
+        setForm(prev => ({
+            ...prev,
+            [name]: value
+
+        }))
+    };
+
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        setForm((prev) => ({
+            ...prev,
+            [e.target.name]: file || null
+        }));
+    }
+
+    const getOptions = async ()=>{
+        const data = await get('/api/v1/gym-package')
+        setDropdown({packages: data})
+    }
+
+    const handleSubmit = async () => {
+        try {
+            const formData = new FormData();
+            formData.append('pkgName', form?.pkgName || '')
+            formData.append('duration', form?.duration || '')
+            formData.append('pkgDesc', form?.pkgDesc || '')
+            formData.append('pkgPrice', form?.pkgPrice || '')
+            formData.append('pkgDiscount', form?.pkgDiscount || '')
+            // formData.append('pkgDiscountedPrice', form?.pkgDiscountedPrice || '')
+
+
+
+            const url = isEdit ? `${backendURL}/api/v1/gym-package/${data?.id}` : `${backendURL}/api/v1/gym-package/create`
+            const method = isEdit ? 'PUT' : 'POST'
+
+            const res = await fetch(url,
+                {
+                    method: method,
+                    body: JSON.stringify(form),
+                    headers:{
+                        "Content-Type": "application/json"
+
+                    }
+                })
+
+            if (res.ok) {
+                setForm({})
+                router.push('/dashboard/packages')
+            } else {
+                alert('Error while creating product.')
+            }
+
+        } catch (error) {
+
+        }
+    }
+
+    const route = useRouter()
+    const gotoList = () => {
+        route.push('/dashboard/packages')
+    }
+
+    useEffect(() => {
+        if (data) {
+            setIsEdit(true)
+            setForm(data)
+        }
+    }, [data])
+
+    useEffect(() => {
+        getOptions()
+    }, [])
+    
+
+    return (
+        <div>
+            <div className='p-4'>
+                <PageHeader onClick={gotoList} button_text="Back to List" title='Create Package' />
+                <div className='bg-gray-800 py-8 px-5 rounded-md'>
+
+                    <div className="grid grid-cols-3  gap-x-5 gap-y-4">
+                        <Input
+                            label="Package Name"
+                            value={form?.pkgName}
+                            placeholder='Enter Package Name'
+                            name="pkgName"
+                            onChange={handleInputChange}
+
+                        />
+                        <Input
+                            label="Duration"
+                            value={form?.duration}
+                            placeholder='Enter Duration'
+                            name="duration"
+                            onChange={handleInputChange}
+                        />
+                        <Input
+                            label="Package Desc"
+                            value={form?.pkgDesc}
+                            placeholder='Enter Package Desc'
+                            name="pkgDesc"
+                            type='text'
+                            onChange={handleInputChange}
+                        />
+                        <Input
+                            label="Price"
+                            value={form?.pkgPrice}
+                            placeholder='Enter Price'
+                            type="number"
+                            name="pkgPrice"
+                            onChange={handleInputChange}
+                        />
+                        <Input
+                            label="Price Discount"
+                            value={form?.pkgDiscount}
+                            placeholder='Enter Price Discount'
+                            type="number"
+                            name="pkgDiscount"
+                            onChange={handleInputChange}
+                        />
+                        {/* <Input
+                            label="Select Image"
+                            value=""
+                            placeholder='Select Image'
+                            name="photo"
+                            type='file'
+                            onChange={handleImageChange}
+                        /> */}
+                        {/* <Input
+                            label="Enter Start Date"
+                            value={form?.pkgStartDate}
+                            type="date"
+                            placeholder='Enter Start Date'
+                            name="pkgStartDate"
+                            onChange={handleInputChange}
+                        />
+                        <Select
+                            onChange={handleInputChange}
+                            name="pkgId"
+                            options={dropdown?.packages?.map((item:any)=>({
+                                value: item?.id,
+                                label: item?.pkgName}
+                            ))}
+                        /> */}
+                    </div>
+                    <div className='mt-8'>
+                        <Button onClick={handleSubmit}>Submit</Button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default CreateUser
