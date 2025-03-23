@@ -5,7 +5,7 @@ import NoDataFound from '@/components/table/NoDataFound'
 import Table from '@/components/table/Table'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-const backendURL = "http://192.168.3.92:8080"
+const backendURL = "http://192.168.51.92:8080"
 
 const Users = () => {
 

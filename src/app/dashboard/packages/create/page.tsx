@@ -6,7 +6,7 @@ import PageHeader from '@/components/PageHeader'
 import { get } from '@/utils/services'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-const backendURL = "http://192.168.3.92:8080"
+const backendURL = "http://192.168.51.92:8080"
 
 interface FormTypes {
     pkgName?: string | undefined,
