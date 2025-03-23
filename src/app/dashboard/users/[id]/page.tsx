@@ -9,28 +9,38 @@ export const metadata: Metadata = {
   // other metadata
 };
 
-const EditUser = async ({params}:any) => {
+const EditUser = async ({params}) => {
   console.log('===>',params?.id)
- 
-    const res = await fetch(`${backendURL}/api/user/${params?.id}`,{
-        method: "GET",
-        cache: 'no-cache',
-        headers: {
-          "Content-Type": "application/json",
-          // Add any other necessary headers here (e.g., authentication tokens)
-        },
-      });
-    
-      // If the response is not successful, handle the error
-      if (!res.ok) {
-        throw new Error("Failed to fetch products");
-      }
-    
-     
-      const user = await res.json();
-     console.log("user", user)
+  let user;
 
-   return <UserDetail data={user?.data}/>
+  try {
+    const res = await fetch(`${backendURL}/api/v1/user/${params?.id}`,{
+      method: "GET",
+      cache: 'no-cache',
+      headers: {
+        "Content-Type": "application/json",
+        // Add any other necessary headers here (e.g., authentication tokens)
+      },
+    });
+
+    console.log('res===>',res)
+  
+    // If the response is not successful, handle the error
+    if (!res.ok) {
+      throw new Error("Failed to fetch products");
+    }
+  
+   
+     user = await res.json();
+   console.log("user", user)
+    
+  } catch (error) {
+    console.log('error', error)
+  }
+ 
+    
+
+   return <UserDetail data={user}/>
 }
 
 export default EditUser
