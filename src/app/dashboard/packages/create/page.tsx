@@ -17,10 +17,19 @@ interface FormTypes {
     pkgDiscountedPrice?: string,
 }
 
+interface ErrorObject {
+    duration?:string,
+    pkgPrice?:string,
+    pkgName?:string
+   
+
+}
+
 const CreateUser = ({ data }: any) => {
     const [form, setForm] = useState<FormTypes>({})
     const [isEdit, setIsEdit] = useState(false);
     const [dropdown, setDropdown] = useState<{ packages?: any[] }>({});
+    const[error, setError] = useState<ErrorObject>({})
     const router = useRouter();
 
     const handleInputChange = (e: any) => {
@@ -74,7 +83,11 @@ const CreateUser = ({ data }: any) => {
                 setForm({})
                 router.push('/dashboard/packages')
             } else {
-                alert('Error while creating product.')
+                const errorText = await res.text(); // Try to get error details
+                console.log('Error Response:', errorText); 
+                alert('Error while creating package.');
+                setError(JSON.parse(errorText)); 
+
             }
 
         } catch (error) {
@@ -112,14 +125,16 @@ const CreateUser = ({ data }: any) => {
                             placeholder='Enter Package Name'
                             name="pkgName"
                             onChange={handleInputChange}
+                            error={error?.pkgName || ''}
 
                         />
                         <Input
                             label="Duration"
                             value={form?.duration}
-                            placeholder='Enter Duration'
+                            placeholder='Enter Duration e.g.. 3 months' 
                             name="duration"
                             onChange={handleInputChange}
+                            error={error?.duration || ''}
                         />
                         <Input
                             label="Package Desc"
@@ -128,6 +143,7 @@ const CreateUser = ({ data }: any) => {
                             name="pkgDesc"
                             type='text'
                             onChange={handleInputChange}
+                            
                         />
                         <Input
                             label="Price"
@@ -136,6 +152,7 @@ const CreateUser = ({ data }: any) => {
                             type="number"
                             name="pkgPrice"
                             onChange={handleInputChange}
+                            error={error?.pkgPrice || ''}
                         />
                         <Input
                             label="Price Discount"
