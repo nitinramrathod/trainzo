@@ -1,4 +1,5 @@
 import { box_icon, dashboard_icon, edti_icon, login_icon, users_icon, workout_plan_icon } from '@/assets/icons/dashboard'
+import Link from 'next/link'
 import React from 'react'
 
 const SideBar = () => {
@@ -89,10 +90,10 @@ const SideBar = () => {
                         </li>
 
                         {sidebarNavs?.map((item): any => (<li key={item?.url}>
-                            <a href={item?.url} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                            <Link href={item?.url || "#"} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                 {item.icon}
                                 <span className="flex-1 ms-3 whitespace-nowrap">{item.name}</span>
-                            </a>
+                            </Link>
                         </li>
                         ))
                         }

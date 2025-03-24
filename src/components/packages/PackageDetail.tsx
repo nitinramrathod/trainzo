@@ -10,22 +10,23 @@ const backendURL = "http://192.168.51.92:8080"
 
 interface FormTypes {
     pkgName?: string | undefined,
-    durationInMonth?: string,
+    duration?: string,
     pkgDesc?: string,
     pkgPrice?: any,
     pkgDiscount?: string,
     pkgDiscountedPrice?: string,
+    id? : string
 }
 
 interface ErrorObject {
-    durationInMonth?:string,
+    duration?:string,
     pkgPrice?:string,
     pkgName?:string
    
 
 }
 
-const CreateUser = ({ data }: any) => {
+const PackageDetail = ({ data }: any) => {
     const [form, setForm] = useState<FormTypes>({})
     const [isEdit, setIsEdit] = useState(false);
     const [dropdown, setDropdown] = useState<{ packages?: any[] }>({});
@@ -58,15 +59,19 @@ const CreateUser = ({ data }: any) => {
         try {
             const formData = new FormData();
             formData.append('pkgName', form?.pkgName || '')
-            formData.append('durationInMonth', form?.durationInMonth || '')
+            formData.append('duration', form?.duration || '')
             formData.append('pkgDesc', form?.pkgDesc || '')
             formData.append('pkgPrice', form?.pkgPrice || '')
             formData.append('pkgDiscount', form?.pkgDiscount || '')
+            if(isEdit){
+                formData.append('id', form?.id || '')
+
+            }
             // formData.append('pkgDiscountedPrice', form?.pkgDiscountedPrice || '')
 
 
 
-            const url = isEdit ? `${backendURL}/api/v1/gym-package/${data?.id}` : `${backendURL}/api/v1/gym-package/create`
+            const url = isEdit ? `${backendURL}/api/v1/gym-package/update` : `${backendURL}/api/v1/gym-package/create`
             const method = isEdit ? 'PUT' : 'POST'
 
             const res = await fetch(url,
@@ -115,7 +120,7 @@ const CreateUser = ({ data }: any) => {
     return (
         <div>
             <div className='p-4'>
-                <PageHeader onClick={gotoList} button_text="Back to List" title='Create Package' />
+                <PageHeader onClick={gotoList} button_text="Back to List" title={isEdit?'Update Package' :'create Package'} />
                 <div className='bg-gray-800 py-8 px-5 rounded-md'>
 
                     <div className="grid grid-cols-3  gap-x-5 gap-y-4">
@@ -130,11 +135,11 @@ const CreateUser = ({ data }: any) => {
                         />
                         <Input
                             label="Duration"
-                            value={form?.durationInMonth}
+                            value={form?.duration}
                             placeholder='Enter Duration e.g.. 3 months' 
-                            name="durationInMonth"
+                            name="duration"
                             onChange={handleInputChange}
-                            error={error?.durationInMonth || ''}
+                            error={error?.duration || ''}
                         />
                         <Input
                             label="Package Desc"
@@ -196,4 +201,4 @@ const CreateUser = ({ data }: any) => {
     )
 }
 
-export default CreateUser
+export default PackageDetail

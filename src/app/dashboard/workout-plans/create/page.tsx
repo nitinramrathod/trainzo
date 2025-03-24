@@ -9,15 +9,20 @@ import React, { useEffect, useState } from 'react'
 const backendURL = "http://192.168.51.92:8080"
 
 interface FormTypes {
-    planName?: string | undefined,
-    workouts?: string | undefined,
-    decription?: string | undefined,
+    workoutPlanName?: string | undefined,
+    exercises?: Object | undefined,
+    id?:string
+   
+}
+interface ErrorObject {
+    workoutPlanName? : string
 }
 
 const CreateUser = ({ data }: any) => {
-    const [form, setForm] = useState<FormTypes>({})
+    const [form, setForm] = useState<FormTypes>({exercises:[]})
     const [isEdit, setIsEdit] = useState(false);
     const [dropdown, setDropdown] = useState<{ packages?: any[] }>({});
+    const [error, setError] = useState<ErrorObject>({});
     const router = useRouter();
 
     const handleInputChange = (e: any) => {
@@ -44,22 +49,28 @@ const CreateUser = ({ data }: any) => {
 
     const handleSubmit = async () => {
         try {
-            const formData = new FormData();
-            formData.append('planName', form?.planName || '')
-            // formData.append('pkgDiscountedPrice', form?.pkgDiscountedPrice || '')
+            // const formData = new FormData();
+            // formData.append('workoutPlanName', form?.workoutPlanName || '')
+            // formData.append('exercises', '[]')
+            // // formData.append('pkgDiscountedPrice', form?.pkgDiscountedPrice || '')
+            // if(isEdit){
+            //     formData.append('id', form?.id || '')
+
+            // }
 
 
 
-            const url = isEdit ? `${backendURL}/api/v1/workout-plan/${data?.id}` : `${backendURL}/api/v1/workout-plan/create`
+
+            const url = isEdit ? `${backendURL}/api/v1/workout-plan/update` : `${backendURL}/api/v1/workout-plan/create`
             const method = isEdit ? 'PUT' : 'POST'
 
             const res = await fetch(url,
                 {
+                   
                     method: method,
                     body: JSON.stringify(form),
                     headers:{
                         "Content-Type": "application/json"
-
                     }
                 })
 
@@ -67,7 +78,10 @@ const CreateUser = ({ data }: any) => {
                 setForm({})
                 router.push('/dashboard/workout-plans')
             } else {
-                alert('Error while creating product.')
+                const errorText = await res.text(); // Try to get error details
+                console.log('Error Response:', errorText); 
+                // alert('Error while creating package.');
+                setError(JSON.parse(errorText));
             }
 
         } catch (error) {
@@ -101,26 +115,12 @@ const CreateUser = ({ data }: any) => {
                     <div className="grid grid-cols-3  gap-x-5 gap-y-4">
                         <Input
                             label="Plan Name"
-                            value={form?.planName}
+                            value={form?.workoutPlanName}
                             placeholder='Enter Plan Name'
-                            name="planName"
+                            name="workoutPlanName"
                             onChange={handleInputChange}
+                            error={error?.workoutPlanName || ''}
 
-                        />
-                        <Input
-                            label="Description"
-                            value={form?.decription}
-                            placeholder='Enter Description'
-                            name="decription"
-                            onChange={handleInputChange}
-                        />
-                        <Input
-                            label="Workouts"
-                            value={form?.workouts}
-                            placeholder='Enter Package Desc'
-                            name="workouts"
-                            type='text'
-                            onChange={handleInputChange}
                         />
                        
                         {/* <Input

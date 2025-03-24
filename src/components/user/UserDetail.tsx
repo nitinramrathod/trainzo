@@ -16,6 +16,7 @@ interface FormTypes {
     mob?: string,
     pkgStartDate?: string,
     pkgId?: string,
+    id?: string
 }
 
 interface ErrorObject {
@@ -65,12 +66,16 @@ function UserDetail({data}:any) {
             formData.append('mob', form?.mob || '')
             formData.append('pkgId', form?.pkgId || '')
             formData.append('pkgStartDate', form?.pkgStartDate || '')
+            if(isEdit){
+                formData.append('id', form?.id || '')
+
+            }
 
             if (form.photo) {
                 formData.append('photo', form.photo);
             }
 
-            const url = isEdit ? `${backendURL}/api/v1/user/${data?.id}` : `${backendURL}/api/v1/user/create`
+            const url = isEdit ? `${backendURL}/api/v1/user/update` : `${backendURL}/api/v1/user/create`
             const method = isEdit ? 'PUT' : 'POST'
 
             const res = await fetch(url,
@@ -156,6 +161,7 @@ function UserDetail({data}:any) {
                             onChange={handleInputChange}
                             error={error?.mob || ''}
                         />
+                      <div>
                         <Input
                             label="Select Image"
                             value=""
@@ -163,7 +169,11 @@ function UserDetail({data}:any) {
                             name="photo"
                             type='file'
                             onChange={handleImageChange}
+
                         />
+                       
+                       {form?.photo && <img src={`${backendURL}/${form?.photo}`} alt="" className='w-[50px] object-cover border-2 border-blue-400 h-[50px] rounded-full' />
+                       }</div>
                         <Input
                             label="Enter Start Date"
                             value={form?.pkgStartDate}
