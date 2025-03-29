@@ -1,7 +1,7 @@
-const backendURL = "http://192.168.51.92:8080"
+const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
 
 const get = async(url:any)=>{
-    const res = await fetch(`${backendURL}${url}`);
+    const res = await fetch(`${API_URL}${url}`);
     if(!res.ok){
         return Error('get error')
     }
@@ -9,5 +9,6 @@ const get = async(url:any)=>{
 }
 
 export{
-    get
+    get,
+    API_URL
 }

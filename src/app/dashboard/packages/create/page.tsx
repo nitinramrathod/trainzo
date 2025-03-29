@@ -3,10 +3,9 @@ import Button from '@/components/forms/Button'
 import Input from '@/components/forms/Input'
 import Select from '@/components/forms/Select'
 import PageHeader from '@/components/PageHeader'
-import { get } from '@/utils/services'
+import { API_URL, get } from '@/utils/services'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-const backendURL = "http://192.168.51.92:8080"
 
 interface FormTypes {
     pkgName?: string | undefined,
@@ -66,7 +65,7 @@ const CreateUser = ({ data }: any) => {
 
 
 
-            const url = isEdit ? `${backendURL}/api/v1/gym-package/${data?.id}` : `${backendURL}/api/v1/gym-package/create`
+            const url = isEdit ? `${API_URL}/api/v1/gym-package/${data?.id}` : `${API_URL}/api/v1/gym-package/create`
             const method = isEdit ? 'PUT' : 'POST'
 
             const res = await fetch(url,

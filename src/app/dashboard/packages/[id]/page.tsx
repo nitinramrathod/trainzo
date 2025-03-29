@@ -1,12 +1,10 @@
 import PackageDetail from "@/components/packages/PackageDetail";
+import { API_URL } from "@/utils/services";
 import { Metadata } from "next";
-
-const backendURL = "http://192.168.51.92:8080"
 
 export const metadata: Metadata = {
   title: "Update Package",
   description: "Update package information",
-  // other metadata
 };
 
 
@@ -16,7 +14,7 @@ const EditPackage = async ({params}) => {
   let packageinfo;
 
   try {
-    const res = await fetch(`${backendURL}/api/v1/gym-package/${params?.id}`,{
+    const res = await fetch(`${API_URL}/api/v1/gym-package/${params?.id}`,{
       method: "GET",
       cache: 'no-cache',
       headers: {

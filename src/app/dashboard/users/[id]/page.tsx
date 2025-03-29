@@ -1,7 +1,6 @@
 import UserDetail from "@/components/user/UserDetail";
+import { API_URL } from "@/utils/services";
 import { Metadata } from "next";
-
-const backendURL = "http://192.168.51.92:8080"
 
 export const metadata: Metadata = {
   title: "Update Products | In House Shop",
@@ -14,7 +13,7 @@ const EditUser = async ({params}) => {
   let user;
 
   try {
-    const res = await fetch(`${backendURL}/api/v1/user/${params?.id}`,{
+    const res = await fetch(`${API_URL}/api/v1/user/${params?.id}`,{
       method: "GET",
       cache: 'no-cache',
       headers: {

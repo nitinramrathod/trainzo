@@ -31,7 +31,7 @@ const SideBar = () => {
             url: '/dashboard/workout-plans'
         },
         {
-            name: 'Sign In',
+            name: 'Logout',
             icon: login_icon,
             url: '/dashboard/signout'
         },

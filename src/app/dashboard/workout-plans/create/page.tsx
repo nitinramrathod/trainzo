@@ -2,11 +2,13 @@
 import Button from '@/components/forms/Button'
 import Input from '@/components/forms/Input'
 import Select from '@/components/forms/Select'
+import Modal from '@/components/Modal'
 import PageHeader from '@/components/PageHeader'
-import { get } from '@/utils/services'
+import {TR, TD} from '@/components/table/Common'
+import Table from '@/components/table/Table'
+import { API_URL, get } from '@/utils/services'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-const backendURL = "http://192.168.51.92:8080"
 
 interface FormTypes {
     workoutPlanName?: string | undefined,
@@ -24,6 +26,7 @@ const CreateUser = ({ data }: any) => {
     const [dropdown, setDropdown] = useState<{ packages?: any[] }>({});
     const [error, setError] = useState<ErrorObject>({});
     const router = useRouter();
+    const [days, setDays] = useState<any>([{day: 1, workouts: 3}, {day: 2, workouts: 3}])
 
     const handleInputChange = (e: any) => {
         const { name, value } = e.target;
@@ -61,7 +64,7 @@ const CreateUser = ({ data }: any) => {
 
 
 
-            const url = isEdit ? `${backendURL}/api/v1/workout-plan/update` : `${backendURL}/api/v1/workout-plan/create`
+            const url = isEdit ? `${API_URL}/api/v1/workout-plan/update` : `${API_URL}/api/v1/workout-plan/create`
             const method = isEdit ? 'PUT' : 'POST'
 
             const res = await fetch(url,
@@ -104,6 +107,21 @@ const CreateUser = ({ data }: any) => {
     // useEffect(() => {
     //     getOptions()
     // }, [])
+
+    const headers = [
+        {
+            title: "Day"
+        },
+    
+        {
+            title: "Workouts"
+        },
+        {
+            title: "Action"
+        },
+    ];
+
+
     
 
     return (
@@ -147,6 +165,16 @@ const CreateUser = ({ data }: any) => {
                                 label: item?.pkgName}
                             ))}
                         /> */}
+                    </div>
+                   
+                    <div>
+                    <Table headers={headers}>
+                            {
+                                days?.length > 0 && days.map(item=>{
+                                    return <TR key={item.day}><TD>{item.day}</TD> <TD>{item.workouts}</TD> <TD>...</TD></TR>
+                                })
+                            }
+                    </Table>
                     </div>
                     <div className='mt-8'>
                         <Button onClick={handleSubmit}>Submit</Button>

@@ -3,10 +3,9 @@ import Button from '@/components/forms/Button'
 import Input from '@/components/forms/Input'
 import Select from '@/components/forms/Select'
 import PageHeader from '@/components/PageHeader'
-import { get } from '@/utils/services'
+import { API_URL, get } from '@/utils/services'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-const backendURL = "http://192.168.51.92:8080"
 
 interface FormTypes {
     name?: string | undefined,
@@ -75,7 +74,7 @@ function UserDetail({data}:any) {
                 formData.append('photo', form.photo);
             }
 
-            const url = isEdit ? `${backendURL}/api/v1/user/update` : `${backendURL}/api/v1/user/create`
+            const url = isEdit ? `${API_URL}/api/v1/user/update` : `${API_URL}/api/v1/user/create`
             const method = isEdit ? 'PUT' : 'POST'
 
             const res = await fetch(url,
@@ -172,7 +171,7 @@ function UserDetail({data}:any) {
 
                         />
                        
-                       {form?.photo && <img src={`${backendURL}/${form?.photo}`} alt="" className='w-[50px] object-cover border-2 border-blue-400 h-[50px] rounded-full' />
+                       {form?.photo && <img src={`${API_URL}/${form?.photo}`} alt="" className='w-[50px] object-cover border-2 border-blue-400 h-[50px] rounded-full' />
                        }</div>
                         <Input
                             label="Enter Start Date"

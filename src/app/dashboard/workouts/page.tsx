@@ -3,9 +3,9 @@
 import PageHeader from '@/components/PageHeader'
 import NoDataFound from '@/components/table/NoDataFound'
 import Table from '@/components/table/Table'
+import { API_URL } from '@/utils/services'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-const backendURL = "http://192.168.51.92:8080"
 
 const Users = () => {
 
@@ -13,7 +13,7 @@ const Users = () => {
 
 
     const fetchData = async () => {
-        const res = await fetch(`${backendURL}/api/v1/workout`, {
+        const res = await fetch(`${API_URL}/api/v1/workout`, {
             method: "GET",
             cache: 'no-cache',
             headers: {
@@ -40,7 +40,7 @@ const Users = () => {
     // }
 
     // const handleDelete = async (id) => {
-    //     const res = await fetch(`${backendURL}/products/${id}`, {
+    //     const res = await fetch(`${API_URL}/products/${id}`, {
     //         method: "Delete"
     //     });
 

@@ -1,11 +1,12 @@
 "use client"
-
 import Input from '@/components/forms/Input'
 import PageHeader from '@/components/PageHeader'
 import NoDataFound from '@/components/table/NoDataFound'
+import { API_URL } from '@/utils/services'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
-const backendURL = "http://192.168.51.92:8080"
+
+
 
 const Users = () => {
 
@@ -13,7 +14,7 @@ const Users = () => {
 
 
     const fetchData = async () => {
-        const res = await fetch(`${backendURL}/api/v1/user`, {
+        const res = await fetch(`${API_URL}/api/v1/user`, {
             method: "GET",
             cache: 'no-cache',
             headers: {
@@ -40,7 +41,7 @@ const Users = () => {
     // }
 
     // const handleDelete = async (id) => {
-    //     const res = await fetch(`${backendURL}/products/${id}`, {
+    //     const res = await fetch(`${API_URL}/products/${id}`, {
     //         method: "Delete"
     //     });
 
@@ -110,7 +111,7 @@ const Users = () => {
                             </td>
                             <td className="px-6 py-4">
                                 {/* {item?.photo || 'image'} */}
-                                <img src={`${backendURL}/${item.photo}`} alt="" className='w-[50px] object-cover border-2 border-blue-400 h-[50px] rounded-full' />
+                                <img src={`${API_URL}/${item.photo}`} alt="" className='w-[50px] object-cover border-2 border-blue-400 h-[50px] rounded-full' />
 
                             </td>
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
