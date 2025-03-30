@@ -2,9 +2,10 @@
 import Button from '@/components/forms/Button'
 import Input from '@/components/forms/Input'
 import Select from '@/components/forms/Select'
-import Modal from '@/components/Modal'
+import { ModalBox } from '@/components/Modal'
 import PageHeader from '@/components/PageHeader'
-import {TR, TD} from '@/components/table/Common'
+import AddWorkouts from '@/components/pages/AddWorkouts'
+import { TR, TD } from '@/components/table/Common'
 import Table from '@/components/table/Table'
 import { API_URL, get } from '@/utils/services'
 import { useRouter } from 'next/navigation'
@@ -12,24 +13,36 @@ import React, { useEffect, useState } from 'react'
 
 interface FormTypes {
     workoutPlanName?: string | undefined,
-    exercises?: Object | undefined,
-    id?:string
-   
+    id?: string,
+    days?: number,
+    exercises?: Array<any> | undefined,
+
 }
 interface ErrorObject {
-    workoutPlanName? : string
+    workoutPlanName?: string
 }
 
 const CreateUser = ({ data }: any) => {
-    const [form, setForm] = useState<FormTypes>({exercises:[]})
+    const [form, setForm] = useState<FormTypes>({ exercises: [] })
     const [isEdit, setIsEdit] = useState(false);
     const [dropdown, setDropdown] = useState<{ packages?: any[] }>({});
     const [error, setError] = useState<ErrorObject>({});
+    const [open, setOpen] = useState<boolean>(false);
     const router = useRouter();
-    const [days, setDays] = useState<any>([{day: 1, workouts: 3}, {day: 2, workouts: 3}])
+    const [days, setDays] = useState<any>([])
+    const [day, setDay] = useState<any>()
+
+    const [exercises, setExercises] = useState<any>([{onDay: 1, setCount: 0, repsCount: '', gapBwSet: ''}])
+
 
     const handleInputChange = (e: any) => {
+
         const { name, value } = e.target;
+
+        if (name == 'days' && value > 90) {
+            alert('Days cannot be more than 90')
+            return;
+        }
         setForm(prev => ({
             ...prev,
             [name]: value
@@ -37,18 +50,6 @@ const CreateUser = ({ data }: any) => {
         }))
     };
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        setForm((prev) => ({
-            ...prev,
-            [e.target.name]: file || null
-        }));
-    }
-
-    // const getOptions = async ()=>{
-    //     const data = await get('/api/v1/gym-package')
-    //     setDropdown({packages: data})
-    // }
 
     const handleSubmit = async () => {
         try {
@@ -69,10 +70,10 @@ const CreateUser = ({ data }: any) => {
 
             const res = await fetch(url,
                 {
-                   
+
                     method: method,
                     body: JSON.stringify(form),
-                    headers:{
+                    headers: {
                         "Content-Type": "application/json"
                     }
                 })
@@ -82,7 +83,7 @@ const CreateUser = ({ data }: any) => {
                 router.push('/dashboard/workout-plans')
             } else {
                 const errorText = await res.text(); // Try to get error details
-                console.log('Error Response:', errorText); 
+                console.log('Error Response:', errorText);
                 // alert('Error while creating package.');
                 setError(JSON.parse(errorText));
             }
@@ -104,15 +105,11 @@ const CreateUser = ({ data }: any) => {
         }
     }, [data])
 
-    // useEffect(() => {
-    //     getOptions()
-    // }, [])
-
     const headers = [
         {
             title: "Day"
         },
-    
+
         {
             title: "Workouts"
         },
@@ -121,14 +118,41 @@ const CreateUser = ({ data }: any) => {
         },
     ];
 
+    const handleAddWorkout = (day: any) => {
+        setDay(day)
+        setOpen(true);
+        setForm(prev => ({
+            ...prev,
+            exercises: [
+                ...(prev?.exercises || []),
+            ]
+        }))
+    }
 
-    
+    useEffect(() => {
+
+        const generateDays = () => {
+            const arr: { day: number }[] = []
+
+            for (let i = 1; i <= (form.days ?? 0); i++) {
+                arr.push({ day: i })
+            }
+            setDays(arr)
+        }
+
+
+        generateDays()
+    }, [form.days])
+
+
+
+
 
     return (
         <div>
             <div className='p-4'>
                 <PageHeader onClick={gotoList} button_text="Back to List" title='Create Plan' />
-                <div className='bg-gray-800 py-8 px-5 rounded-md'>
+                <div className='bg-gray-200 py-8 px-5 rounded-md'>
 
                     <div className="grid grid-cols-3  gap-x-5 gap-y-4">
                         <Input
@@ -138,49 +162,36 @@ const CreateUser = ({ data }: any) => {
                             name="workoutPlanName"
                             onChange={handleInputChange}
                             error={error?.workoutPlanName || ''}
+                        />
 
-                        />
-                       
-                        {/* <Input
-                            label="Select Image"
-                            value=""
-                            placeholder='Select Image'
-                            name="photo"
-                            type='file'
-                            onChange={handleImageChange}
-                        /> */}
-                        {/* <Input
-                            label="Enter Start Date"
-                            value={form?.pkgStartDate}
-                            type="date"
-                            placeholder='Enter Start Date'
-                            name="pkgStartDate"
+                        <Input
+                            label="Enter Days"
+                            value={form?.days}
+                            placeholder='Enter days'
+                            name="days"
+                            type='number'
                             onChange={handleInputChange}
                         />
-                        <Select
-                            onChange={handleInputChange}
-                            name="pkgId"
-                            options={dropdown?.packages?.map((item:any)=>({
-                                value: item?.id,
-                                label: item?.pkgName}
-                            ))}
-                        /> */}
                     </div>
-                   
+
                     <div>
-                    <Table headers={headers}>
+                        <Table headers={headers}>
                             {
-                                days?.length > 0 && days.map(item=>{
-                                    return <TR key={item.day}><TD>{item.day}</TD> <TD>{item.workouts}</TD> <TD>...</TD></TR>
+                                days?.length > 0 && days.map(item => {
+                                    return <TR key={item.day}><TD>{item.day}</TD> <TD>{item.workouts}</TD> <TD> <button onClick={() => handleAddWorkout(item.day)}>Add</button></TD></TR>
                                 })
                             }
-                    </Table>
+                        </Table>
                     </div>
                     <div className='mt-8'>
                         <Button onClick={handleSubmit}>Submit</Button>
                     </div>
                 </div>
             </div>
+
+            <ModalBox open={open} setOpen={setOpen}>
+                <AddWorkouts exercises={exercises} day={day} setExercises={setExercises}></AddWorkouts>
+            </ModalBox>
         </div>
     )
 }

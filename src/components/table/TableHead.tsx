@@ -4,7 +4,7 @@ const TableHead = ({
     headers
 }:any) => {
   return (
-    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+    <thead className="text-xs bg-blue-400 text-gray-700 uppercase  dark:bg-gray-700 dark:text-gray-400">
     <tr>
         {/* <th scope="col" className="p-4">
             <div className="flex items-center">
