@@ -78,10 +78,10 @@ const AddWorkouts = ({ day, setExercises, exercises }: any) => {
             <Table headers={headers}>
                 {exercises?.length > 0 ? exercises?.map((item, index) => (
                     <TR key={item.onDay + index}>
-                        <TD><Select options={workoutOptions} noLable={true}></Select></TD>
-                        <TD><Input onChange={handleInput} value={item?.setCount || ''} name='setCount' noLable={true} type="number" placeholder="Eg. 2" /></TD>
-                        <TD><Input onChange={handleInput} value={item.repsCount || ''} name='repsCount' noLable={true} type="text" placeholder="Eg. 1st set 16, 2nd set 12" /></TD>
-                        <TD><Input onChange={handleInput} value={item.gapBwSet || ''} name='gapBwSet' noLable={true} type="text" placeholder="Eg. 2 Minutes" /></TD>
+                        <TD><Select options={workoutOptions} noLabel={true}></Select></TD>
+                        <TD><Input onChange={handleInput} value={item?.setCount || ''} name='setCount' noLabel={true} type="number" placeholder="Eg. 2" /></TD>
+                        <TD><Input onChange={handleInput} value={item.repsCount || ''} name='repsCount' noLabel={true} type="text" placeholder="Eg. 1st set 16, 2nd set 12" /></TD>
+                        <TD><Input onChange={handleInput} value={item.gapBwSet || ''} name='gapBwSet' noLabel={true} type="text" placeholder="Eg. 2 Minutes" /></TD>
                         <TD>Delete</TD>
                     </TR>
                 )) : <NoDataFound colSpan={headers?.length}>No data found</NoDataFound>}

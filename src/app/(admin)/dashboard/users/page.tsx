@@ -1,12 +1,22 @@
 "use client"
-import Input from '@/components/forms/Input'
 import PageHeader from '@/components/PageHeader'
 import NoDataFound from '@/components/table/NoDataFound'
+import Table from '@/components/table/Table'
 import { API_URL } from '@/utils/services'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 
+interface User {
+    id: string;
+    photo?: string;
+    name?: string;
+    email?: string;
+    mob?: string;
+    username?: string;
+    role?: string;
+}
 
 const Users = () => {
 
@@ -53,6 +63,29 @@ const Users = () => {
     //     }
     // }
 
+    
+    const headers = [
+        {
+            title: "Image"
+        },
+        {
+            title: "Name"
+        },
+        {
+            title: "Email"
+        },
+       
+        {
+            title: "Mobile"
+        },
+        {
+            title: "Username"
+        },
+        {
+            title: "Action"
+        }
+    ];
+
     useEffect(() => {
         fetchData()
     }, [])
@@ -65,43 +98,8 @@ const Users = () => {
 
     return (<div className='p-4'>
         <PageHeader button_text='Create User' onClick={goToCreate} title='User List' />
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" className="p-4">
-                            <div className="flex items-center">
-                                <input id="checkbox-all-search" type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-                                <label htmlFor="checkbox-all-search" className="sr-only">checkbox</label>
-                            </div>
-                        </th>
-                        <th scope="col" className="px-6  text-[.8rem] py-3 font-bold text-white">
-                            Image
-                        </th>
-                        <th scope="col" className="px-6  text-[.8rem] py-3 font-bold text-white">
-                            Name
-                        </th>
-                        <th scope="col" className="px-6  text-[.8rem] py-3 font-bold text-white">
-                            Email
-                        </th>
-                        <th scope="col" className="px-6  text-[.8rem] py-3 font-bold text-white">
-                            Mobile
-                        </th>
-                        <th scope="col" className="px-6  text-[.8rem] py-3 font-bold text-white">
-                            Username
-                        </th>
-                        <th scope="col" className="px-6  text-[.8rem] py-3 font-bold text-white">
-                            Role
-                        </th>
-
-                        <th scope="col" className="px-6  text-[.8rem] py-3 font-bold text-white">
-                            Action
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                    {users?.length > 0 ? users?.map((item: any) => (
+         <Table headers={headers}>
+            {users?.length > 0 ? users?.map((item: User) => (
                         <tr key={item?.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                             <td className="w-4 p-4">
                                 <div className="flex items-center">
@@ -111,7 +109,13 @@ const Users = () => {
                             </td>
                             <td className="px-6 py-4">
                                 {/* {item?.photo || 'image'} */}
-                                <img src={`${API_URL}/${item.photo}`} alt="" className='w-[50px] object-cover border-2 border-blue-400 h-[50px] rounded-full' />
+                                   <Image
+                                    src={item.photo ? `${API_URL}/${item.photo}` : '/default-user.png'}
+                                    alt={item?.name || "--"}
+                                    width={50}
+                                    height={50}
+                                    className='object-cover border-2 border-blue-400 rounded-full'
+                                />                              
 
                             </td>
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -135,10 +139,12 @@ const Users = () => {
                                 <a href="#" className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
                             </td>
                         </tr>
-                    )) : <NoDataFound colSpan={8}>No data found</NoDataFound>}
-                </tbody>
-            </table>
-        </div>
+                    )) : <NoDataFound colSpan={8}/>}
+        </Table>
+        
+        
+        
+       
 
     </div>
 

@@ -19,7 +19,7 @@ const Page = () => {
     const [form, setForm] = useState<FormTypes>({})
     const [error, setError] = useState<ErrorObject>({});
 
-    const handleInputChange = (e: any) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setForm(prev => ({
             ...prev,
@@ -57,8 +57,8 @@ const Page = () => {
     }
 
     return (
-        <div className='grid items-center justify-center h-screen'>
-            <div className='rounded-2xl bg-gray-800 p-7 py-8 w-[400px]'>
+        <div className='grid items-center bg-gray-200 justify-center h-screen'>
+            <div className='rounded-2xl shadow-lg bg-white p-7 py-8 w-[400px]'>
                 <h2 className='text-[2.5rem] mb-10'>Login</h2>
                 <div className='flex flex-col gap-3 mb-4'>
 

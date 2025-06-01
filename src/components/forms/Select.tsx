@@ -9,13 +9,13 @@ interface SelectProps {
     name?:string; 
     value?: string;
     onChange?: any;
-    noLable?: boolean;
+    noLabel?: boolean;
 }
 
-const Select: React.FC<SelectProps> = ({ options, noLable = false, value, name, onChange }) => {
+const Select: React.FC<SelectProps> = ({ options, noLabel = false, value, name, onChange }) => {
     return (
         <div className="max-w-sm w-full">
-            {!noLable && <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>}
+            {!noLabel && <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>}
             <select
             name={name}
                 id="countries"

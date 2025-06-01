@@ -11,7 +11,7 @@ interface FormTypes {
     name?: string | undefined,
     email?: string,
     username?: string,
-    photo?: any,
+    photo?: string,
     mob?: string,
     pkgStartDate?: string,
     pkgId?: string,

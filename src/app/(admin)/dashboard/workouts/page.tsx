@@ -7,10 +7,16 @@ import { API_URL } from '@/utils/services'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
+interface Workout{
+    workoutName: string;
+    workoutDesc: string;
+    videoURL: string;
+    id: string;
+}
+
 const Users = () => {
 
-    const [users, setUsers] = useState([])
-
+    const [users, setUsers] = useState([]);
 
     const fetchData = async () => {
         const res = await fetch(`${API_URL}/api/v1/workout`, {
@@ -32,25 +38,6 @@ const Users = () => {
         setUsers(users)
     }
 
-    // const goToCreate = () => {
-    //     router.push('/admin/products/create')
-    // }
-    // const goToEdit = (id) => {
-    //     router.push(`/admin/products/${id}`)
-    // }
-
-    // const handleDelete = async (id) => {
-    //     const res = await fetch(`${API_URL}/products/${id}`, {
-    //         method: "Delete"
-    //     });
-
-    //     if (!res.ok) {
-    //         throw new Error("Failed to delete product");
-    //     } else {
-    //         fetchData()
-
-    //     }
-    // }
 
     useEffect(() => {
         fetchData()
@@ -76,11 +63,11 @@ const Users = () => {
             title: "Action"
         },
     ];
-
+  
     return (<div className='p-4'>
         <PageHeader button_text='Create Workout' onClick={goToCreate} title='Workout List' />
         <Table headers={headers}>
-            {users?.length > 0 ? users?.map((item: any) => (
+            {users?.length > 0 ? users?.map((item: Workout) => (
 
                 <tr key={item?.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
 
@@ -93,14 +80,13 @@ const Users = () => {
                     <td className="px-6 py-4">
                         {item?.videoURL}
                     </td>
-                   
 
                     <td className="flex items-center px-6 py-4">
                         <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                         <a href="#" className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
                     </td>
                 </tr>
-            )) : <NoDataFound colSpan={headers?.length}>No data found</NoDataFound>}
+            )) : <NoDataFound colSpan={headers?.length}/>}
         </Table>
     </div>
     )

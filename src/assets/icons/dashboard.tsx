@@ -7,7 +7,7 @@ const dashboard_icon = (  <svg className="w-5 h-5 text-gray-500 transition durat
     <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z"/>
  </svg>)
 
- const edti_icon = ( <svg className="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+ const edit_icon = ( <svg className="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
     <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.96 2.96 0 0 0 .13 5H5Z" />
     <path d="M6.737 11.061a2.961 2.961 0 0 1 .81-1.515l6.117-6.116A4.839 4.839 0 0 1 16 2.141V2a1.97 1.97 0 0 0-1.933-2H7v5a2 2 0 0 1-2 2H0v11a1.969 1.969 0 0 0 1.933 2h12.134A1.97 1.97 0 0 0 16 18v-3.093l-1.546 1.546c-.413.413-.94.695-1.513.81l-3.4.679a2.947 2.947 0 0 1-1.85-.227 2.96 2.96 0 0 1-1.635-3.257l.681-3.397Z" />
     <path d="M8.961 16a.93.93 0 0 0 .189-.019l3.4-.679a.961.961 0 0 0 .49-.263l6.118-6.117a2.884 2.884 0 0 0-4.079-4.078l-6.117 6.117a.96.96 0 0 0-.263.491l-.679 3.4A.961.961 0 0 0 8.961 16Zm7.477-9.8a.958.958 0 0 1 .68-.281.961.961 0 0 1 .682 1.644l-.315.315-1.36-1.36.313-.318Zm-5.911 5.911 4.236-4.236 1.359 1.359-4.236 4.237-1.7.339.341-1.699Z" />
@@ -28,14 +28,46 @@ const box_icon = (    <svg className="shrink-0 w-5 h-5 text-gray-500 transition 
 </svg>)
 
 const workout_plan_icon = (
-   <svg width="20px" height="20px" viewBox="0 0 24 24" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"><defs></defs><polygon className="cls-1" points="14.15 22.5 3.41 22.5 3.41 1.5 20.59 1.5 20.59 22.5 14.15 22.5"/><line className="cls-1" x1="6.27" y1="11.05" x2="8.18" y2="11.05"/><line className="cls-1" x1="10.09" y1="11.05" x2="17.73" y2="11.05"/><line className="cls-1" x1="6.27" y1="14.86" x2="8.18" y2="14.86"/><line className="cls-1" x1="10.09" y1="14.86" x2="17.73" y2="14.86"/><line className="cls-1" x1="6.27" y1="18.68" x2="8.18" y2="18.68"/><line className="cls-1" x1="10.09" y1="18.68" x2="17.73" y2="18.68"/><line className="cls-1" x1="7.23" y1="6.27" x2="16.77" y2="6.27"/><line className="cls-1" x1="9.14" y1="4.36" x2="9.14" y2="8.18"/><line className="cls-1" x1="14.86" y1="4.36" x2="14.86" y2="8.18"/></svg>)
+  <svg  className="text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" version="1.1" id="Capa_1" 
+	 width="20px" fill="currentColor" height="20px" viewBox="0 0 485.535 485.535"
+	 >
+<g>
+	<g id="_x35__13_">
+		<g>
+			<path d="M55.465,123.228c-15.547,0-28.159,12.608-28.159,28.161v56.673C11.653,211.908,0,225.928,0,242.765
+				c0,16.842,11.652,30.861,27.306,34.707v56.666c0,15.555,12.612,28.16,28.159,28.16c15.546,0,28.16-12.605,28.16-28.16V151.389
+				C83.625,135.837,71.011,123.228,55.465,123.228z"/>
+			<path d="M334.498,65.278c-23.092,0-41.811,18.719-41.811,41.812v93.864h-12.801h-60.585h-19.625l-6.827-0.163V107.09
+				c0-23.092-18.72-41.812-41.813-41.812c-23.091,0-41.812,18.719-41.812,41.812v271.355c0,23.093,18.721,41.812,41.812,41.812
+				c23.094,0,41.813-18.719,41.813-41.812v-93.653c0,0,4.501-0.211,6.827-0.211h19.625h60.585h12.801v93.864
+				c0,23.093,18.719,41.812,41.811,41.812c23.094,0,41.812-18.719,41.812-41.812V107.089
+				C376.311,83.998,357.592,65.278,334.498,65.278z"/>
+			<path d="M458.229,208.062v-56.673c0-15.552-12.613-28.161-28.158-28.161c-15.547,0-28.16,12.608-28.16,28.161v182.749
+				c0,15.555,12.613,28.16,28.16,28.16c15.545,0,28.158-12.605,28.158-28.16v-56.666c15.654-3.846,27.307-17.865,27.307-34.707
+				C485.535,225.927,473.883,211.908,458.229,208.062z"/>
+		</g>
+	</g>
+</g>
+</svg>)
+
+const create_icon = (<svg width="20px" stroke="currentColor" className="text-white " height="20px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<g id="Complete">
+<g data-name="add" id="add-2">
+<g>
+<line fill="none"   stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="12" x2="12" y1="19" y2="5"/>
+<line fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="5" x2="19" y1="12" y2="12"/>
+</g>
+</g>
+</g>
+</svg>)
 
  export {
     dashboard_icon,
     users_icon,
     box_icon,
-    edti_icon,
+    edit_icon,
     login_icon,
     product_icon,
-    workout_plan_icon
+    workout_plan_icon,
+    create_icon
  }
