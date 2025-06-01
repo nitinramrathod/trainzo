@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Header = () => {
-    return (<nav className="bg-gray-100 dark:bg-gray-800">
+    return (<nav className="bg-white dark:bg-gray-800">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-11 items-center justify-end">
 

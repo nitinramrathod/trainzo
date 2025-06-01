@@ -119,9 +119,9 @@ function UserDetail({data}:any) {
 
     return (
         <div>
-            <div className='p-4'>
+            <div>
                 <PageHeader onClick={gotoList} button_text="Back to List" title='Create User' />
-                <div className='bg-gray-200 py-8 px-5 rounded-md'>
+                <div className='bg-white shadow-md py-8 px-5 rounded-md'>
 
                     <div className="grid grid-cols-3  gap-x-5 gap-y-4">
                         <Input

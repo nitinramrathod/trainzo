@@ -113,7 +113,7 @@ const CreateUser = ({ data }: any) => {
 
     return (
         <div>
-            <div className='p-4'>
+            <div>
                 <PageHeader onClick={gotoList} button_text="Back to List" title='Create Package' />
                 <div className='bg-gray-200 py-8 px-5 rounded-md'>
 
