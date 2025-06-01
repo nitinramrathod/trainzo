@@ -12,9 +12,10 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
             <div className="flex">
                 <SideBar></SideBar>
                 <main className='flex-1'>
-                    <Header></Header>
-
+                    <Header/>
+                    <div className='p-4 bg-[#fcfeff] min-h-[600px]'>
                     {children}
+                    </div>
                 </main>
             </div>
         </div>

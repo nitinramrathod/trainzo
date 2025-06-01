@@ -72,7 +72,7 @@ const Users = () => {
         },
     ];
 
-    return (<div className='p-4'>
+    return (<div >
         <PageHeader button_text='Create Workout Plan' onClick={goToCreate} title='Workout Plan List' />
         <Table headers={headers}>
             {users?.length > 0 ? users?.map((item: any) => (

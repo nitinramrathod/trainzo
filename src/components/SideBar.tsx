@@ -8,6 +8,8 @@ import {
 } from "@/assets/icons/dashboard";
 import Link from "next/link";
 import React from "react";
+import Image from "next/image";
+import logo from "@/assets/icons/logo.png";
 
 interface SideBarProps {
   name: string;
@@ -16,7 +18,7 @@ interface SideBarProps {
 }
 
 const SideBar = () => {
-  const sidebarNavs = [
+  const sidebarLinks = [
     {
       name: "Dashboard",
       icon: dashboard_icon,
@@ -51,7 +53,7 @@ const SideBar = () => {
       name: "Logout",
       icon: login_icon,
       url: "/dashboard/signout",
-    },
+    }
   ];
 
   return (
@@ -84,9 +86,9 @@ const SideBar = () => {
         className="top-0 left-0 z-40 w-45 h-screen transition-transform -translate-x-full sm:translate-x-0"
         aria-label="Sidebar"
       >
-        <div className="h-full pt-10 px-3 py-4 overflow-y-auto bg-gradient-to-t from-blue-100 to-blue-200 dark:bg-gray-800">
-          <h2 className="text-center mb-10 text-xl font-medium">
-            Protonity Gym
+        <div className="h-full pt-2 px-3 py-4 overflow-y-auto bg-gradient-to-t from-indigo-400 to-indigo-600 dark:bg-gray-800">
+          <h2 className="text-center mb-12 text-xl font-medium">
+            <Image src={logo} alt="Protonity Gym Softwares"></Image>
           </h2>
           <ul className="space-y-2 font-medium">
             {/* <li>
@@ -122,11 +124,11 @@ const SideBar = () => {
                             </a>
                         </li> */}
 
-            {sidebarNavs?.map((item: SideBarProps) => (
+            {sidebarLinks?.map((item: SideBarProps) => (
               <li key={item?.url}>
                 <Link
                   href={item?.url || "#"}
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-blue-100 dark:hover:bg-gray-600 group"
+                  className="flex items-center transition-all duration-700 ease-in-out p-2 text-slate-100 rounded-md hover:text-indigo-800 dark:text-white hover:bg-indigo-200 dark:hover:bg-gray-600 group"
                 >
                   {item.icon}
                   <span className="flex-1 ms-3 whitespace-nowrap">

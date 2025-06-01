@@ -6,7 +6,7 @@ const Header = () => {
             <div className="relative flex h-11 items-center justify-end">
 
                 <div className="inset-y-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                    <button type="button" className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
+                    <button type="button" className="relative rounded-full bg-indigo-100 p-1 text-indigo-700 hover:bg-indigo-200 hover:text-indigo-900 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
                         <span className="absolute -inset-1.5"></span>
                         <span className="sr-only">View notifications</span>
                         <svg className="size-6" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
