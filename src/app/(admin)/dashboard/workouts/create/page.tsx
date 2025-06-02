@@ -1,5 +1,6 @@
 'use client'
 import Button from '@/components/forms/Button'
+import FormWrapper from '@/components/forms/FormWrapper'
 import Input from '@/components/forms/Input'
 import Select from '@/components/forms/Select'
 import PageHeader from '@/components/PageHeader'
@@ -93,7 +94,7 @@ const CreateUser = ({ data }: any) => {
         <div>
             <div>
                 <PageHeader onClick={gotoList} button_text="Back to List" title='Create Workout' />
-                <div className='bg-gray-200 py-8 px-5 rounded-md'>
+                <FormWrapper>
 
                     <div className="grid grid-cols-3  gap-x-5 gap-y-4">
                         <Input
@@ -124,7 +125,7 @@ const CreateUser = ({ data }: any) => {
                     <div className='mt-8'>
                         <Button onClick={handleSubmit}>Submit</Button>
                     </div>
-                </div>
+                </FormWrapper>
             </div>
         </div>
     )

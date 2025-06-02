@@ -1,5 +1,6 @@
 'use client'
 import Button from '@/components/forms/Button'
+import FormWrapper from '@/components/forms/FormWrapper'
 import Input from '@/components/forms/Input'
 import Select from '@/components/forms/Select'
 import { ModalBox } from '@/components/Modal'
@@ -150,10 +151,8 @@ const CreateUser = ({ data }: any) => {
 
     return (
         <div>
-            <div>
                 <PageHeader onClick={gotoList} button_text="Back to List" title='Create Plan' />
-                <div className='bg-gray-200 py-8 px-5 rounded-md'>
-
+                <FormWrapper>
                     <div className="grid grid-cols-3  gap-x-5 gap-y-4">
                         <Input
                             label="Plan Name"
@@ -186,8 +185,8 @@ const CreateUser = ({ data }: any) => {
                     <div className='mt-8'>
                         <Button onClick={handleSubmit}>Submit</Button>
                     </div>
-                </div>
-            </div>
+                </FormWrapper>
+            
 
             <ModalBox open={open} setOpen={setOpen}>
                 <AddWorkouts exercises={exercises} day={day} setExercises={setExercises}></AddWorkouts>

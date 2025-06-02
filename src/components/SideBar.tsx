@@ -1,15 +1,22 @@
+"use client";
+
 import {
   box_icon,
   dashboard_icon,
+  diet_icon,
   edit_icon,
   login_icon,
+  logout_icon,
+  package_icon,
   users_icon,
+  workout_icon,
   workout_plan_icon,
 } from "@/assets/icons/dashboard";
 import Link from "next/link";
 import React from "react";
 import Image from "next/image";
 import logo from "@/assets/icons/logo.png";
+import { usePathname } from "next/navigation";
 
 interface SideBarProps {
   name: string;
@@ -31,30 +38,35 @@ const SideBar = () => {
     },
     {
       name: "Package",
-      icon: edit_icon,
+      icon: package_icon,
       url: "/dashboard/packages",
     },
     {
       name: "Diet",
-      icon: box_icon,
+      icon: diet_icon,
       url: "/dashboard/diets",
     },
     {
       name: "Workout",
-      icon: users_icon,
+      icon: workout_icon,
       url: "/dashboard/workouts",
     },
     {
       name: "Workout Plans",
       icon: workout_plan_icon,
       url: "/dashboard/workout-plans",
-    },
-    {
-      name: "Logout",
-      icon: login_icon,
-      url: "/dashboard/signout",
     }
+    // {
+    //   name: "Logout",
+    //   icon: logout_icon,
+    //   url: "/dashboard/signout",
+    // }
   ];
+
+  const pathname = usePathname();
+
+  console.log('pathname', pathname)
+
 
   return (
     <>
@@ -83,14 +95,17 @@ const SideBar = () => {
 
       <aside
         id="sidebar-multi-level-sidebar"
-        className="top-0 left-0 z-40 w-45 h-screen transition-transform -translate-x-full sm:translate-x-0"
+        className="top-0 left-0 z-40 w-48 h-screen transition-transform -translate-x-full sm:translate-x-0"
         aria-label="Sidebar"
       >
-        <div className="h-full pt-2 px-3 py-4 overflow-y-auto bg-gradient-to-t from-indigo-400 to-indigo-600 dark:bg-gray-800">
-          <h2 className="text-center mb-12 text-xl font-medium">
+        <div className="h-full  font-medium flex flex-col justify-between pt-2 px-3 py-4 overflow-y-auto bg-gradient-to-t from-indigo-400 to-indigo-600 dark:bg-gray-800">
+          <div>
+
+        
+          <h2 className="text-center mb-12 text-xl ">
             <Image src={logo} alt="Protonity Gym Softwares"></Image>
           </h2>
-          <ul className="space-y-2 font-medium">
+          <ul className="space-y-2">
             {/* <li>
                             <button type="button" className="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
                                 <svg className="shrink-0 w-5 h-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 21">
@@ -128,7 +143,7 @@ const SideBar = () => {
               <li key={item?.url}>
                 <Link
                   href={item?.url || "#"}
-                  className="flex items-center transition-all duration-700 ease-in-out p-2 text-slate-100 rounded-md hover:text-indigo-800 dark:text-white hover:bg-indigo-200 dark:hover:bg-gray-600 group"
+                  className={`flex items-center transition-all duration-700 ease-in-out p-2  rounded-md ${item.url == pathname ? 'text-indigo-800 bg-indigo-200': 'text-slate-100'} hover:text-indigo-800 dark:text-white hover:bg-indigo-200 dark:hover:bg-gray-600 group`}
                 >
                   {item.icon}
                   <span className="flex-1 ms-3 whitespace-nowrap">
@@ -138,6 +153,16 @@ const SideBar = () => {
               </li>
             ))}
           </ul>
+            </div>
+            <Link
+                  href={ "#"}
+                  className="flex items-center transition-all duration-700 ease-in-out p-2 text-slate-100 rounded-md hover:text-indigo-800 dark:text-white hover:bg-indigo-200 dark:hover:bg-gray-600 group"
+                >
+                  {logout_icon}
+                  <span className="flex-1 ms-3 whitespace-nowrap">
+                    Logout
+                  </span>
+                </Link>
         </div>
       </aside>
     </>
