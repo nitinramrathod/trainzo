@@ -8,7 +8,7 @@ interface SelectProps {
     options?: Option[];
     name?:string; 
     value?: string;
-    onChange?: any;
+    onChange?: React.ChangeEventHandler<HTMLSelectElement>;
     noLabel?: boolean;
 }
 

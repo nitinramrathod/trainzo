@@ -1,11 +1,8 @@
 "use client";
 
 import {
-  box_icon,
   dashboard_icon,
   diet_icon,
-  edit_icon,
-  login_icon,
   logout_icon,
   package_icon,
   users_icon,
@@ -56,11 +53,6 @@ const SideBar = () => {
       icon: workout_plan_icon,
       url: "/dashboard/workout-plans",
     }
-    // {
-    //   name: "Logout",
-    //   icon: logout_icon,
-    //   url: "/dashboard/signout",
-    // }
   ];
 
   const pathname = usePathname();

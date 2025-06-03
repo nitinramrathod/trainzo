@@ -7,6 +7,13 @@ import { API_URL } from '@/utils/services'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
+
+interface WorkoutPlan {
+    workoutPlanName?: string,
+    id?: string,
+    pkgDesc?: string,
+}
+
 const Users = () => {
 
     const [users, setUsers] = useState([]);
@@ -75,7 +82,7 @@ const Users = () => {
     return (<div >
         <PageHeader button_text='Create Workout Plan' onClick={goToCreate} title='Workout Plan List' />
         <Table headers={headers}>
-            {users?.length > 0 ? users?.map((item: any) => (
+            {users?.length > 0 ? users?.map((item: WorkoutPlan) => (
 
                 <tr key={item?.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
 
@@ -92,7 +99,7 @@ const Users = () => {
                         <a href="#" className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
                     </td>
                 </tr>
-            )) : <NoDataFound colSpan={headers?.length}>No data found</NoDataFound>}
+            )) : <NoDataFound colSpan={headers?.length}/>}
         </Table>
     </div>
     )

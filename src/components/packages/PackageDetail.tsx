@@ -1,9 +1,8 @@
 'use client'
 import Button from '@/components/forms/Button'
 import Input from '@/components/forms/Input'
-import Select from '@/components/forms/Select'
 import PageHeader from '@/components/PageHeader'
-import { API_URL, get } from '@/utils/services'
+import { API_URL} from '@/utils/services'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
@@ -11,7 +10,7 @@ interface FormTypes {
     pkgName?: string | undefined,
     duration?: string,
     pkgDesc?: string,
-    pkgPrice?: any,
+    pkgPrice?: number | string,
     pkgDiscount?: string,
     pkgDiscountedPrice?: string,
     id? : string
@@ -25,14 +24,14 @@ interface ErrorObject {
 
 }
 
-const PackageDetail = ({ data }: any) => {
+const PackageDetail = ({ data }: {data: FormTypes}) => {
     const [form, setForm] = useState<FormTypes>({})
     const [isEdit, setIsEdit] = useState(false);
-    const [dropdown, setDropdown] = useState<{ packages?: any[] }>({});
+    // const [dropdown, setDropdown] = useState<{ packages?: any[] }>({});
     const[error, setError] = useState<ErrorObject>({})
     const router = useRouter();
 
-    const handleInputChange = (e: any) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setForm(prev => ({
             ...prev,
@@ -41,18 +40,18 @@ const PackageDetail = ({ data }: any) => {
         }))
     };
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        setForm((prev) => ({
-            ...prev,
-            [e.target.name]: file || null
-        }));
-    }
+    // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     const file = e.target.files?.[0];
+    //     setForm((prev) => ({
+    //         ...prev,
+    //         [e.target.name]: file || null
+    //     }));
+    // }
 
-    const getOptions = async ()=>{
-        const data = await get('/api/v1/gym-package')
-        setDropdown({packages: data})
-    }
+    // const getOptions = async ()=>{
+    //     const data = await get('/api/v1/gym-package')
+    //     setDropdown({packages: data})
+    // }
 
     const handleSubmit = async () => {
         try {
@@ -60,7 +59,7 @@ const PackageDetail = ({ data }: any) => {
             formData.append('pkgName', form?.pkgName || '')
             formData.append('duration', form?.duration || '')
             formData.append('pkgDesc', form?.pkgDesc || '')
-            formData.append('pkgPrice', form?.pkgPrice || '')
+            formData.append('pkgPrice', form?.pkgPrice ? String(form?.pkgPrice) : '')
             formData.append('pkgDiscount', form?.pkgDiscount || '')
             if(isEdit){
                 formData.append('id', form?.id || '')
@@ -95,7 +94,7 @@ const PackageDetail = ({ data }: any) => {
             }
 
         } catch (error) {
-
+            console.log('error', error)
         }
     }
 
@@ -111,9 +110,9 @@ const PackageDetail = ({ data }: any) => {
         }
     }, [data])
 
-    useEffect(() => {
-        getOptions()
-    }, [])
+    // useEffect(() => {
+    //     getOptions()
+    // }, [])
     
 
     return (

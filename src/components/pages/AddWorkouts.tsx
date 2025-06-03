@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import NoDataFound from '../table/NoDataFound';
 import Table from '../table/Table';
 import { TD, TR } from '../table/Common';
@@ -25,15 +25,29 @@ const headers = [
     },
 ];
 
-let data = {onDay:0, setCount: 0, repsCount: '', gapBwSet: ''}
-const AddWorkouts = ({ day, setExercises, exercises }: any) => {
-    const [workoutOptions, setworkoutOptions] = useState<any>();
+const data = {onDay:0, setCount: 0, repsCount: '', gapBwSet: ''}
+interface Exercise {
+    onDay: number;
+    setCount: number;
+    repsCount: string;
+    gapBwSet: string;
+    [key: string]: string | number | undefined;
+}
+
+interface AddWorkoutsProps {
+    day: number;
+    setExercises: React.Dispatch<React.SetStateAction<Exercise[]>>;
+    exercises: Exercise[];
+}
+
+const AddWorkouts = ({ day, setExercises, exercises }: AddWorkoutsProps) => {
+    const [workoutOptions, setworkoutOptions] = useState<{ value: string; label: string }[]>();
 
     useEffect(() => {
         get('/api/v1/workout').then((res) => {
-            let options = res.map(item => {
+            const options = res.map(item => {
                 return {
-                    value: item.id,
+                    value: String(item.id),
                     label: item.workoutName
                 }
             })
@@ -56,13 +70,15 @@ const AddWorkouts = ({ day, setExercises, exercises }: any) => {
 
     console.log('exercises', exercises)
 
-    const addNewRow = ()=>{
-
-        let row = data.onDay = day
-
-        setExercises(prev=>(
-            [...prev,row]
-        ))
+    const addNewRow = () => {
+        const row: Exercise = {
+            ...data,
+            onDay: day
+        };
+        setExercises(prev => [
+            ...prev,
+            row
+        ]);
     }
 
     
@@ -84,7 +100,7 @@ const AddWorkouts = ({ day, setExercises, exercises }: any) => {
                         <TD><Input onChange={handleInput} value={item.gapBwSet || ''} name='gapBwSet' noLabel={true} type="text" placeholder="Eg. 2 Minutes" /></TD>
                         <TD>Delete</TD>
                     </TR>
-                )) : <NoDataFound colSpan={headers?.length}>No data found</NoDataFound>}
+                )) : <NoDataFound colSpan={headers?.length}/>}
             </Table>
 
         </div>

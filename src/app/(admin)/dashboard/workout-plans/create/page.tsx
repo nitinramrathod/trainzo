@@ -2,45 +2,52 @@
 import Button from '@/components/forms/Button'
 import FormWrapper from '@/components/forms/FormWrapper'
 import Input from '@/components/forms/Input'
-import Select from '@/components/forms/Select'
 import { ModalBox } from '@/components/Modal'
 import PageHeader from '@/components/PageHeader'
 import AddWorkouts from '@/components/pages/AddWorkouts'
 import { TR, TD } from '@/components/table/Common'
 import Table from '@/components/table/Table'
-import { API_URL, get } from '@/utils/services'
+import { API_URL } from '@/utils/services'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+
+// Define Exercise type here if the import fails
+interface Exercise {
+    onDay: number;
+    setCount: number;
+    repsCount: string;
+    gapBwSet: string;
+}
 
 interface FormTypes {
     workoutPlanName?: string | undefined,
     id?: string,
     days?: number,
-    exercises?: Array<any> | undefined,
+    exercises?: Exercise[] | undefined,
 
 }
 interface ErrorObject {
     workoutPlanName?: string
 }
 
-const CreateUser = ({ data }: any) => {
+const CreateUser = ({ data }: { data?: FormTypes }) => {
     const [form, setForm] = useState<FormTypes>({ exercises: [] })
     const [isEdit, setIsEdit] = useState(false);
-    const [dropdown, setDropdown] = useState<{ packages?: any[] }>({});
+    // const [dropdown, setDropdown] = useState<{ packages?: any[] }>({});
     const [error, setError] = useState<ErrorObject>({});
     const [open, setOpen] = useState<boolean>(false);
     const router = useRouter();
-    const [days, setDays] = useState<any>([])
-    const [day, setDay] = useState<any>()
+    const [days, setDays] = useState<{ day: number, workouts: string }[]>([])
+    const [day, setDay] = useState<number | undefined>()
 
-    const [exercises, setExercises] = useState<any>([{onDay: 1, setCount: 0, repsCount: '', gapBwSet: ''}])
+    const [exercises, setExercises] = useState<Exercise[]>([{onDay: 1, setCount: 0, repsCount: '', gapBwSet: ''}])
 
 
-    const handleInputChange = (e: any) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
         const { name, value } = e.target;
 
-        if (name == 'days' && value > 90) {
+        if (name == 'days' && Number(value) > 90) {
             alert('Days cannot be more than 90')
             return;
         }
@@ -54,17 +61,6 @@ const CreateUser = ({ data }: any) => {
 
     const handleSubmit = async () => {
         try {
-            // const formData = new FormData();
-            // formData.append('workoutPlanName', form?.workoutPlanName || '')
-            // formData.append('exercises', '[]')
-            // // formData.append('pkgDiscountedPrice', form?.pkgDiscountedPrice || '')
-            // if(isEdit){
-            //     formData.append('id', form?.id || '')
-
-            // }
-
-
-
 
             const url = isEdit ? `${API_URL}/api/v1/workout-plan/update` : `${API_URL}/api/v1/workout-plan/create`
             const method = isEdit ? 'PUT' : 'POST'
@@ -90,6 +86,7 @@ const CreateUser = ({ data }: any) => {
             }
 
         } catch (error) {
+            console.log('error', error)
 
         }
     }
@@ -119,7 +116,7 @@ const CreateUser = ({ data }: any) => {
         },
     ];
 
-    const handleAddWorkout = (day: any) => {
+    const handleAddWorkout = (day: number) => {
         setDay(day)
         setOpen(true);
         setForm(prev => ({
@@ -133,10 +130,10 @@ const CreateUser = ({ data }: any) => {
     useEffect(() => {
 
         const generateDays = () => {
-            const arr: { day: number }[] = []
+            const arr: { day: number; workouts: string }[] = []
 
             for (let i = 1; i <= (form.days ?? 0); i++) {
-                arr.push({ day: i })
+                arr.push({ day: i, workouts: '' })
             }
             setDays(arr)
         }
@@ -177,7 +174,7 @@ const CreateUser = ({ data }: any) => {
                         <Table headers={headers}>
                             {
                                 days?.length > 0 && days.map(item => {
-                                    return <TR key={item.day}><TD>{item.day}</TD> <TD>{item.workouts}</TD> <TD> <button onClick={() => handleAddWorkout(item.day)}>Add</button></TD></TR>
+                                    return <TR key={item.day}><TD>{item.day}</TD> <TD>{item?.workouts}</TD> <TD> <button onClick={() => handleAddWorkout(item.day)}>Add</button></TD></TR>
                                 })
                             }
                         </Table>
@@ -189,7 +186,7 @@ const CreateUser = ({ data }: any) => {
             
 
             <ModalBox open={open} setOpen={setOpen}>
-                <AddWorkouts exercises={exercises} day={day} setExercises={setExercises}></AddWorkouts>
+                <AddWorkouts exercises={exercises} day={day ?? 1} setExercises={setExercises}></AddWorkouts>
             </ModalBox>
         </div>
     )

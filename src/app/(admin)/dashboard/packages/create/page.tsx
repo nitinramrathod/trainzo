@@ -3,7 +3,7 @@ import Button from '@/components/forms/Button'
 import FormWrapper from '@/components/forms/FormWrapper'
 import Input from '@/components/forms/Input'
 import PageHeader from '@/components/PageHeader'
-import { API_URL, get } from '@/utils/services'
+import { API_URL} from '@/utils/services'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
@@ -11,9 +11,10 @@ interface FormTypes {
     pkgName?: string | undefined,
     durationInMonth?: string,
     pkgDesc?: string,
-    pkgPrice?: any,
+    pkgPrice?: number | string | undefined,
     pkgDiscount?: string,
     pkgDiscountedPrice?: string,
+    id?: number
 }
 
 interface ErrorObject {
@@ -24,14 +25,20 @@ interface ErrorObject {
 
 }
 
-const CreateUser = ({ data }: any) => {
+const CreateUser = ({ data }: { data?: FormTypes }) => {
     const [form, setForm] = useState<FormTypes>({})
     const [isEdit, setIsEdit] = useState(false);
-    const [dropdown, setDropdown] = useState<{ packages?: any[] }>({});
+    // interface Package {
+    //     id: string;
+    //     pkgName: string;
+    //     // Add other relevant fields as needed
+    // }
+    
+    // const [dropdown, setDropdown] = useState<{ packages?: Package[] }>({});
     const[error, setError] = useState<ErrorObject>({})
     const router = useRouter();
 
-    const handleInputChange = (e: any) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setForm(prev => ({
             ...prev,
@@ -40,18 +47,18 @@ const CreateUser = ({ data }: any) => {
         }))
     };
 
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        setForm((prev) => ({
-            ...prev,
-            [e.target.name]: file || null
-        }));
-    }
+    // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     const file = e.target.files?.[0];
+    //     setForm((prev) => ({
+    //         ...prev,
+    //         [e.target.name]: file || null
+    //     }));
+    // }
 
-    const getOptions = async ()=>{
-        const data = await get('/api/v1/gym-package')
-        setDropdown({packages: data})
-    }
+    // const getOptions = async ()=>{
+    //     const data = await get('/api/v1/gym-package')
+    //     setDropdown({packages: data})
+    // }
 
     const handleSubmit = async () => {
         try {
@@ -59,11 +66,9 @@ const CreateUser = ({ data }: any) => {
             formData.append('pkgName', form?.pkgName || '')
             formData.append('durationInMonth', form?.durationInMonth || '')
             formData.append('pkgDesc', form?.pkgDesc || '')
-            formData.append('pkgPrice', form?.pkgPrice || '')
+            formData.append('pkgPrice', form?.pkgPrice !== undefined ? String(form.pkgPrice) : '')
             formData.append('pkgDiscount', form?.pkgDiscount || '')
             // formData.append('pkgDiscountedPrice', form?.pkgDiscountedPrice || '')
-
-
 
             const url = isEdit ? `${API_URL}/api/v1/gym-package/${data?.id}` : `${API_URL}/api/v1/gym-package/create`
             const method = isEdit ? 'PUT' : 'POST'
@@ -90,6 +95,7 @@ const CreateUser = ({ data }: any) => {
             }
 
         } catch (error) {
+            console.log('error', error)
 
         }
     }
@@ -106,10 +112,9 @@ const CreateUser = ({ data }: any) => {
         }
     }, [data])
 
-    useEffect(() => {
-        getOptions()
-    }, [])
-    
+    // useEffect(() => {
+    //     getOptions()
+    // }, [])    
 
     return (
        

@@ -5,6 +5,7 @@ import Input from "@/components/forms/Input";
 import Select from "@/components/forms/Select";
 import PageHeader from "@/components/PageHeader";
 import { API_URL, get } from "@/utils/services";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
@@ -25,15 +26,20 @@ interface ErrorObject {
   name?: string;
   username?: string;
 }
-function UserDetail({ data }: any) {
+function UserDetail({ data }: {data: FormTypes}) {
   console.log("data", data);
   const [form, setForm] = useState<FormTypes>({});
   const [isEdit, setIsEdit] = useState(false);
-  const [dropdown, setDropdown] = useState<{ packages?: any[] }>({});
+  interface Package {
+    id: string;
+    pkgName: string;
+  }
+  
+    const [dropdown, setDropdown] = useState<{ packages?: Package[] }>({});
   const [error, setError] = useState<ErrorObject>({});
   const router = useRouter();
 
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({
       ...prev,
@@ -46,6 +52,14 @@ function UserDetail({ data }: any) {
     setForm((prev) => ({
       ...prev,
       [e.target.name]: file || null,
+    }));
+  };
+
+  const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
     }));
   };
 
@@ -166,29 +180,32 @@ function UserDetail({ data }: any) {
             />
 
             {form?.photo && (
-              <img
+              <Image
                 src={`${API_URL}/${form?.photo}`}
-                alt=""
+                alt={form?.name || 'Protonity User'}
+                width={50}
+                height={50}
                 className="w-[50px] object-cover border-2 border-blue-400 h-[50px] rounded-full"
               />
             )}
           </div>
-          <Input
-            label="Enter Start Date"
-            value={form?.pkgStartDate}
-            type="date"
-            placeholder="Enter Start Date"
-            name="pkgStartDate"
-            onChange={handleInputChange}
-          />
           <Select
-            onChange={handleInputChange}
-            name="gymPkgId"
-            options={dropdown?.packages?.map((item: any) => ({
+            onChange={handleSelectChange}
+            name="pkgId"
+            value={form?.pkgId}
+            options={dropdown?.packages?.map((item: Package) => ({
               value: item?.id,
               label: item?.pkgName,
             }))}
           />
+          {/* <Select
+            onChange={handleInputChange}
+            name="gymPkgId"
+            options={dropdown?.packages?.map((item: Package) => ({
+              value: item?.id,
+              label: item?.pkgName,
+            }))}
+          /> */}
         </div>
         <div className="mt-8">
           <Button onClick={handleSubmit}>{save_icon}Submit</Button>

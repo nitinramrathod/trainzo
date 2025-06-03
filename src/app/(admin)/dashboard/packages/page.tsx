@@ -7,9 +7,19 @@ import { API_URL } from '@/utils/services'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
+interface Package {
+    id: string;
+    pkgName?: string;
+    duration?: string;
+    pkgDesc?: string;
+    pkgPrice?: number;
+    pkgDiscount?: number;
+    pkgDiscountedPrice?: number;
+}
+
 const Users = () => {
 
-    const [users, setUsers] = useState([]);
+    const [users, setUsers] = useState<Package[]>([]);
 
     const fetchData = async () => {
         const res = await fetch(`${API_URL}/api/v1/gym-package`, {
@@ -77,9 +87,6 @@ const Users = () => {
             title: "Discount"
         },
         {
-            title: " Discount Price"
-        },
-        {
             title: "Action"
         },
     ];
@@ -87,7 +94,7 @@ const Users = () => {
     return (<div >
         <PageHeader button_text='Create Package' onClick={goToCreate} title='Package List' />
         <Table headers={headers}>
-            {users?.length > 0 ? users?.map((item: any) => (
+            {users?.length > 0 ? users?.map((item: Package) => (
 
                 <tr key={item?.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
 
@@ -115,7 +122,7 @@ const Users = () => {
                         <a href="#" className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
                     </td>
                 </tr>
-            )) : <NoDataFound colSpan={headers?.length}>No data found</NoDataFound>}
+            )) : <NoDataFound colSpan={headers?.length}/>}
         </Table>
     </div>
     )

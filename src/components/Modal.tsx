@@ -2,14 +2,14 @@
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
+  // DialogDescription,
   DialogFooter,
-  DialogHeader,
-  DialogTitle,
+  // DialogHeader,
+  // DialogTitle,
 } from "@/components/ui/dialog";
 import Button from "./forms/Button";
 
-export function ModalBox({ open, setOpen, children }: { open: boolean; setOpen: (value: boolean) => void; children:any }) {
+export function ModalBox({ open, setOpen, children }: { open: boolean; setOpen: (value: boolean) => void; children:React.ReactNode }) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-[992px]">         
@@ -17,7 +17,7 @@ export function ModalBox({ open, setOpen, children }: { open: boolean; setOpen: 
             {children}
           </div>
           <DialogFooter>
-            <Button type="submit" onClick={() => setOpen(false)}>
+            <Button onClick={() => setOpen(false)}>
               Save changes
             </Button>
           </DialogFooter>
