@@ -26,7 +26,7 @@ interface ErrorObject {
   name?: string;
   username?: string;
 }
-function UserDetail({ data }: {data: FormTypes}) {
+function UserDetail({ data }: {data?: FormTypes}) {
   console.log("data", data);
   const [form, setForm] = useState<FormTypes>({});
   const [isEdit, setIsEdit] = useState(false);

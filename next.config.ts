@@ -3,7 +3,19 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ['protonity.onrender.com', 'images.unsplash.com'],
+        remotePatterns: [     
+      {
+        protocol: 'https',
+        hostname: 'protonity.onrender.com',
+        pathname: '/**', // Match all paths
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        pathname: '/**', // Match all paths
+      },
+    ],
+
   },
   env: {
     API_URL: process.env.BACKEND_URL,

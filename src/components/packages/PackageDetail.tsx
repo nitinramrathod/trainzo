@@ -5,6 +5,7 @@ import PageHeader from '@/components/PageHeader'
 import { API_URL} from '@/utils/services'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import FormWrapper from '../forms/FormWrapper'
 
 interface FormTypes {
     pkgName?: string | undefined,
@@ -24,7 +25,7 @@ interface ErrorObject {
 
 }
 
-const PackageDetail = ({ data }: {data: FormTypes}) => {
+const PackageDetail = ({ data }: {data?: FormTypes}) => {
     const [form, setForm] = useState<FormTypes>({})
     const [isEdit, setIsEdit] = useState(false);
     // const [dropdown, setDropdown] = useState<{ packages?: any[] }>({});
@@ -117,9 +118,9 @@ const PackageDetail = ({ data }: {data: FormTypes}) => {
 
     return (
         <div>
-            <div>
+          
                 <PageHeader onClick={gotoList} button_text="Back to List" title={isEdit?'Update Package' :'create Package'} />
-                <div className='bg-gray-200 py-8 px-5 rounded-md'>
+                <FormWrapper>
 
                     <div className="grid grid-cols-3  gap-x-5 gap-y-4">
                         <Input
@@ -193,8 +194,8 @@ const PackageDetail = ({ data }: {data: FormTypes}) => {
                     <div className='mt-8'>
                         <Button onClick={handleSubmit}>Submit</Button>
                     </div>
-                </div>
-            </div>
+                </FormWrapper>
+          
         </div>
     )
 }

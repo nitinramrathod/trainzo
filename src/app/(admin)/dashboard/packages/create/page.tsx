@@ -1,150 +1,153 @@
-'use client'
-import Button from '@/components/forms/Button'
-import FormWrapper from '@/components/forms/FormWrapper'
-import Input from '@/components/forms/Input'
-import PageHeader from '@/components/PageHeader'
-import { API_URL} from '@/utils/services'
-import { useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+// 'use client'
+// import Button from '@/components/forms/Button'
+// import FormWrapper from '@/components/forms/FormWrapper'
+// import Input from '@/components/forms/Input'
+// import PageHeader from '@/components/PageHeader'
+// import { API_URL} from '@/utils/services'
+// import { useRouter } from 'next/navigation'
+// import React, { useEffect, useState } from 'react'
 
-interface FormTypes {
-    pkgName?: string | undefined,
-    durationInMonth?: string,
-    pkgDesc?: string,
-    pkgPrice?: number | string | undefined,
-    pkgDiscount?: string,
-    pkgDiscountedPrice?: string,
-    id?: number
-}
+import PackageDetail from "@/components/packages/PackageDetail"
 
-interface ErrorObject {
-    durationInMonth?:string,
-    pkgPrice?:string,
-    pkgName?:string
-}
+// interface FormTypes {
+//     pkgName?: string | undefined,
+//     durationInMonth?: string,
+//     pkgDesc?: string,
+//     pkgPrice?: number | string | undefined,
+//     pkgDiscount?: string,
+//     pkgDiscountedPrice?: string,
+//     id?: number
+// }
 
-const CreatePackage = ({ data }: { data?: FormTypes }) => {
-    const [form, setForm] = useState<FormTypes>({})
-    const [isEdit, setIsEdit] = useState(false);
-    const[error, setError] = useState<ErrorObject>({})
-    const router = useRouter();
+// interface ErrorObject {
+//     durationInMonth?:string,
+//     pkgPrice?:string,
+//     pkgName?:string
+// }
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setForm(prev => ({
-            ...prev,
-            [name]: value
+const CreatePackage = () => {
+// const CreatePackage = ({ data }: { data?: FormTypes }) => {
+    // const [form, setForm] = useState<FormTypes>({})
+    // const [isEdit, setIsEdit] = useState(false);
+    // const[error, setError] = useState<ErrorObject>({})
+    // const router = useRouter();
 
-        }))
-    };
+    // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //     const { name, value } = e.target;
+    //     setForm(prev => ({
+    //         ...prev,
+    //         [name]: value
 
-    const handleSubmit = async () => {
-        try {
-            const formData = new FormData();
-            formData.append('pkgName', form?.pkgName || '')
-            formData.append('durationInMonth', form?.durationInMonth || '')
-            formData.append('pkgDesc', form?.pkgDesc || '')
-            formData.append('pkgPrice', form?.pkgPrice !== undefined ? String(form.pkgPrice) : '')
-            formData.append('pkgDiscount', form?.pkgDiscount || '')
+    //     }))
+    // };
 
-            const url = isEdit ? `${API_URL}/api/v1/gym-package/${data?.id}` : `${API_URL}/api/v1/gym-package/create`
-            const method = isEdit ? 'PUT' : 'POST'
+    // const handleSubmit = async () => {
+    //     try {
+    //         const formData = new FormData();
+    //         formData.append('pkgName', form?.pkgName || '')
+    //         formData.append('durationInMonth', form?.durationInMonth || '')
+    //         formData.append('pkgDesc', form?.pkgDesc || '')
+    //         formData.append('pkgPrice', form?.pkgPrice !== undefined ? String(form.pkgPrice) : '')
+    //         formData.append('pkgDiscount', form?.pkgDiscount || '')
 
-            const res = await fetch(url,
-                {
-                    method: method,
-                    body: JSON.stringify(form),
-                    headers:{
-                        "Content-Type": "application/json"
+    //         const url = isEdit ? `${API_URL}/api/v1/gym-package/${data?.id}` : `${API_URL}/api/v1/gym-package/create`
+    //         const method = isEdit ? 'PUT' : 'POST'
 
-                    }
-                })
+    //         const res = await fetch(url,
+    //             {
+    //                 method: method,
+    //                 body: JSON.stringify(form),
+    //                 headers:{
+    //                     "Content-Type": "application/json"
 
-            if (res.ok) {
-                setForm({})
-                router.push('/dashboard/packages')
-            } else {
-                const errorText = await res.text(); // Try to get error details
-                console.log('Error Response:', errorText); 
-                // alert('Error while creating package.');
-                setError(JSON.parse(errorText)); 
+    //                 }
+    //             })
 
-            }
+    //         if (res.ok) {
+    //             setForm({})
+    //             router.push('/dashboard/packages')
+    //         } else {
+    //             const errorText = await res.text(); // Try to get error details
+    //             console.log('Error Response:', errorText); 
+    //             // alert('Error while creating package.');
+    //             setError(JSON.parse(errorText)); 
 
-        } catch (error) {
-            console.log('error', error)
+    //         }
 
-        }
-    }
+    //     } catch (error) {
+    //         console.log('error', error)
 
-    const route = useRouter()
-    const gotoList = () => {
-        route.push('/dashboard/packages')
-    }
+    //     }
+    // }
 
-    useEffect(() => {
-        if (data) {
-            setIsEdit(true)
-            setForm(data)
-        }
-    }, [data]) 
+    // const route = useRouter()
+    // const gotoList = () => {
+    //     route.push('/dashboard/packages')
+    // }
 
-    return (
-       
-            <div>
-                <PageHeader onClick={gotoList} button_text="Back to List" title='Create Package' />
-                <FormWrapper>
+    // useEffect(() => {
+    //     if (data) {
+    //         setIsEdit(true)
+    //         setForm(data)
+    //     }
+    // }, [data]) 
 
-                    <div className="grid grid-cols-3  gap-x-5 gap-y-4">
-                        <Input
-                            label="Package Name"
-                            value={form?.pkgName}
-                            placeholder='Enter Package Name'
-                            name="pkgName"
-                            onChange={handleInputChange}
-                            error={error?.pkgName || ''}
+    return (<PackageDetail/>
+    
+            // <div>
+            //     <PageHeader onClick={gotoList} button_text="Back to List" title='Create Package' />
+            //     <FormWrapper>
 
-                        />
-                        <Input
-                            label="Duration"
-                            value={form?.durationInMonth}
-                            placeholder='Enter Duration e.g.. 3 months' 
-                            name="durationInMonth"
-                            onChange={handleInputChange}
-                            error={error?.durationInMonth || ''}
-                        />
-                        <Input
-                            label="Package Desc"
-                            value={form?.pkgDesc}
-                            placeholder='Enter Package Desc'
-                            name="pkgDesc"
-                            type='text'
-                            onChange={handleInputChange}
+            //         <div className="grid grid-cols-3  gap-x-5 gap-y-4">
+            //             <Input
+            //                 label="Package Name"
+            //                 value={form?.pkgName}
+            //                 placeholder='Enter Package Name'
+            //                 name="pkgName"
+            //                 onChange={handleInputChange}
+            //                 error={error?.pkgName || ''}
+
+            //             />
+            //             <Input
+            //                 label="Duration"
+            //                 value={form?.durationInMonth}
+            //                 placeholder='Enter Duration e.g.. 3 months' 
+            //                 name="durationInMonth"
+            //                 onChange={handleInputChange}
+            //                 error={error?.durationInMonth || ''}
+            //             />
+            //             <Input
+            //                 label="Package Desc"
+            //                 value={form?.pkgDesc}
+            //                 placeholder='Enter Package Desc'
+            //                 name="pkgDesc"
+            //                 type='text'
+            //                 onChange={handleInputChange}
                             
-                        />
-                        <Input
-                            label="Price"
-                            value={form?.pkgPrice}
-                            placeholder='Enter Price'
-                            type="number"
-                            name="pkgPrice"
-                            onChange={handleInputChange}
-                            error={error?.pkgPrice || ''}
-                        />
-                        <Input
-                            label="Price Discount"
-                            value={form?.pkgDiscount}
-                            placeholder='Enter Price Discount'
-                            type="number"
-                            name="pkgDiscount"
-                            onChange={handleInputChange}
-                        />
-                    </div>
-                    <div className='mt-8'>
-                        <Button onClick={handleSubmit}>Submit</Button>
-                    </div>
-                </FormWrapper>
-            </div>
+            //             />
+            //             <Input
+            //                 label="Price"
+            //                 value={form?.pkgPrice}
+            //                 placeholder='Enter Price'
+            //                 type="number"
+            //                 name="pkgPrice"
+            //                 onChange={handleInputChange}
+            //                 error={error?.pkgPrice || ''}
+            //             />
+            //             <Input
+            //                 label="Price Discount"
+            //                 value={form?.pkgDiscount}
+            //                 placeholder='Enter Price Discount'
+            //                 type="number"
+            //                 name="pkgDiscount"
+            //                 onChange={handleInputChange}
+            //             />
+            //         </div>
+            //         <div className='mt-8'>
+            //             <Button onClick={handleSubmit}>Submit</Button>
+            //         </div>
+            //     </FormWrapper>
+            // </div>
     )
 }
 
