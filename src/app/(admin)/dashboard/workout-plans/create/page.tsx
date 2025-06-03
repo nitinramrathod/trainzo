@@ -4,7 +4,7 @@ import FormWrapper from '@/components/forms/FormWrapper'
 import Input from '@/components/forms/Input'
 import { ModalBox } from '@/components/Modal'
 import PageHeader from '@/components/PageHeader'
-import AddWorkouts from '@/components/pages/AddWorkouts'
+import AddWorkouts, { Exercise } from '@/components/pages/AddWorkouts'
 import { TR, TD } from '@/components/table/Common'
 import Table from '@/components/table/Table'
 import { API_URL } from '@/utils/services'
@@ -12,12 +12,6 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 // Define Exercise type here if the import fails
-interface Exercise {
-    onDay: number;
-    setCount: number;
-    repsCount: string;
-    gapBwSet: string;
-}
 
 interface FormTypes {
     workoutPlanName?: string | undefined,

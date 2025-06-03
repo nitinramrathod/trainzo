@@ -26,7 +26,7 @@ const headers = [
 ];
 
 const data = {onDay:0, setCount: 0, repsCount: '', gapBwSet: ''}
-interface Exercise {
+export interface Exercise {
     onDay: number;
     setCount: number;
     repsCount: string;

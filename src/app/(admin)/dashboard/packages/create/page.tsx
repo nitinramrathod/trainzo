@@ -21,20 +21,11 @@ interface ErrorObject {
     durationInMonth?:string,
     pkgPrice?:string,
     pkgName?:string
-   
-
 }
 
-const CreateUser = ({ data }: { data?: FormTypes }) => {
+const CreatePackage = ({ data }: { data?: FormTypes }) => {
     const [form, setForm] = useState<FormTypes>({})
     const [isEdit, setIsEdit] = useState(false);
-    // interface Package {
-    //     id: string;
-    //     pkgName: string;
-    //     // Add other relevant fields as needed
-    // }
-    
-    // const [dropdown, setDropdown] = useState<{ packages?: Package[] }>({});
     const[error, setError] = useState<ErrorObject>({})
     const router = useRouter();
 
@@ -47,19 +38,6 @@ const CreateUser = ({ data }: { data?: FormTypes }) => {
         }))
     };
 
-    // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     const file = e.target.files?.[0];
-    //     setForm((prev) => ({
-    //         ...prev,
-    //         [e.target.name]: file || null
-    //     }));
-    // }
-
-    // const getOptions = async ()=>{
-    //     const data = await get('/api/v1/gym-package')
-    //     setDropdown({packages: data})
-    // }
-
     const handleSubmit = async () => {
         try {
             const formData = new FormData();
@@ -68,7 +46,6 @@ const CreateUser = ({ data }: { data?: FormTypes }) => {
             formData.append('pkgDesc', form?.pkgDesc || '')
             formData.append('pkgPrice', form?.pkgPrice !== undefined ? String(form.pkgPrice) : '')
             formData.append('pkgDiscount', form?.pkgDiscount || '')
-            // formData.append('pkgDiscountedPrice', form?.pkgDiscountedPrice || '')
 
             const url = isEdit ? `${API_URL}/api/v1/gym-package/${data?.id}` : `${API_URL}/api/v1/gym-package/create`
             const method = isEdit ? 'PUT' : 'POST'
@@ -110,11 +87,7 @@ const CreateUser = ({ data }: { data?: FormTypes }) => {
             setIsEdit(true)
             setForm(data)
         }
-    }, [data])
-
-    // useEffect(() => {
-    //     getOptions()
-    // }, [])    
+    }, [data]) 
 
     return (
        
@@ -166,30 +139,6 @@ const CreateUser = ({ data }: { data?: FormTypes }) => {
                             name="pkgDiscount"
                             onChange={handleInputChange}
                         />
-                        {/* <Input
-                            label="Select Image"
-                            value=""
-                            placeholder='Select Image'
-                            name="photo"
-                            type='file'
-                            onChange={handleImageChange}
-                        /> */}
-                        {/* <Input
-                            label="Enter Start Date"
-                            value={form?.pkgStartDate}
-                            type="date"
-                            placeholder='Enter Start Date'
-                            name="pkgStartDate"
-                            onChange={handleInputChange}
-                        />
-                        <Select
-                            onChange={handleInputChange}
-                            name="pkgId"
-                            options={dropdown?.packages?.map((item:any)=>({
-                                value: item?.id,
-                                label: item?.pkgName}
-                            ))}
-                        /> */}
                     </div>
                     <div className='mt-8'>
                         <Button onClick={handleSubmit}>Submit</Button>
@@ -199,4 +148,4 @@ const CreateUser = ({ data }: { data?: FormTypes }) => {
     )
 }
 
-export default CreateUser
+export default CreatePackage
