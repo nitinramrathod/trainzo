@@ -123,7 +123,7 @@ const PackageDetail = ({ data }: {data?: FormTypes}) => {
                 <PageHeader onClick={gotoList} detail={true} button_text="Back to List" title={isEdit?'Update Package' :'create Package'} />
                 <FormWrapper>
 
-                    <div className="grid grid-cols-3  gap-x-5 gap-y-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-4">
                         <Input
                             label="Package Name"
                             value={form?.pkgName}

@@ -8,14 +8,15 @@ interface SelectProps {
     options?: Option[];
     name?:string; 
     value?: string;
+    label?: string;
     onChange?: React.ChangeEventHandler<HTMLSelectElement>;
     noLabel?: boolean;
 }
 
-const Select: React.FC<SelectProps> = ({ options, noLabel = false, value, name, onChange }) => {
+const Select: React.FC<SelectProps> = ({ options, noLabel = false, label, value, name, onChange }) => {
     return (
-        <div className="max-w-sm w-full">
-            {!noLabel && <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>}
+        <div className="max-w-sm w-full mb-5">
+            {!noLabel && <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{label || 'Select an option'}</label>}
             <select
             name={name}
                 id="countries"

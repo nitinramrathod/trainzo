@@ -53,19 +53,18 @@ const SideBar = () => {
       name: "Workout Plans",
       icon: workout_plan_icon,
       url: "/dashboard/workout-plans",
-    }
+    },
   ];
 
   const pathname = usePathname();
 
-  console.log('pathname', pathname)
+  console.log("pathname", pathname);
 
   const { collapsed } = useSidebar();
 
-
   return (
     <>
-      <button
+      {/* <button
         data-drawer-target="sidebar-multi-level-sidebar"
         data-drawer-toggle="sidebar-multi-level-sidebar"
         aria-controls="sidebar-multi-level-sidebar"
@@ -86,33 +85,44 @@ const SideBar = () => {
             d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
           ></path>
         </svg>
-      </button>
+      </button> */}
 
       <aside
         id="sidebar-multi-level-sidebar"
-        className={`top-0 left-0 z-40 ${collapsed ? 'w-17' : 'w-48'} h-screen transition-all duration-200 ease-in-out -translate-x-full sm:translate-x-0`}
+        className={` ${
+          collapsed ? "w-17" : "w-48"
+        } h-screen transition-all duration-200 ease-in-out`}
         aria-label="Sidebar"
       >
         <div className="h-full overflow-x-hidden font-medium flex flex-col justify-between pt-2 px-3 py-4 overflow-y-auto bg-gradient-to-t from-indigo-400 to-indigo-600 dark:bg-gray-800">
           <div>
-
-        
-          <h2 className="text-center mb-12 text-xl ">
-            {collapsed ? <span className="text-slate-50 text-3xl">P</span>
-            :
-            <Image src={logo} alt="Protonity Gym Softwares"></Image>
-          }
-          </h2>
-          <ul className="space-y-2">
-            {sidebarLinks?.map((item: SideBarProps) => (
-              <li key={item?.url}>
-                <NavLink url={item?.url} isActive={item.url == pathname } icon={item?.icon} isCollapsed={collapsed} title={item.name}/>              
-              </li>
-            ))}
-          </ul>
-            </div>
-            <NavLink url="logout" icon={logout_icon} isCollapsed={collapsed} title="Logout"/>              
-            
+            <h2 className="text-center mb-12 text-xl ">
+              {collapsed ? (
+                <span className="text-slate-50 text-3xl">P</span>
+              ) : (
+                <Image src={logo} alt="Protonity Gym Softwares"></Image>
+              )}
+            </h2>
+            <ul className="space-y-2">
+              {sidebarLinks?.map((item: SideBarProps) => (
+                <li key={item?.url}>
+                  <NavLink
+                    url={item?.url}
+                    isActive={item.url == pathname}
+                    icon={item?.icon}
+                    isCollapsed={collapsed}
+                    title={item.name}
+                  />
+                </li>
+              ))}
+            </ul>
+          </div>
+          <NavLink
+            url="logout"
+            icon={logout_icon}
+            isCollapsed={collapsed}
+            title="Logout"
+          />
         </div>
       </aside>
     </>
@@ -130,14 +140,14 @@ interface NavLinkProps {
 const NavLink = ({ url, icon, isActive, title, isCollapsed }: NavLinkProps) => {
   return (
     <Link
-      href={url || '#'}
-      className={`flex items-center transition-all duration-700 ease-in-out p-2  rounded-md ${isActive ? 'text-indigo-800 bg-indigo-200': 'text-slate-100'} hover:text-indigo-800 dark:text-white hover:bg-indigo-200 dark:hover:bg-gray-600 group`}
+      href={url || "#"}
+      className={`flex items-center transition-all duration-700 ease-in-out p-2  rounded-md ${
+        isActive ? "text-indigo-800 bg-indigo-200" : "text-slate-100"
+      } hover:text-indigo-800 dark:text-white hover:bg-indigo-200 dark:hover:bg-gray-600 group`}
     >
       {icon}
       {!isCollapsed && (
-        <span className="flex-1 ms-3 whitespace-nowrap">
-          {title}
-        </span>
+        <span className="flex-1 ms-3 whitespace-nowrap">{title}</span>
       )}
     </Link>
   );

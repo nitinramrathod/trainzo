@@ -1,3 +1,4 @@
+import MainContent from "@/components/dashboard/MainContent";
 import Header from "@/components/Header";
 import SideBar from "@/components/SideBar";
 import { SidebarProvider } from "@/utils/context/SidebarContext";
@@ -13,12 +14,12 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
 
     <div className="flex min-h-screen ">
       <SideBar />
-      <main className="flex-1 flex max-h-screen flex-col">
+      <MainContent>
         <Header />
         <div className="p-4 bg-indigo-50 flex-1 overflow-y-auto">
           {children}
         </div>
-      </main>
+      </MainContent>
     </div>
     </SidebarProvider>
   );

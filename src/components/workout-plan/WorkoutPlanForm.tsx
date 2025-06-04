@@ -144,7 +144,7 @@ const WorkoutPlanForm = ({ data }: { data?: FormTypes }) => {
         <div>
                 <PageHeader onClick={gotoList} detail={true} button_text="Back to List" title='Create Plan' />
                 <FormWrapper>
-                    <div className="grid grid-cols-3  gap-x-5 gap-y-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-4">
                         <Input
                             label="Plan Name"
                             value={form?.workoutPlanName}

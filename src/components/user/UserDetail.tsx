@@ -24,7 +24,7 @@ interface ErrorObject {
   email?: string;
   mob?: string;
   name?: string;
-  username?: string;
+  address?: string;
 }
 function UserDetail({ data }: {data?: FormTypes}) {
   console.log("data", data);
@@ -134,7 +134,7 @@ function UserDetail({ data }: {data?: FormTypes}) {
         detail={true}
       />
       <div className="bg-white shadow-md py-8 px-5 rounded-md">
-        <div className="grid grid-cols-3  gap-x-5 gap-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-4">
           <Input
             label="Enter Name"
             value={form?.name}
@@ -143,13 +143,16 @@ function UserDetail({ data }: {data?: FormTypes}) {
             onChange={handleInputChange}
             error={error?.name || ""}
           />
+         
+          
           <Input
-            label="Enter Username"
-            value={form?.username}
-            placeholder="Enter Username"
-            name="username"
+            label="Enter Mobile"
+            value={form?.mob}
+            placeholder="Enter Mobile Number"
+            type="tel"
+            name="mob"
             onChange={handleInputChange}
-            error={error?.username || ""}
+            error={error?.mob || ""}
           />
           <Input
             label="Enter Email"
@@ -160,14 +163,13 @@ function UserDetail({ data }: {data?: FormTypes}) {
             onChange={handleInputChange}
             error={error?.email || ""}
           />
-          <Input
-            label="Enter Mobile"
-            value={form?.mob}
-            placeholder="Enter Mobile Number"
-            type="tel"
-            name="mob"
+           <Input
+            label="Enter Address"
+            value={form?.username}
+            placeholder="Enter Address"
+            name="address"
             onChange={handleInputChange}
-            error={error?.mob || ""}
+            error={error?.address || ""}
           />
           <div>
             <Input
@@ -191,6 +193,17 @@ function UserDetail({ data }: {data?: FormTypes}) {
           </div>
           <Select
             onChange={handleSelectChange}
+            label="Gym Plan"
+            name="pkgId"
+            value={form?.pkgId}
+            options={dropdown?.packages?.map((item: Package) => ({
+              value: item?.id,
+              label: item?.pkgName,
+            }))}
+          />
+          <Select
+            onChange={handleSelectChange}
+            label="Workout Plan"
             name="pkgId"
             value={form?.pkgId}
             options={dropdown?.packages?.map((item: Package) => ({

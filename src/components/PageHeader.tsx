@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react'
 import Button from './forms/Button'
 import { create_icon, left_icon } from '@/assets/icons/dashboard'
@@ -19,7 +21,7 @@ const PageHeader: React.FC<HeaderProps> = ({
     return (
         <header className='flex mb-9 justify-between items-center'>
             <h2 className='text-xl '>{title}</h2>
-            <Button onClick={onClick}>{detail ? left_icon : create_icon}{button_text}</Button>
+            <Button onClick={onClick}>{detail ? left_icon : create_icon} <span className='hidden md:block'>{button_text}</span></Button>
         </header>
     )
 }
