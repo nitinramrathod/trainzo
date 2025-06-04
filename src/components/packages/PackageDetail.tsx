@@ -6,6 +6,7 @@ import { API_URL} from '@/utils/services'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import FormWrapper from '../forms/FormWrapper'
+import { save_icon } from '@/assets/icons/dashboard'
 
 interface FormTypes {
     pkgName?: string | undefined,
@@ -119,7 +120,7 @@ const PackageDetail = ({ data }: {data?: FormTypes}) => {
     return (
         <div>
           
-                <PageHeader onClick={gotoList} button_text="Back to List" title={isEdit?'Update Package' :'create Package'} />
+                <PageHeader onClick={gotoList} detail={true} button_text="Back to List" title={isEdit?'Update Package' :'create Package'} />
                 <FormWrapper>
 
                     <div className="grid grid-cols-3  gap-x-5 gap-y-4">
@@ -166,33 +167,9 @@ const PackageDetail = ({ data }: {data?: FormTypes}) => {
                             name="pkgDiscount"
                             onChange={handleInputChange}
                         />
-                        {/* <Input
-                            label="Select Image"
-                            value=""
-                            placeholder='Select Image'
-                            name="photo"
-                            type='file'
-                            onChange={handleImageChange}
-                        /> */}
-                        {/* <Input
-                            label="Enter Start Date"
-                            value={form?.pkgStartDate}
-                            type="date"
-                            placeholder='Enter Start Date'
-                            name="pkgStartDate"
-                            onChange={handleInputChange}
-                        />
-                        <Select
-                            onChange={handleInputChange}
-                            name="pkgId"
-                            options={dropdown?.packages?.map((item:any)=>({
-                                value: item?.id,
-                                label: item?.pkgName}
-                            ))}
-                        /> */}
                     </div>
                     <div className='mt-8'>
-                        <Button onClick={handleSubmit}>Submit</Button>
+                        <Button onClick={handleSubmit}>{save_icon} Submit</Button>
                     </div>
                 </FormWrapper>
           

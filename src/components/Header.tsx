@@ -1,10 +1,15 @@
+'use client'
+import { open_menu_icon, right_icon } from '@/assets/icons/dashboard';
+import { useSidebar } from '@/utils/context/SidebarContext';
 import Image from 'next/image'
 import React from 'react'
 
 const Header = () => {
+    const { toggleSidebar, collapsed } = useSidebar();
     return (<nav className="bg-white dark:bg-gray-800">
         <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-            <div className="relative flex h-11 items-center justify-end">
+            <div className="relative flex h-11 items-center justify-between">
+                <button onClick={toggleSidebar}>{collapsed ? right_icon : open_menu_icon}</button>
 
                 <div className="inset-y-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                     <button type="button" className="relative rounded-full bg-indigo-100 p-1 text-indigo-700 hover:bg-indigo-200 hover:text-indigo-900 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">

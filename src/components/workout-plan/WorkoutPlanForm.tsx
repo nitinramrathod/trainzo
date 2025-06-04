@@ -1,4 +1,5 @@
 'use client'
+import { save_icon } from '@/assets/icons/dashboard'
 import Button from '@/components/forms/Button'
 import FormWrapper from '@/components/forms/FormWrapper'
 import Input from '@/components/forms/Input'
@@ -24,7 +25,7 @@ interface ErrorObject {
     workoutPlanName?: string
 }
 
-const WorkoutPlaneForm = ({ data }: { data?: FormTypes }) => {
+const WorkoutPlanForm = ({ data }: { data?: FormTypes }) => {
     const [form, setForm] = useState<FormTypes>({ exercises: [] })
     const [isEdit, setIsEdit] = useState(false);
     // const [dropdown, setDropdown] = useState<{ packages?: any[] }>({});
@@ -141,7 +142,7 @@ const WorkoutPlaneForm = ({ data }: { data?: FormTypes }) => {
 
     return (
         <div>
-                <PageHeader onClick={gotoList} button_text="Back to List" title='Create Plan' />
+                <PageHeader onClick={gotoList} detail={true} button_text="Back to List" title='Create Plan' />
                 <FormWrapper>
                     <div className="grid grid-cols-3  gap-x-5 gap-y-4">
                         <Input
@@ -173,7 +174,7 @@ const WorkoutPlaneForm = ({ data }: { data?: FormTypes }) => {
                         </Table>
                     </div>
                     <div className='mt-8'>
-                        <Button onClick={handleSubmit}>Submit</Button>
+                        <Button onClick={handleSubmit}> {save_icon}Submit</Button>
                     </div>
                 </FormWrapper>
             
@@ -185,4 +186,4 @@ const WorkoutPlaneForm = ({ data }: { data?: FormTypes }) => {
     )
 }
 
-export default WorkoutPlaneForm
+export default WorkoutPlanForm
