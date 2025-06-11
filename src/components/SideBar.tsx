@@ -4,6 +4,7 @@ import {
   dashboard_icon,
   diet_icon,
   logout_icon,
+  mail_icon,
   package_icon,
   users_icon,
   workout_icon,
@@ -53,6 +54,11 @@ const SideBar = () => {
       name: "Workout Plans",
       icon: workout_plan_icon,
       url: "/dashboard/workout-plans",
+    },
+    {
+      name: "Enquiries",
+      icon: mail_icon,
+      url: "/dashboard/enquiries",
     },
   ];
 
@@ -141,7 +147,7 @@ const NavLink = ({ url, icon, isActive, title, isCollapsed }: NavLinkProps) => {
   return (
     <Link
       href={url || "#"}
-      className={`flex items-center transition-all duration-700 ease-in-out p-2  rounded-md ${
+      className={`flex items-center transition-all duration-700 ease-in-out px-2 py-1.5  rounded-md ${
         isActive ? "text-indigo-800 bg-indigo-200" : "text-slate-100"
       } hover:text-indigo-800 dark:text-white hover:bg-indigo-200 dark:hover:bg-gray-600 group`}
     >

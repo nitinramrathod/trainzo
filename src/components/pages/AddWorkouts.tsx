@@ -7,6 +7,7 @@ import Select from "../forms/Select";
 import { get } from "@/utils/services";
 import Button from "../forms/Button";
 import { WorkoutDay, WorkoutPlan } from "../workout-plan/WorkoutPlanForm";
+import { create_icon, delete_icon, save_icon } from "@/assets/icons/dashboard";
 
 const headers = [
   {
@@ -40,9 +41,10 @@ interface AddWorkoutsProps {
   day: number;
   setWorkoutPlan: Dispatch<SetStateAction<WorkoutPlan>>;
   workoutPlanDays: WorkoutDay[];
+  setOpen: (open: boolean) => void;
 }
 
-const AddWorkouts = ({ day, workoutPlanDays, setWorkoutPlan }: AddWorkoutsProps) => {
+const AddWorkouts = ({ day, setOpen, workoutPlanDays, setWorkoutPlan }: AddWorkoutsProps) => {
   const [workoutOptions, setWorkoutOptions] =
     useState<{ value: string; label: string }[]>();
 
@@ -114,6 +116,7 @@ const AddWorkouts = ({ day, workoutPlanDays, setWorkoutPlan }: AddWorkoutsProps)
       days: updatedDays,
     };
   });
+  setOpen(false)
 };
 
   return (
@@ -122,7 +125,7 @@ const AddWorkouts = ({ day, workoutPlanDays, setWorkoutPlan }: AddWorkoutsProps)
         <h2 className="mb-5">
           Day: <span> {day} </span>
         </h2>
-        <Button onClick={addNewRow}>Add New Item</Button>
+        <Button onClick={addNewRow}>{create_icon} Add Workout</Button>
       </div>
 
       <Table headers={headers}>
@@ -162,14 +165,15 @@ const AddWorkouts = ({ day, workoutPlanDays, setWorkoutPlan }: AddWorkoutsProps)
                   placeholder="Eg. 2 Minutes"
                 />
               </TD>
-              <TD>Delete</TD>
+              <TD className="text-red-400 cursor-pointer">{delete_icon}</TD>
             </TR>
           ))
         ) : (
           <NoDataFound colSpan={headers?.length} />
         )}
       </Table>
-      <Button onClick={saveExercises}>Save</Button>
+
+      <Button className="mt-5" onClick={saveExercises}>{save_icon} Save</Button>
     </div>
   );
 };

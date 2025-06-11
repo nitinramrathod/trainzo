@@ -19,9 +19,9 @@ const PageHeader: React.FC<HeaderProps> = ({
 
 }) => {
     return (
-        <header className='flex mb-9 justify-between items-center'>
+        <header className='flex mb-5 justify-between items-center'>
             <h2 className='text-xl '>{title}</h2>
-            <Button onClick={onClick}>{detail ? left_icon : create_icon} <span className='hidden md:block'>{button_text}</span></Button>
+           {button_text &&<Button onClick={onClick}>{detail ? left_icon : create_icon} <span className='hidden md:block'>{button_text}</span></Button>}
         </header>
     )
 }

@@ -1,15 +1,19 @@
 import React from 'react'
+interface TrProps {
+    children?: React.ReactNode;
+    className?: string;
+}
 
-function TR({ key, children }) {
+function TR({ children, className }: TrProps) {
     return (
-        <tr key={key} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+        <tr className={`bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 ${className ?? ''}`}>
             {children}
         </tr>
-    )
+    );
 }
-function TD({ children }) {
+function TD({ children, className }:{children: React.ReactNode, className?: string}) {
     return (
-        <td className="px-6 py-4">
+        <td className={`px-6 py-4 ${className}`}>
         {children || "--"}
     </td>
     )

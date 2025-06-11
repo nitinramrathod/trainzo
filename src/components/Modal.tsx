@@ -3,11 +3,11 @@ import {
   Dialog,
   DialogContent,
   // DialogDescription,
-  DialogFooter,
+  // DialogFooter,
   // DialogHeader,
   // DialogTitle,
 } from "@/components/ui/dialog";
-import Button from "./forms/Button";
+// import Button from "./forms/Button";
 
 export function ModalBox({ open, setOpen, children }: { open: boolean; setOpen: (value: boolean) => void; children:React.ReactNode }) {
     return (
@@ -16,11 +16,11 @@ export function ModalBox({ open, setOpen, children }: { open: boolean; setOpen: 
           <div className="grid gap-4 py-4">
             {children}
           </div>
-          <DialogFooter>
+          {/* <DialogFooter>
             <Button onClick={() => setOpen(false)}>
               Save changes
             </Button>
-          </DialogFooter>
+          </DialogFooter> */}
         </DialogContent>
       </Dialog>
     );

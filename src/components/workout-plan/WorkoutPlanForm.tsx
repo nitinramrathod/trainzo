@@ -1,5 +1,5 @@
 "use client";
-import { save_icon } from "@/assets/icons/dashboard";
+import { edit_icon, save_icon } from "@/assets/icons/dashboard";
 import Button from "@/components/forms/Button";
 import FormWrapper from "@/components/forms/FormWrapper";
 import Input from "@/components/forms/Input";
@@ -43,8 +43,8 @@ const WorkoutPlanForm = ({ data }: { data?: FormTypes }) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
-    if (name == "daysCount" && Number(value) > 90) {
-      alert("Days cannot be more than 90");
+    if (name == "daysCount" && Number(value) > 90 || Number(value)< 1) {
+      alert("Days cannot be less than 1 or more than 90");
       return;
     }
     setWorkoutPlan((prev) => ({
@@ -62,14 +62,14 @@ const WorkoutPlanForm = ({ data }: { data?: FormTypes }) => {
 
       const res = await fetch(url, {
         method: method,
-        body: JSON.stringify({}),
+        body: JSON.stringify(workoutPlan),
         headers: {
           "Content-Type": "application/json",
         },
       });
 
       if (res.ok) {
-        // setForm({});
+        setWorkoutPlan({});
         router.push("/dashboard/workout-plans");
       } else {
         const errorText = await res.text(); // Try to get error details
@@ -120,7 +120,7 @@ const WorkoutPlanForm = ({ data }: { data?: FormTypes }) => {
           day: i,
           exercises: [
             {
-              uniqueId: "",
+              uniqueId: 1,
               setCount: 0,
               repsCount: "",
               gapBwSet: "",
@@ -139,7 +139,6 @@ const WorkoutPlanForm = ({ data }: { data?: FormTypes }) => {
   }, [workoutPlan?.daysCount]);
 
   console.log("workoutPlan", workoutPlan);
-  console.log("workoutPlan?.days", workoutPlan?.days);
 
   return (
     <div>
@@ -172,7 +171,7 @@ const WorkoutPlanForm = ({ data }: { data?: FormTypes }) => {
 
         <div>
           <Table headers={headers}>
-            {workoutPlan?.days && workoutPlan?.days?.length > 0 &&
+            { workoutPlan?.days && workoutPlan?.days?.length > 0 ?
               workoutPlan?.days?.map((item) => {
                 return (
                   <TR key={item.day}>
@@ -182,14 +181,14 @@ const WorkoutPlanForm = ({ data }: { data?: FormTypes }) => {
                         <p key={exercise?.uniqueId}>{exercise?.workoutId}</p>
                       ))}
                     </TD>{" "}
-                    <TD>
-                      <button onClick={() => handleAddWorkout(item.day)}>
-                        Add
+                    <TD className="w-[100px]">
+                      <button className="cursor-pointer text-indigo-400" onClick={() => handleAddWorkout(item.day)}>
+                        {edit_icon}
                       </button>
                     </TD>
                   </TR>
                 );
-              })}
+              }): <TR> <TD>Add Days to edit</TD></TR>}
           </Table>
         </div>
         <div className="mt-8">
@@ -202,6 +201,7 @@ const WorkoutPlanForm = ({ data }: { data?: FormTypes }) => {
           workoutPlanDays={workoutPlan?.days || []}
           setWorkoutPlan={setWorkoutPlan}
           day={day ?? 1}
+          setOpen={setOpen}
         ></AddWorkouts>
       </ModalBox>
     </div>

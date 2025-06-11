@@ -9,7 +9,7 @@ interface ItemProps {
 const Stat = ({ stat }: { stat: ItemProps }) => {
   return (
 
-    <div className="flex items-center p-3 shadow-sm rounded-md bg-slate-100 border-1 border-indigo-200">
+    <div className="flex items-center p-3 shadow-sm rounded-md bg-white border-1 border-indigo-200">
                 <div className="p-3 rounded-full bg-indigo-100 ">
                     <svg className="h-7 w-7 text-indigo-600" viewBox="0 0 28 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -35,7 +35,7 @@ const Stat = ({ stat }: { stat: ItemProps }) => {
 
                 <div className="mx-5">
                     <h4 className="text-2xl font-semibold text-gray-700">{stat?.count || 1234}</h4>
-                    <div className="text-gray-500">{stat?.title || 'Stat Title'}</div>
+                    <div className="text-gray-500 text-sm">{stat?.title || 'Stat Title'}</div>
                 </div>
             </div>
 
