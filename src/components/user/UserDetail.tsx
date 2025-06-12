@@ -5,9 +5,9 @@ import Input from "@/components/forms/Input";
 import Select from "@/components/forms/Select";
 import PageHeader from "@/components/PageHeader";
 import { API_URL, get } from "@/utils/services";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import ImageSelector from "../forms/ImageSelector";
 
 interface FormTypes {
   name?: string | undefined;
@@ -35,7 +35,7 @@ function UserDetail({ data }: {data?: FormTypes}) {
     pkgName: string;
   }
   
-    const [dropdown, setDropdown] = useState<{ packages?: Package[] }>({});
+  const [dropdown, setDropdown] = useState<{ packages?: Package[] }>({});
   const [error, setError] = useState<ErrorObject>({});
   const router = useRouter();
 
@@ -73,7 +73,7 @@ function UserDetail({ data }: {data?: FormTypes}) {
       const formData = new FormData();
       formData.append("name", form?.name || "");
       formData.append("email", form?.email || "");
-      formData.append("username", form?.username || "");
+      formData.append("username", form?.username || "hello");
       formData.append("mob", form?.mob || "");
       formData.append("pkgId", form?.pkgId || "");
       formData.append("pkgStartDate", form?.pkgStartDate || "");
@@ -134,7 +134,19 @@ function UserDetail({ data }: {data?: FormTypes}) {
         detail={true}
       />
       <div className="bg-white shadow-md py-8 px-5 rounded-md">
+        <div className="mb-5">
+           <ImageSelector
+          name="photo"
+          defaultSrc={
+            (form?.photo && typeof form.photo === "string")
+              ? `${API_URL}/${form?.photo}`
+              : ''
+          }
+          onChange={handleImageChange}
+          /> 
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-4">
+                
           <Input
             label="Enter Name"
             value={form?.name}
@@ -143,7 +155,7 @@ function UserDetail({ data }: {data?: FormTypes}) {
             onChange={handleInputChange}
             error={error?.name || ""}
           />
-         
+
           
           <Input
             label="Enter Mobile"
@@ -171,7 +183,7 @@ function UserDetail({ data }: {data?: FormTypes}) {
             onChange={handleInputChange}
             error={error?.address || ""}
           />
-          <div>
+          {/* <div>
             <Input
               label="Select Image"
               value=""
@@ -190,7 +202,7 @@ function UserDetail({ data }: {data?: FormTypes}) {
                 className="w-[50px] object-cover border-2 border-blue-400 h-[50px] rounded-full"
               />
             )}
-          </div>
+          </div> */}
           <Select
             onChange={handleSelectChange}
             label="Gym Plan"

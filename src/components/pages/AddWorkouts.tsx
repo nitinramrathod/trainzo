@@ -120,7 +120,7 @@ const AddWorkouts = ({ day, setOpen, workoutPlanDays, setWorkoutPlan }: AddWorko
 };
 
   return (
-    <div>
+    <div className="w-full">
       <div className="flex justify-between items-center mb-5">
         <h2 className="mb-5">
           Day: <span> {day} </span>

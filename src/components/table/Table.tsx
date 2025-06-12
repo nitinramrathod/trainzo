@@ -19,4 +19,4 @@ const Table = ({ children, headers }: TableProps) => {
     )
 }
 
-export default Table
+export default Table;

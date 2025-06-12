@@ -1,8 +1,10 @@
 "use client"
 
 import PageHeader from '@/components/PageHeader'
+import { ActionTD } from '@/components/table/Common'
 import NoDataFound from '@/components/table/NoDataFound'
 import Table from '@/components/table/Table'
+import TableLoader from '@/components/table/TableLoader'
 import { API_URL } from '@/utils/services'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -20,6 +22,7 @@ interface Package {
 const Users = () => {
 
     const [users, setUsers] = useState<Package[]>([]);
+     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const fetchData = async () => {
         const res = await fetch(`${API_URL}/api/v1/gym-package`, {
@@ -38,7 +41,8 @@ const Users = () => {
 
         // Parse the JSON response into product data
         const users = await res.json();
-        setUsers(users)
+        setUsers(users);
+        setIsLoading(false);
     }
 
     // const goToCreate = () => {
@@ -94,7 +98,7 @@ const Users = () => {
     return (<div >
         <PageHeader button_text='Create Package' onClick={goToCreate} title='Package List' />
         <Table headers={headers}>
-            {users?.length > 0 ? users?.map((item: Package) => (
+            {isLoading ? (<TableLoader cols={headers?.length}/>) : users?.length > 0 ? users?.map((item: Package) => (
 
                 <tr key={item?.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
 
@@ -117,10 +121,10 @@ const Users = () => {
                         ₹  {item?.pkgDiscountedPrice || "--"}
                     </td>
 
-                    <td className="flex items-center px-6 py-4">
+                    <ActionTD>
                         <a href={`/dashboard/packages/${item.id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                         <a href="#" className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
-                    </td>
+                    </ActionTD>
                 </tr>
             )) : <NoDataFound colSpan={headers?.length}/>}
         </Table>

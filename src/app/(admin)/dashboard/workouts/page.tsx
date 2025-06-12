@@ -1,8 +1,11 @@
 "use client"
 
+import { delete_icon, edit_icon } from '@/assets/icons/dashboard'
 import PageHeader from '@/components/PageHeader'
+import { ActionTD } from '@/components/table/Common'
 import NoDataFound from '@/components/table/NoDataFound'
 import Table from '@/components/table/Table'
+import TableLoader from '@/components/table/TableLoader'
 import { API_URL } from '@/utils/services'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -17,6 +20,8 @@ interface Workout{
 const Users = () => {
 
     const [users, setUsers] = useState([]);
+        const [isLoading, setIsLoading] = useState<boolean>(true)
+    
 
     const fetchData = async () => {
         const res = await fetch(`${API_URL}/api/v1/workout`, {
@@ -35,7 +40,8 @@ const Users = () => {
 
         // Parse the JSON response into product data
         const users = await res.json();
-        setUsers(users)
+        setUsers(users);
+        setIsLoading(false);
     }
 
 
@@ -67,7 +73,7 @@ const Users = () => {
     return (<div >
         <PageHeader button_text='Create Workout' onClick={goToCreate} title='Workout List' />
         <Table headers={headers}>
-            {users?.length > 0 ? users?.map((item: Workout) => (
+            {isLoading ? (<TableLoader cols={headers?.length}/>) : users?.length > 0 ? users?.map((item: Workout) => (
 
                 <tr key={item?.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
 
@@ -81,10 +87,10 @@ const Users = () => {
                         {item?.videoURL}
                     </td>
 
-                    <td className="flex items-center px-6 py-4">
-                        <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                        <a href="#" className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
-                    </td>
+                    <ActionTD>
+                        <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">{edit_icon}</a>
+                        <a href="#" className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">{delete_icon}</a>
+                    </ActionTD>
                 </tr>
             )) : <NoDataFound colSpan={headers?.length}/>}
         </Table>
