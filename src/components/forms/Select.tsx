@@ -1,6 +1,6 @@
 
 interface Option {
-    value?: string;
+    value?: string | number;
     label?: string;
 }
 
@@ -9,11 +9,12 @@ interface SelectProps {
     name?:string; 
     value?: string;
     label?: string;
+    placeholder?: string;
     onChange?: React.ChangeEventHandler<HTMLSelectElement>;
     noLabel?: boolean;
 }
 
-const Select: React.FC<SelectProps> = ({ options, noLabel = false, label, value, name, onChange }) => {
+const Select: React.FC<SelectProps> = ({ options, placeholder ="Select", noLabel = false, label, value, name, onChange }) => {
     return (
         <div className={`max-w-sm w-full ${noLabel ?'':'mb-5'}`}>
             {!noLabel && <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{label || 'Select an option'}</label>}
@@ -25,7 +26,7 @@ const Select: React.FC<SelectProps> = ({ options, noLabel = false, label, value,
                 onChange={onChange}
                 defaultValue={0}
             >
-                <option disabled value="0">Select Option</option>
+                <option disabled value="0">{placeholder}</option>
                 {options?.map((option) => (
                     <option key={option.value} value={option.value}>
                         {option.label}

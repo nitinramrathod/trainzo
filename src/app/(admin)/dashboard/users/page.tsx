@@ -26,7 +26,6 @@ const Users = () => {
     const [users, setUsers] = useState([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
 
-
     const fetchData = async () => {
         const res = await fetch(`${API_URL}/api/v1/user`, {
             method: "GET",
@@ -39,6 +38,7 @@ const Users = () => {
 
         // If the response is not successful, handle the error
         if (!res.ok) {
+            setIsLoading(false);
             throw new Error("Failed to fetch products");
         }
 
@@ -48,45 +48,29 @@ const Users = () => {
         setIsLoading(false);
     }
 
-    // const goToCreate = () => {
-    //     router.push('/admin/products/create')
-    // }
-    // const goToEdit = (id) => {
-    //     router.push(`/admin/products/${id}`)
-    // }
-
-    // const handleDelete = async (id) => {
-    //     const res = await fetch(`${API_URL}/products/${id}`, {
-    //         method: "Delete"
-    //     });
-
-    //     if (!res.ok) {
-    //         throw new Error("Failed to delete product");
-    //     } else {
-    //         fetchData()
-
-    //     }
-    // }
-
-    
-    const headers = [
+     const headers = [
         {
             title: "Image"
         },
         {
-            title: "Name"
+            title: "Name",
+            input: 'text'
         },
         {
-            title: "Email"
+            title: "Email",
+            input: 'text'
         },       
         {
-            title: "Mobile"
+            title: "Mobile",
+            input: 'text'
         },
         {
-            title: "Username"
+            title: "Username",
+            input: 'text'
         },
         {
-            title: "Role"
+            title: "Role",
+            input: 'text'
         },
         {
             title: "Action"

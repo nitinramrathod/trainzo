@@ -75,11 +75,13 @@ const Users = () => {
 
     const headers = [
         {
-            title: "Name"
+            title: "Name",
+            input: "text"
         },
     
         {
-            title: "Workouts"
+            title: "Workouts",
+            input: "text"
         },
         {
             title: "Action"
