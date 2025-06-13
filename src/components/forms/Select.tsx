@@ -7,7 +7,7 @@ interface Option {
 interface SelectProps {
     options?: Option[];
     name?:string; 
-    value?: string;
+    value?: string | number;
     label?: string;
     placeholder?: string;
     onChange?: React.ChangeEventHandler<HTMLSelectElement>;

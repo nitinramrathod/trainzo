@@ -55,23 +55,33 @@ const Users = () => {
         {
             title: "Name",
             input: 'text'
-        },
-        {
-            title: "Email",
-            input: 'text'
-        },       
+        },             
         {
             title: "Mobile",
-            input: 'text'
-        },
-        {
-            title: "Username",
             input: 'text'
         },
         {
             title: "Role",
             input: 'text'
         },
+        {
+            title: "Start Date",
+            input: 'text'
+        },
+        {
+            title: "End Date",
+            input: 'text'
+        },
+        {
+            title: "Remaining Fees",
+            input: 'text'
+        },
+        {
+            title: "Gym Plan",
+            input: 'text'
+        },
+
+        
         {
             title: "Action"
         }

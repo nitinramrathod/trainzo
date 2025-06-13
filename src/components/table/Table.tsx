@@ -1,6 +1,7 @@
 import React from "react";
 import TableHead from "./TableHead";
 import Select from "../forms/Select";
+import { backward_arrow_icon, forward_arrow_icon } from "@/assets/icons/dashboard";
 
 interface TableProps {
   children: React.ReactNode;
@@ -51,11 +52,11 @@ const Pagination = ({currentPage = 2}) => {
       </div>
 
       <div className="flex rounded-md overflow-hidden shadow-md bg-indigo-100 w-fit">
-        <button className="p-1 bg-indigo-400 px-3 text-white">Prev</button>
-        <button className={` px-3 ${currentPage == 1 ? 'bg-indigo-400 text-white' :'bg-white'}`}>1</button>
-        <button className={` px-3 ${currentPage == 2 ? 'bg-indigo-400 text-white' :'bg-white'}`}>2</button>
-        <button className={` px-3 ${currentPage == 3 ? 'bg-indigo-400 text-white' :'bg-white'}`}>3</button>
-        <button className="p-1 bg-indigo-400 px-3 text-white">Next</button>
+        <button className="p-3  border-r-1 bg-white px-3 text-gray-500 hover:bg-indigo-300 cursor-pointer hover:text-white">{backward_arrow_icon}</button>
+        <button className={` px-3 hover:bg-indigo-300 cursor-pointer hover:text-white ${currentPage == 1 ? 'bg-indigo-400 text-white hover:bg-indigo-400' :'bg-white'}`}>1</button>
+        <button className={` px-3 hover:bg-indigo-300 cursor-pointer hover:text-white ${currentPage == 2 ? 'bg-indigo-400 text-white hover:bg-indigo-400' :'bg-white'}`}>2</button>
+        <button className={` px-3 hover:bg-indigo-300 cursor-pointer hover:text-white ${currentPage == 3 ? 'bg-indigo-400 text-white hover:bg-indigo-400' :'bg-white'}`}>3</button>
+        <button className="p-3 bg-white border-l-1 px-3 text-gray-500 hover:bg-indigo-300 cursor-pointer hover:text-white">{forward_arrow_icon}</button>
       </div>
     </div>
   );

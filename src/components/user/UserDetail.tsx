@@ -13,10 +13,12 @@ interface FormTypes {
   name?: string | undefined;
   email?: string;
   username?: string;
+  address?: string;
   photo?: string;
   mob?: string;
   pkgStartDate?: string;
   pkgId?: string;
+  workoutPlanId?: string | number;
   id?: string;
 }
 
@@ -25,9 +27,9 @@ interface ErrorObject {
   mob?: string;
   name?: string;
   address?: string;
+  [key: string]: string | undefined;
 }
 function UserDetail({ data }: {data?: FormTypes}) {
-  console.log("data", data);
   const [form, setForm] = useState<FormTypes>({});
   const [isEdit, setIsEdit] = useState(false);
   interface Package {
@@ -74,6 +76,7 @@ function UserDetail({ data }: {data?: FormTypes}) {
       formData.append("name", form?.name || "");
       formData.append("email", form?.email || "");
       formData.append("username", form?.username || "hello");
+      formData.append("address", form?.address || "");
       formData.append("mob", form?.mob || "");
       formData.append("pkgId", form?.pkgId || "");
       formData.append("pkgStartDate", form?.pkgStartDate || "");
@@ -177,32 +180,30 @@ function UserDetail({ data }: {data?: FormTypes}) {
           />
            <Input
             label="Enter Address"
-            value={form?.username}
+            value={form?.address}
             placeholder="Enter Address"
             name="address"
             onChange={handleInputChange}
             error={error?.address || ""}
           />
-          {/* <div>
-            <Input
-              label="Select Image"
-              value=""
-              placeholder="Select Image"
-              name="photo"
-              type="file"
-              onChange={handleImageChange}
-            />
-
-            {form?.photo && (
-              <Image
-                src={`${API_URL}/${form?.photo}`}
-                alt={form?.name || 'Protonity User'}
-                width={50}
-                height={50}
-                className="w-[50px] object-cover border-2 border-blue-400 h-[50px] rounded-full"
-              />
-            )}
-          </div> */}
+          <Input
+            label="Enter Start Date"
+            value={form?.pkgStartDate}
+            placeholder="Enter pkgStartDate"
+            type="date"
+            name="pkgStartDate"
+            onChange={handleInputChange}
+            error={error?.pkgStartDate || ""}
+          />
+          <Input
+            label="Enter Paid Fees"
+            value={form?.pkgStartDate}
+            placeholder="Enter Paid Fees"
+            type="number"            
+            name="pkgStartDate"
+            onChange={handleInputChange}
+            error={error?.pkgStartDate || ""}
+          />
           <Select
             onChange={handleSelectChange}
             label="Gym Plan"
@@ -216,8 +217,8 @@ function UserDetail({ data }: {data?: FormTypes}) {
           <Select
             onChange={handleSelectChange}
             label="Workout Plan"
-            name="pkgId"
-            value={form?.pkgId}
+            name="workoutPlanId"
+            value={form?.workoutPlanId}
             options={dropdown?.packages?.map((item: Package) => ({
               value: item?.id,
               label: item?.pkgName,

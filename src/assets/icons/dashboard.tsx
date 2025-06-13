@@ -69,8 +69,17 @@ const mail_icon = (
 
 const left_icon = (
 <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="currentColor"><path d="M360-200 80-480l280-280 56 56-183 184h647v80H233l184 184-57 56Z"/></svg>)
- export {
+ 
+const backward_arrow_icon = (
+
+<svg xmlns="http://www.w3.org/2000/svg" height="15px" viewBox="0 -960 960 960" width="15px" fill="currentColor"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/></svg>); 
+const forward_arrow_icon = (
+<svg xmlns="http://www.w3.org/2000/svg" height="15px" viewBox="0 -960 960 960" width="15px" fill="currentColor"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/></svg>); 
+ 
+export {
     dashboard_icon,
+    backward_arrow_icon,
+    forward_arrow_icon,
     users_icon,
     mail_icon,
     box_icon,
