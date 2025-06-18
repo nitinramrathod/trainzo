@@ -22,7 +22,7 @@ interface Package {
 const Users = () => {
 
     const [users, setUsers] = useState<Package[]>([]);
-     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const fetchData = async () => {
         const res = await fetch(`${API_URL}/api/v1/gym-package`, {
@@ -36,7 +36,8 @@ const Users = () => {
 
         // If the response is not successful, handle the error
         if (!res.ok) {
-            throw new Error("Failed to fetch products");
+            throw new Error("Failed to fetch products");            
+            setIsLoading(false);
         }
 
         // Parse the JSON response into product data

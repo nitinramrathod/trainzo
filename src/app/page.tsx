@@ -1,13 +1,19 @@
-import Link from "next/link";
+import Footer from "@/components/website/Footer";
+import Landing from "@/components/website/Landing";
+import Navbar from "@/components/website/Navbar";
+import Plans from "@/components/website/Plans";
 
 export default function Home() {
   return (
-    <div className="grid items-center justify-center h-screen">
-      <div className="flex gap-9">
-
-      <Link href="/dashboard">Go to Dashboard</Link>
-      <Link href="/login">Go to Login</Link>
-      </div>
-    </div>
+    <main>
+      <section className="max-w-[1440px] px-4 md:px-14">
+        <Navbar />
+      </section>
+      <Landing />
+      <section className="max-w-[1440px] px-4 md:px-14">
+        <Plans></Plans>
+      </section>
+      <Footer></Footer>
+    </main>
   );
 }

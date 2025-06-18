@@ -2,6 +2,7 @@
 import PageHeader from '@/components/PageHeader'
 import NoDataFound from '@/components/table/NoDataFound'
 import Table from '@/components/table/Table'
+import TableLoader from '@/components/table/TableLoader'
 import { API_URL } from '@/utils/services'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -21,7 +22,7 @@ interface User {
 const Users = () => {
 
     const [users, setUsers] = useState([])
-
+    const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const fetchData = async () => {
         const res = await fetch(`${API_URL}/api/v1/user`, {
@@ -36,11 +37,13 @@ const Users = () => {
         // If the response is not successful, handle the error
         if (!res.ok) {
             throw new Error("Failed to fetch products");
+            setIsLoading(false);
         }
 
         // Parse the JSON response into product data
         const users = await res.json();
-        setUsers(users)
+        setUsers(users);
+        setIsLoading(false);
     }
 
     // const goToCreate = () => {
@@ -66,19 +69,24 @@ const Users = () => {
     
     const headers = [
         {
-            title: "Name"
+            title: "Name",
+            input: "text"
         },
         {
-            title: "Contact"
+            title: "Contact",
+            input: "text"
         },
         {
-            title: "Subject"
+            title: "Subject",
+            input: "text"
         },       
         {
-            title: "Message"
+            title: "Message",
+            input: "text"
         },
         {
-            title: "Address"
+            title: "Address",
+            input: "text"
         },
         {
             title: "Action"
@@ -98,7 +106,7 @@ const Users = () => {
     return (<div >
         <PageHeader button_text={false} onClick={goToCreate} title='Enquiries' />
          <Table headers={headers}>
-            {users?.length > 0 ? users?.map((item: User) => (
+            {isLoading ? (<TableLoader cols={headers?.length}/>) : users?.length > 0 ? users?.map((item: User) => (
                         <tr key={item?.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                             {/* <td className="w-4 p-4">
                                 <div className="flex items-center">
