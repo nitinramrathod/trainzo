@@ -1,3 +1,4 @@
+import ContactUs from "@/components/website/ContactUs";
 import Footer from "@/components/website/Footer";
 import Landing from "@/components/website/Landing";
 import Navbar from "@/components/website/Navbar";
@@ -11,7 +12,10 @@ export default function Home() {
       </section>
       <Landing />
       <section className="max-w-[1440px] mx-auto px-4 md:px-14">
-        <Plans></Plans>
+        <Plans/>
+      </section>
+      <section className="max-w-[1440px] mx-auto px-4 md:px-14">
+        <ContactUs/>
       </section>
       <Footer></Footer>
     </main>
