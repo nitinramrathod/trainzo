@@ -34,8 +34,8 @@ const Navbar = () => {
             </ul>
         </menu>
         {!navVisible ?
-        <button className='lg:hidden' onClick={(e)=>setNavVisible(true)}>Show</button> :
-        <button className='lg:hidden' onClick={(e)=>setNavVisible(false)}>Hide</button> 
+        <button className='lg:hidden' onClick={()=>setNavVisible(true)}>Show</button> :
+        <button className='lg:hidden' onClick={()=>setNavVisible(false)}>Hide</button> 
     }
     </nav>
 
