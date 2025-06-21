@@ -3,7 +3,7 @@
 import { cross_icon, menu_icon } from "@/assets/icons/website";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import avatar from "@/assets/images/user-avatar.png";
 
 const Navbar = () => {
@@ -30,6 +30,11 @@ const Navbar = () => {
       url: "/dashboard",
     },
   ];
+
+  useEffect(() => {
+    document.body.style.overflow = navVisible ? 'hidden' : 'auto';
+  }, [navVisible])
+  
   return (
     <>
       {/* ${navVisible ? "rounded-tl-[40px] rounded-tr-[40px]" : "rounded-[40px]"} */}
