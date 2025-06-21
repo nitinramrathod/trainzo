@@ -97,6 +97,10 @@ const Users = () => {
             input: "text"
         },
         {
+            title: "Discount Price",
+            input: "text"
+        },
+        {
             title: "Action"
         },
     ];
