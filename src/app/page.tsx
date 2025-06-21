@@ -14,22 +14,18 @@ export default function Home() {
         <Navbar />
       </section>
       <Landing />
-      {/* <section className=" mx-auto px-4 md:px-14"> */}
-        <Equipments />
-      {/* </section> */}
-      <section className="max-w-[1440px] mx-auto px-4 md:px-14">
+      <Equipments />
+      <section className="max-w-[1440px] mx-auto sm:px-4 md:px-14">
         <Plans />
       </section>
+      {/* <section className="max-w-[1440px]  mx-auto px-4 md:px-14"> */}
+        <Testimonials />
+      {/* </section> */}
       <section className="max-w-[1440px] mx-auto px-4 md:px-14">
         <Coach />
       </section>
-      <section className="max-w-[1440px]  mx-auto px-4 md:px-14">
-        <Testimonials/>
-      </section>
-      {/* <section className="max-w-[1440px] mx-auto px-4 md:px-14"> */}
       <ContactUs />
-      {/* </section> */}
-      <Footer></Footer>
+      <Footer/>
     </main>
   );
 }

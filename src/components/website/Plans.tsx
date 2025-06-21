@@ -77,7 +77,7 @@ const PlanCard = ({plan})=>{
 
 const Plans = () => {
   return (
-    <section style={{ backgroundImage: `url(${landingImage.src})` }} className='max-w-[1140px] mx-auto my-[7rem] bg-indigo-200 backdrop-blur-lg py-[3.5rem] px-9 rounded-lg'>
+    <section style={{ backgroundImage: `url(${landingImage.src})` }} className='max-w-[1140px] mx-auto my-[7rem] bg-indigo-200 backdrop-blur-lg py-[3.5rem] px-4 sm:px-9 sm:rounded-lg'>
         <SectionHeading className='text-white'>Our Gym Plans</SectionHeading>
 
     <div className='grid sm:grid-cols-2 lg:grid-cols-4 gap-9 md:gap-4 mx-auto'>

@@ -117,16 +117,22 @@ const Users = () => {
                                 {item?.name || "--"}
                             </th>
                             <td className="px-6 py-4">
+                                {item?.mob || "--"}
+                            </td>
+                            <td className="px-6 py-4">
+                                {item?.role || "--"}
+                            </td>
+                            <td className="px-6 py-4">
                                 {item?.email || "--"}
                             </td>
                             <td className="px-6 py-4">
-                                {item?.mob || "--"}
+                                {item?.email || "--"}
                             </td>
                             <td className="px-6 py-4">
                                 {item?.username || "--"}
                             </td>
                             <td className="px-6 py-4">
-                                {item?.role || "--"}
+                                {item?.username || "--"}
                             </td>
 
                             <ActionTD>
