@@ -1,8 +1,11 @@
+import Coach from "@/components/website/Coach";
 import ContactUs from "@/components/website/ContactUs";
+import Equipments from "@/components/website/Equipment";
 import Footer from "@/components/website/Footer";
 import Landing from "@/components/website/Landing";
 import Navbar from "@/components/website/Navbar";
 import Plans from "@/components/website/Plans";
+import Testimonials from "@/components/website/Testimonials";
 
 export default function Home() {
   return (
@@ -11,12 +14,21 @@ export default function Home() {
         <Navbar />
       </section>
       <Landing />
+      {/* <section className=" mx-auto px-4 md:px-14"> */}
+        <Equipments />
+      {/* </section> */}
       <section className="max-w-[1440px] mx-auto px-4 md:px-14">
-        <Plans/>
+        <Plans />
       </section>
       <section className="max-w-[1440px] mx-auto px-4 md:px-14">
-        <ContactUs/>
+        <Coach />
       </section>
+      <section className="max-w-[1440px]  mx-auto px-4 md:px-14">
+        <Testimonials/>
+      </section>
+      {/* <section className="max-w-[1440px] mx-auto px-4 md:px-14"> */}
+      <ContactUs />
+      {/* </section> */}
       <Footer></Footer>
     </main>
   );

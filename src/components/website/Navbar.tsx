@@ -8,11 +8,7 @@ import avatar from '@/assets/images/user-avatar.png'
 
 const Navbar = () => {
     const [navVisible, setNavVisible] = useState<boolean>(false);
-    const links = [
-        {
-            text: 'Home',
-            url: '/'
-        },
+    const links = [        
         {
             text: 'Equipment',
             url: '/'
@@ -22,13 +18,13 @@ const Navbar = () => {
             url: '/'
         },
         {
-            text: 'Testimonials',
+            text: 'Trainers',
             url: '/'
         },
         {
-            text: 'Contact Us',
+            text: 'Testimonials',
             url: '/'
-        },
+        },       
         {
             text: 'Dashboard',
             url: '/dashboard'
@@ -36,7 +32,7 @@ const Navbar = () => {
     ]
   return (
     <>
-    <nav className=' min-w-[80%] z-40 xl:min-w-[992px] max-w-[992px] backdrop-blur-[20px] backdrop-saturate-150 backdrop-invert-[.1] border-1 border-indigo-100/30 bg-white/10 fixed p-4 md:w-[70%] left-[50%] translate-x-[-50%] rounded-[40px] items-center flex justify-between mt-4 px-10'>
+    <nav className=' min-w-[95%] z-40 xl:min-w-[992px] max-w-[1140px] backdrop-blur-[20px] backdrop-saturate-150 backdrop-invert-[.1] border-1 border-indigo-100/30 bg-white/50 fixed p-4 md:w-[95%] left-[50%] translate-x-[-50%] rounded-[40px] items-center flex justify-between mt-4 px-10'>
         <h2 className='text-xl font-bold text-indigo-800'>Trainzo</h2>
         <menu className={`hidden lg:block`}>
             <ul className='flex gap-5 items-center'>
@@ -47,15 +43,24 @@ const Navbar = () => {
                 ))}
                
                 
-                <li>
+                {/* <li>
                     <Link className='text-slate-100 font-medium' href={'/login'}>
                         <div className='border-1 rounded-full border-gray-600'>
                         <Image className='w-8 rounded-full' src={avatar} alt="Avatar"></Image>
                         </div>
                     </Link>
-                </li>
+                </li> */}
             </ul>
         </menu>
+        <div className='hidden lg:flex gap-5 items-center'>
+            <Link className='border-1 p-2 py-1 rounded-4xl px-5 text-white border-orange-500 bg-orange-500' href={'#contact'}>Contact us</Link>
+             <Link className='text-slate-100 font-medium' href={'/login'}>
+                <div className='border-1 rounded-full border-gray-600'>
+                <Image className='w-8 rounded-full' src={avatar} alt="Avatar"></Image>
+                </div>
+            </Link>
+
+        </div>
         {!navVisible ?
         <button className='lg:hidden' onClick={()=>setNavVisible(true)}>{menu_icon}</button> :
         <button className='lg:hidden' onClick={()=>setNavVisible(false)}>{cross_icon}</button> 

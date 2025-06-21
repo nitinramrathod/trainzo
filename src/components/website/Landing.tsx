@@ -1,6 +1,6 @@
 // import Image from 'next/image'
 import React from 'react'
-import landingImage from '@/assets/images/landing-image.jpg'
+import landingImage from '@/assets/images/landing-image-1.png'
 
 
 const Landing = () => {
