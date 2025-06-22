@@ -10,7 +10,7 @@ import landingImage from '@/assets/images/banner1.jpg'
 
 const ContactUs = () => {
   return (
-    <div className=" px-4 relative py-[6rem] bg-cover bg-center"  style={{ backgroundImage: `url(${landingImage.src})` }}>
+    <section id="contact-us" className=" px-4 relative py-[6rem] bg-cover bg-center"  style={{ backgroundImage: `url(${landingImage.src})` }}>
        <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-black/60 to-transparent"></div>
        
       <SectionHeading className="text-white">Contact Us</SectionHeading>
@@ -37,7 +37,7 @@ const ContactUs = () => {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -4,7 +4,7 @@ import { SectionHeading } from './Plans'
 
 const Equipments = () => {
   return (
-    <section className='bg-gray-100'>
+    <section id='equipments' className='bg-gray-100'>
     <div className='mx-auto max-w-[1140px] px-4 md:px-14 xl:px-0  py-[8rem] mb-[8rem]'>
         <SectionHeading>Equipments</SectionHeading>
         <div className='grid gap-2 md:gap-5 lg:grid-cols-2'>

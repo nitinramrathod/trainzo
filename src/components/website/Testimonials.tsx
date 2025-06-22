@@ -5,7 +5,7 @@ import image from "@/assets/images/gym-trainer-1.png";
 
 const Testimonials = () => {
   return (
-    <section className='bg-gray-200 px-4 md:px-14'>
+    <section id='testimonials' className='bg-gray-200 px-4 md:px-14'>
     <div className='mx-auto py-[7rem] mb-[6rem] max-w-[1140px]'>
       <SectionHeading>Testimonials</SectionHeading>
 

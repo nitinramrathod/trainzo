@@ -5,7 +5,7 @@ import { SectionHeading } from './Plans';
 
 const Coach = () => {
   return (
-    <section className='mx-auto max-w-[1140px] mb-[8rem]'>
+    <section id='trainers' className='mx-auto max-w-[1140px] mb-[8rem]'>
         <SectionHeading>Our Special Coach for you.</SectionHeading>
 
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>

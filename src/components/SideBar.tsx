@@ -16,6 +16,8 @@ import Image from "next/image";
 import logo from "@/assets/icons/logo.png";
 import { usePathname } from "next/navigation";
 import { useSidebar } from "@/utils/context/SidebarContext";
+import { useDeviceWidth } from "@/utils/hooks/useDeviceWidth";
+import { cross_icon, menu_icon } from "@/assets/icons/website";
 
 interface SideBarProps {
   name: string;
@@ -60,47 +62,29 @@ const SideBar = () => {
       icon: mail_icon,
       url: "/dashboard/enquiries",
     },
+    {
+      name: "Website",
+      icon: mail_icon,
+      url: "/",
+    },
   ];
 
   const pathname = usePathname();
 
-  console.log("pathname", pathname);
+  const { collapsed, toggleSidebar } = useSidebar();
+  const width = useDeviceWidth();
 
-  const { collapsed } = useSidebar();
+
 
   return (
     <>
-      {/* <button
-        data-drawer-target="sidebar-multi-level-sidebar"
-        data-drawer-toggle="sidebar-multi-level-sidebar"
-        aria-controls="sidebar-multi-level-sidebar"
-        type="button"
-        className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-      >
-        <span className="sr-only">Open sidebar</span>
-        <svg
-          className="w-6 h-6"
-          aria-hidden="true"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            clipRule="evenodd"
-            fillRule="evenodd"
-            d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-          ></path>
-        </svg>
-      </button> */}
-
       <aside
         id="sidebar-multi-level-sidebar"
-        className={` ${
-          collapsed ? "w-17" : "w-48"
-        } h-screen transition-all duration-200 ease-in-out`}
+        className={`${(width <= 768 && collapsed) ? "translate-x-[-100%]":"translate-x-0"} ${width <= 768 ? "fixed z-20 md:static min-w-[250px] w-[30%]" : collapsed ? "w-17" : "w-48"} h-screen transition-all duration-200 ease-in-out`}
         aria-label="Sidebar"
       >
         <div className="h-full overflow-x-hidden font-medium flex flex-col justify-between pt-2 px-3 py-4 overflow-y-auto bg-gradient-to-t from-indigo-400 to-indigo-600 dark:bg-gray-800">
+        {width <= 768 && <button onClick={toggleSidebar} className="p-2 bg-indigo-500 w-fit absolute right-[-43px]  text-white top-0" >{collapsed ? menu_icon : cross_icon}</button>}
           <div>
             <h2 className="text-center mb-12 text-xl ">
               {collapsed ? (

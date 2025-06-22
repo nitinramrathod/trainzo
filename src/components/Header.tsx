@@ -7,7 +7,7 @@ import React from 'react'
 const Header = () => {
     const { toggleSidebar, collapsed } = useSidebar();
     return (<nav className="bg-white dark:bg-gray-800">
-        <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div className="mx-auto px-2 sm:pe-6 lg:pe-8">
             <div className="relative flex h-11 items-center justify-between">
                 <button onClick={toggleSidebar}>{collapsed ? right_icon : open_menu_icon}</button>
 

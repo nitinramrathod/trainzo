@@ -11,19 +11,19 @@ const Navbar = () => {
   const links = [
     {
       text: "Equipment",
-      url: "/",
+      url: "#equipments",
     },
     {
       text: "Plans",
-      url: "/",
+      url: "#plans",
     },
     {
       text: "Trainers",
-      url: "/",
+      url: "#trainers",
     },
     {
       text: "Testimonials",
-      url: "/",
+      url: "#testimonials",
     },
     {
       text: "Dashboard",
@@ -59,7 +59,7 @@ const Navbar = () => {
         <div className="hidden lg:flex gap-5 items-center">
           <Link
             className="border-1 p-2 py-1 rounded-4xl px-5 text-white border-orange-500 bg-orange-500"
-            href={"#contact"}
+            href={"#contact-us"}
           >
             Contact us
           </Link>

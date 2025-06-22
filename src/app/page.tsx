@@ -18,14 +18,12 @@ export default function Home() {
       <section className="max-w-[1440px] mx-auto sm:px-4 md:px-14">
         <Plans />
       </section>
-      {/* <section className="max-w-[1440px]  mx-auto px-4 md:px-14"> */}
-        <Testimonials />
-      {/* </section> */}
+      <Testimonials />
       <section className="max-w-[1440px] mx-auto px-4 md:px-14">
         <Coach />
       </section>
       <ContactUs />
-      <Footer/>
+      <Footer />
     </main>
   );
 }
