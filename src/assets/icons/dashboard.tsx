@@ -76,10 +76,14 @@ const backward_arrow_icon = (
 const forward_arrow_icon = (
 <svg xmlns="http://www.w3.org/2000/svg" height="15px" viewBox="0 -960 960 960" width="15px" fill="currentColor"><path d="m321-80-71-71 329-329-329-329 71-71 400 400L321-80Z"/></svg>); 
  
+ const left_arrow_icon = (
+<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed"><path d="M400-80 0-480l400-400 71 71-329 329 329 329-71 71Z"/></svg>)
+
 export {
     dashboard_icon,
     backward_arrow_icon,
     forward_arrow_icon,
+    left_arrow_icon,
     users_icon,
     mail_icon,
     box_icon,

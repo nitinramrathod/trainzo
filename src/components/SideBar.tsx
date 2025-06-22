@@ -1,8 +1,10 @@
 "use client";
 
 import {
+  backward_arrow_icon,
   dashboard_icon,
   diet_icon,
+  forward_arrow_icon,
   logout_icon,
   mail_icon,
   package_icon,
@@ -12,12 +14,11 @@ import {
 } from "@/assets/icons/dashboard";
 import Link from "next/link";
 import React from "react";
-import Image from "next/image";
-import logo from "@/assets/icons/logo.png";
+
 import { usePathname } from "next/navigation";
 import { useSidebar } from "@/utils/context/SidebarContext";
 import { useDeviceWidth } from "@/utils/hooks/useDeviceWidth";
-import { cross_icon, menu_icon } from "@/assets/icons/website";
+// import { cross_icon, menu_icon } from "@/assets/icons/website";
 
 interface SideBarProps {
   name: string;
@@ -74,26 +75,27 @@ const SideBar = () => {
   const { collapsed, toggleSidebar } = useSidebar();
   const width = useDeviceWidth();
 
-
-
   return (
     <>
       <aside
         id="sidebar-multi-level-sidebar"
-        className={`${(width <= 768 && collapsed) ? "translate-x-[-100%]":"translate-x-0"} ${width <= 768 ? "fixed z-20 md:static min-w-[250px] w-[30%]" : collapsed ? "w-17" : "w-48"} h-screen transition-all duration-200 ease-in-out`}
+        className={`${(width <= 768 && collapsed) ? "translate-x-[-110%]":"translate-x-0"} ${width <= 768 ? "fixed z-20 md:static min-w-[250px] w-[30%]" : collapsed ? "w-17" : "w-48"} h-screen transition-all duration-200 ease-in-out`}
         aria-label="Sidebar"
       >
-        <div className="h-full overflow-x-hidden font-medium flex flex-col justify-between pt-2 px-3 py-4 overflow-y-auto bg-gradient-to-t from-indigo-400 to-indigo-600 dark:bg-gray-800">
-        {width <= 768 && <button onClick={toggleSidebar} className="p-2 bg-indigo-500 w-fit absolute right-[-43px]  text-white top-0" >{collapsed ? menu_icon : cross_icon}</button>}
+        <div style={{ boxShadow: 'rgba(0, 0, 0, 0.2) 7px 0px 13px 0px;' }} className={`${width <= 768 ? "rounded-tr-2xl rounded-br-2xl" :""} h-full overflow-x-hidden font-medium flex flex-col justify-between pt-2 px-3 py-4 overflow-y-auto bg-gradient-to-t from-indigo-400 to-indigo-600 dark:bg-gray-800`}>
+        {width <= 768 && <button onClick={toggleSidebar} className="py-8 ps-2 rounded-br-lg rounded-tr-lg bg-indigo-800/30 backdrop-blur-[3px] w-fit absolute right-[-23px]  text-white top-[46%]" >{collapsed ? forward_arrow_icon: backward_arrow_icon }</button>}
           <div>
-            <h2 className="text-center mb-12 text-xl ">
-              {collapsed ? (
-                <span className="text-slate-50 text-3xl">P</span>
-              ) : (
-                <Image src={logo} alt="Protonity Gym Softwares"></Image>
-              )}
-            </h2>
-            <ul className="space-y-2">
+            {width <= 768 ? <div className="flex flex-col items-center mt-7">
+              <div className="shadow-lg border-2 border-slate-100 bg-red-400 w-15 h-15 rounded-full flex items-center justify-center mb-4">
+                <p className="text-white font-bold" >NR</p>
+              </div>
+              <div className="mb-6 flex flex-col items-center">
+                <h3 className="text-center text-white text-lg">Nitin Rathod</h3>
+                <p className="px-4  py-1 rounded-3xl mt-3 bg-red-200 text-[12px]">Member</p>
+              </div>
+                <hr className="mb-4 bg-indigo-800 w-[90%]"/>
+            </div> : <h3 className="text-white text-2xl text-center mb-8 mt-4">{collapsed ? 'P' : 'Protonity'}</h3>}
+            <ul className="space-y-2 mt-5">
               {sidebarLinks?.map((item: SideBarProps) => (
                 <li key={item?.url}>
                   <NavLink
