@@ -82,7 +82,7 @@ const SideBar = () => {
         className={`${(width <= 768 && collapsed) ? "translate-x-[-110%]":"translate-x-0"} ${width <= 768 ? "fixed z-20 md:static min-w-[250px] w-[30%]" : collapsed ? "w-17" : "w-48"} h-screen transition-all duration-200 ease-in-out`}
         aria-label="Sidebar"
       >
-        <div style={{ boxShadow: 'rgba(0, 0, 0, 0.2) 7px 0px 13px 0px;' }} className={`${width <= 768 ? "rounded-tr-2xl rounded-br-2xl" :""} h-full overflow-x-hidden font-medium flex flex-col justify-between pt-2 px-3 py-4 overflow-y-auto bg-gradient-to-t from-indigo-400 to-indigo-600 dark:bg-gray-800`}>
+        <div style={{ boxShadow: 'rgba(0, 0, 0, 0.2) 7px 0px 13px 0px' }} className={`${width <= 768 ? "rounded-tr-2xl rounded-br-2xl" :""} h-full overflow-x-hidden font-medium flex flex-col justify-between pt-2 px-3 py-4 overflow-y-auto bg-gradient-to-t from-indigo-400 to-indigo-600 dark:bg-gray-800`}>
         {width <= 768 && <button onClick={toggleSidebar} className="py-8 ps-2 rounded-br-lg rounded-tr-lg bg-indigo-800/30 backdrop-blur-[3px] w-fit absolute right-[-23px]  text-white top-[46%]" >{collapsed ? forward_arrow_icon: backward_arrow_icon }</button>}
           <div>
             {width <= 768 ? <div className="flex flex-col items-center mt-7">
@@ -133,11 +133,13 @@ const NavLink = ({ url, icon, isActive, title, isCollapsed }: NavLinkProps) => {
   return (
     <Link
       href={url || "#"}
-      className={`flex items-center transition-all duration-700 ease-in-out px-2 py-1.5  rounded-md ${
-        isActive ? "text-indigo-800 bg-indigo-200" : "text-slate-100"
-      } hover:text-indigo-800 dark:text-white hover:bg-indigo-200 dark:hover:bg-gray-600 group`}
+      className={`flex group items-center transition-all duration-700 ease-in-out px-1.5 py-1.5  rounded-3xl ${
+        isActive ? "text-indigo-800 bg-indigo-50/30" : "text-slate-200"
+      } hover:text-indigo-800 dark:text-white hover:bg-indigo-50/30 dark:hover:bg-gray-600 group`}
     >
+      <span className={`${isActive ? "bg-indigo-100/50 " : ""} p-1 text-2xl group-hover:bg-indigo-100/50 rounded-full transition-all duration-700 ease-in-out`}>
       {icon}
+      </span>
       {!isCollapsed && (
         <span className="flex-1 ms-3 whitespace-nowrap">{title}</span>
       )}
