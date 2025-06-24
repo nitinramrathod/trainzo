@@ -44,7 +44,7 @@ const data: ChartData<"bar"> = {
 };
 
 const BarChart = () => {
-   const [isClient, setIsClient] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
