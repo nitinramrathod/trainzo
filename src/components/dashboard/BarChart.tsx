@@ -5,6 +5,7 @@ import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
+  BarController,
   BarElement,
   Title,
   Tooltip,
@@ -15,7 +16,8 @@ import {
 import { Chart } from "react-chartjs-2";
 
 // Register Chart.js components
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, BarController, LinearScale, BarElement, Title, Tooltip, Legend);
+
 
 const options: ChartOptions<"bar"> = {
   responsive: true,

@@ -1,5 +1,5 @@
 import BarChart from "@/components/dashboard/BarChart";
-import { PieChart } from "@/components/dashboard/PieChart";
+import PieChart from "@/components/dashboard/PieChart";
 import Stat from "@/components/dashboard/Stat";
 import React from "react";
 
