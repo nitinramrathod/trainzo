@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -44,6 +44,13 @@ const data: ChartData<"bar"> = {
 };
 
 const BarChart = () => {
+   const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) return null;
   return <Chart type="bar" data={data} options={options} />;
 };
 
