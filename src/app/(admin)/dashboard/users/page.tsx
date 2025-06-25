@@ -1,5 +1,7 @@
 "use client"
 import { delete_icon, edit_icon } from '@/assets/icons/dashboard'
+import Modal from '@/components/common/Modal'
+import Button from '@/components/forms/Button'
 import PageHeader from '@/components/PageHeader'
 import { ActionTD } from '@/components/table/Common'
 import NoDataFound from '@/components/table/NoDataFound'
@@ -25,6 +27,7 @@ const Users = () => {
 
     const [users, setUsers] = useState([])
     const [isLoading, setIsLoading] = useState<boolean>(true)
+    const [deleteModal, setDeleteModal] = useState<boolean>(false)
 
     const fetchData = async () => {
         const res = await fetch(`${API_URL}/api/v1/user`, {
@@ -137,11 +140,24 @@ const Users = () => {
 
                             <ActionTD>
                                 <a href={`/dashboard/users/${item.id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">{edit_icon}</a>
-                                <a href="#" className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">{delete_icon}</a>
+                                <button onClick={()=>setDeleteModal(true)} className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">{delete_icon}</button>
                             </ActionTD>
                         </tr>
                     )) : <NoDataFound colSpan={8}/>)}
         </Table>
+
+        <Modal open ={deleteModal} setOpen={setDeleteModal}>
+            <div className='flex flex-col items-start justify-start h-full md:w-sm lg:w-md'>
+                <h2 className='text-2xl font-bold mb-3 text-gray-700'>Are you absolutely sure?</h2>
+                    <p className='text-gray-600 text-md'>
+                        This action will permanently delete the user from the system.
+                    </p>
+                                <div className='mt-6 flex justify-end w-full gap-5'>
+                    <button className='text-red-400 font-medium transition-all duration-300 ease-in-out hover:bg-red-100 rounded-sm px-4'>Cancel</button>
+                    <Button>Confirm</Button>
+                </div>
+            </div>
+        </Modal>
         
         
         

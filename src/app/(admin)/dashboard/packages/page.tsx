@@ -1,5 +1,6 @@
 "use client"
 
+import { delete_icon, edit_icon } from '@/assets/icons/dashboard'
 import PageHeader from '@/components/PageHeader'
 import { ActionTD } from '@/components/table/Common'
 import NoDataFound from '@/components/table/NoDataFound'
@@ -132,8 +133,8 @@ const Users = () => {
                     </td>
 
                     <ActionTD>
-                        <a href={`/dashboard/packages/${item.id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                        <a href="#" className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a>
+                        <a href={`/dashboard/packages/${item.id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">{edit_icon}</a>
+                        <button className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">{delete_icon}</button>
                     </ActionTD>
                 </tr>
             )) : <NoDataFound colSpan={headers?.length}/>}

@@ -6,7 +6,7 @@ import Input from "@/components/forms/Input";
 // import { ModalBox } from "@/components/Modal";
 import PageHeader from "@/components/PageHeader";
 import AddWorkouts, { Exercise } from "@/components/pages/AddWorkouts";
-import { TR, TD } from "@/components/table/Common";
+import { TR, TD, ActionTD } from "@/components/table/Common";
 import Table from "@/components/table/Table";
 import { API_URL } from "@/utils/services";
 import { useRouter } from "next/navigation";
@@ -182,11 +182,11 @@ const WorkoutPlanForm = ({ data }: { data?: FormTypes }) => {
                         <p key={exercise?.uniqueId}>{exercise?.workoutId}</p>
                       ))}
                     </TD>{" "}
-                    <TD className="w-[100px]">
+                    <ActionTD>
                       <button className="cursor-pointer text-indigo-400" onClick={() => handleAddWorkout(item.day)}>
                         {edit_icon}
                       </button>
-                    </TD>
+                    </ActionTD>
                   </TR>
                 );
               }): <TR> <TD>Add Days to edit</TD></TR>}

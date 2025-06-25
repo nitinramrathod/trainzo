@@ -16,7 +16,7 @@ interface SelectProps {
 
 const Select: React.FC<SelectProps> = ({ options, placeholder ="Select", noLabel = false, label, value, name, onChange }) => {
     return (
-        <div className={`max-w-sm w-full ${noLabel ?'':'mb-5'}`}>
+        <div className={`max-w-sm min-w-[100px] w-full ${noLabel ?'':'mb-5'}`}>
             {!noLabel && <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{label || 'Select an option'}</label>}
             <select
             name={name}

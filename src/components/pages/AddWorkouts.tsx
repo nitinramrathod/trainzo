@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Dispatch, SetStateAction } from "react";
 import NoDataFound from "../table/NoDataFound";
 import Table from "../table/Table";
-import { TD, TR } from "../table/Common";
+import { ActionTD, TD, TR } from "../table/Common";
 import Input from "../forms/Input";
 import Select from "../forms/Select";
 import { get } from "@/utils/services";
@@ -165,7 +165,10 @@ const AddWorkouts = ({ day, setOpen, workoutPlanDays, setWorkoutPlan }: AddWorko
                   placeholder="Eg. 2 Minutes"
                 />
               </TD>
-              <TD className="text-red-400 cursor-pointer">{delete_icon}</TD>
+<ActionTD>
+
+              <button className="text-red-400 cursor-pointer">{delete_icon}</button>
+</ActionTD>
             </TR>
           ))
         ) : (

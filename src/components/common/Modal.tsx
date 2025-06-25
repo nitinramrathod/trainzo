@@ -25,10 +25,10 @@ const Modal = ({ open, setOpen, children }: ModalProps) => {
         open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
       }`}
     >
-      <div className={`bg-white py-12 px-8 m-auto rounded-md min-w-[300px] relative transition-all duration-300 ease-in-out ${open ? "translate-y-0": "translate-y-10"}`}>
+      <div className={`bg-white px-8 py-4 m-auto rounded-md min-w-[300px] relative transition-all duration-300 ease-in-out ${open ? "translate-y-0": "translate-y-10"}`}>
         {children}
         <button
-          className="bg-red-100 p-1 rounded-md hover:bg-red-200 transition-all duration-300 ease-in-out cursor-pointer absolute top-2 text-md right-2"
+          className="bg-red-100 p-1 rounded-md hover:bg-red-200 transition-all duration-300 ease-in-out cursor-pointer absolute top-3 text-md right-3"
           onClick={() => setOpen && setOpen(false)}
         >
           {cross_icon}

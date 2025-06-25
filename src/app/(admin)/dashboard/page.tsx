@@ -39,7 +39,7 @@ const Dashboard = () => {
         <div className="bg-white rounded-lg lg:flex-1 shadow-lg p-4">
           <PieChart />
         </div>
-        <div className="bg-white rounded-lg lg:flex-2 shadow-lg w-[100px] p-4">
+        <div className="bg-white rounded-lg lg:flex-2 shadow-lg lg:w-[100px] p-4">
           <BarChart />
         </div>
       </div>

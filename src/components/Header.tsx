@@ -10,7 +10,7 @@ const Header = () => {
     return (<nav className="bg-white dark:bg-gray-800">
         <div className="mx-auto px-2 sm:pe-6 lg:pe-8">
             <div className="relative flex h-11 items-center justify-between">
-                <button onClick={toggleSidebar} className='bg-indigo-200 p-1 rounded-sm text-indigo-900 '>{menu_icon}</button>
+                <button onClick={toggleSidebar} className='bg-indigo-200 p-1 rounded-sm text-indigo-900 text-2xl'>{menu_icon}</button>
 
                 <div className="inset-y-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                     <button type="button" className="relative rounded-full bg-indigo-100 p-1 text-indigo-700 hover:bg-indigo-200 hover:text-indigo-900 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
