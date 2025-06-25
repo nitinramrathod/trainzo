@@ -5,9 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import avatar from "@/assets/images/user-avatar.png";
+import Modal from "../common/Modal";
+import Button from "../forms/Button";
 
 const Navbar = () => {
   const [navVisible, setNavVisible] = useState<boolean>(false);
+  const [first, setFirst] = useState(true)
   const links = [
     {
       text: "Equipment",
@@ -57,12 +60,6 @@ const Navbar = () => {
           </ul>
         </menu>
         <div className="hidden lg:flex gap-5 items-center">
-          <Link
-            className="border-1 p-2 py-1 rounded-4xl px-5 text-white border-orange-500 bg-orange-500"
-            href={"#contact-us"}
-          >
-            Contact us
-          </Link>
           <Link className="text-slate-100 font-medium" href={"/login"}>
             <div className="border-1 rounded-full border-gray-600">
               <Image
@@ -72,6 +69,14 @@ const Navbar = () => {
               ></Image>
             </div>
           </Link>
+          <Link
+            className="border-1 p-2 py-1 rounded-4xl px-5 text-white border-orange-500 bg-orange-500"
+            href={"#contact-us"}
+          >
+            Contact us
+          </Link>
+          <button onClick={()=> setFirst(true)}>show</button>
+          
         </div>
         {!navVisible ? (
           <button className="lg:hidden" onClick={() => setNavVisible(true)}>
@@ -117,6 +122,19 @@ const Navbar = () => {
           </ul>
         </div>
       </menu>
+
+      <Modal open={first} setOpen={setFirst}>
+        <div>
+          <h1 className="text-xl font-bold mb-4">Lorem, ipsum dolor.</h1>
+          <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, tenetur? amet consectetur adipisicing elit. Facere, tenetur?</h3>
+
+          <div className="flex gap-3 mt-5">
+
+          <Button>Cancel</Button>
+          <Button>Save</Button>
+          </div>
+        </div>
+      </Modal>
     </>
   );
 };

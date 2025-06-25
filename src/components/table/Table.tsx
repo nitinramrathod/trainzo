@@ -11,7 +11,7 @@ interface TableProps {
 const Table = ({ children, headers }: TableProps) => {
   return (
     <>
-      <div className="relative w-full overflow-auto h-[calc(73vh)] shadow-md sm:rounded-lg">
+      <div className="relative w-full overflow-auto max-h-[calc(73vh)] shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <TableHead headers={headers} />
           <tbody>{children}</tbody>

@@ -1,9 +1,14 @@
+"use client"
+
 // import Image from 'next/image'
 import React from 'react'
 import landingImage from '@/assets/images/landing-image-1.png'
 
 
 const Landing = () => {
+
+   
+
   return (
     <section className={`px-2 h-[100vh] bg-cover bg-center bg-fixed`}  style={{ backgroundImage: `url(${landingImage.src})` }}>
         <div className='pt-[33vh] text-center'>

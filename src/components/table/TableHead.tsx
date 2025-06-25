@@ -19,7 +19,7 @@ interface TableHeadProps {
 const TableHead = ({ headers }: TableHeadProps) => {
   return (
     <thead >
-      <tr className="text-xs bg-indigo-400 sticky top-0 z-60 text-gray-700 uppercase dark:bg-gray-700 dark:text-gray-400">
+      <tr className="text-xs bg-indigo-400 sticky top-0 z-10 text-gray-700 uppercase dark:bg-gray-700 dark:text-gray-400">
         {headers?.map((item: { title: string }, index: number) => (
           <th
             key={item?.title + index}

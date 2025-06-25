@@ -3,7 +3,7 @@ import { edit_icon, save_icon } from "@/assets/icons/dashboard";
 import Button from "@/components/forms/Button";
 import FormWrapper from "@/components/forms/FormWrapper";
 import Input from "@/components/forms/Input";
-import { ModalBox } from "@/components/Modal";
+// import { ModalBox } from "@/components/Modal";
 import PageHeader from "@/components/PageHeader";
 import AddWorkouts, { Exercise } from "@/components/pages/AddWorkouts";
 import { TR, TD } from "@/components/table/Common";
@@ -11,6 +11,7 @@ import Table from "@/components/table/Table";
 import { API_URL } from "@/utils/services";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import Modal from "../common/Modal";
 
 // Define Exercise type here if the import fails
 interface FormTypes {
@@ -196,14 +197,14 @@ const WorkoutPlanForm = ({ data }: { data?: FormTypes }) => {
         </div>
       </FormWrapper>
 
-      <ModalBox open={open} setOpen={setOpen}>
+      <Modal open={open} setOpen={setOpen}>
         <AddWorkouts
           workoutPlanDays={workoutPlan?.days || []}
           setWorkoutPlan={setWorkoutPlan}
           day={day ?? 1}
           setOpen={setOpen}
         ></AddWorkouts>
-      </ModalBox>
+      </Modal>
     </div>
   );
 };
