@@ -5,6 +5,7 @@ import {
   dashboard_icon,
   diet_icon,
   forward_arrow_icon,
+  home_icon,
   logout_icon,
   mail_icon,
   package_icon,
@@ -13,11 +14,13 @@ import {
   workout_plan_icon,
 } from "@/assets/icons/dashboard";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 import { usePathname } from "next/navigation";
 import { useSidebar } from "@/utils/context/SidebarContext";
 import { useDeviceWidth } from "@/utils/hooks/useDeviceWidth";
+import Modal from "./common/Modal";
+import Button, { CancelButton } from "./forms/Button";
 // import { cross_icon, menu_icon } from "@/assets/icons/website";
 
 interface SideBarProps {
@@ -27,6 +30,11 @@ interface SideBarProps {
 }
 
 const SideBar = () => {
+  const pathname = usePathname();
+  const { collapsed, toggleSidebar } = useSidebar();
+  const width = useDeviceWidth();
+  const [deleteModal, setDeleteModal] = useState<boolean>(false)
+
   const sidebarLinks = [
     {
       name: "Dashboard",
@@ -65,21 +73,18 @@ const SideBar = () => {
     },
     {
       name: "Website",
-      icon: mail_icon,
+      icon: home_icon,
       url: "/",
     },
   ];
 
-  const pathname = usePathname();
-
-  const { collapsed, toggleSidebar } = useSidebar();
-  const width = useDeviceWidth();
+  
 
   return (
     <>
       <aside
         id="sidebar-multi-level-sidebar"
-        className={`${(width <= 768 && collapsed) ? "translate-x-[-110%]":"translate-x-0"} ${width <= 768 ? "fixed z-20 md:static min-w-[250px] w-[30%]" : collapsed ? "w-17" : "w-48"} h-screen transition-all duration-200 ease-in-out`}
+        className={`h-screen transition-all duration-200 ease-in-out ${(width <= 768 && collapsed) ? "translate-x-[-110%]":"translate-x-0"} ${width <= 768 ? "fixed z-20 md:static min-w-[250px] w-[30%]" : collapsed ? "w-17" : "w-48"}`}
         aria-label="Sidebar"
       >
         <div style={{ boxShadow: 'rgba(0, 0, 0, 0.2) 7px 0px 13px 0px' }} className={`${width <= 768 ? "rounded-tr-2xl rounded-br-2xl" :""} h-full overflow-x-hidden font-medium flex flex-col justify-between pt-2 px-3 py-4 overflow-y-auto bg-gradient-to-t from-indigo-400 to-indigo-600 dark:bg-gray-800`}>
@@ -117,6 +122,18 @@ const SideBar = () => {
           />
         </div>
       </aside>
+
+        <Modal open ={deleteModal} setOpen={setDeleteModal} backgroundBlur={true} position='top' title="Logout from system?">
+            <div className='flex flex-col items-start justify-start h-full md:w-sm'>               
+                    <p className='text-gray-600 text-md'>
+                        Are you sure you want to logout? You will be redirected to the login page.
+                    </p>
+                    <div className='mt-6 flex justify-end w-full gap-3'>
+                    <CancelButton>Cancel</CancelButton>
+                    <Button>Confirm</Button>
+                </div>
+            </div>
+        </Modal>
     </>
   );
 };

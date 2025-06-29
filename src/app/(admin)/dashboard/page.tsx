@@ -1,3 +1,4 @@
+import { rupee_icon, users_icon } from "@/assets/icons/dashboard";
 import BarChart from "@/components/dashboard/BarChart";
 import PieChart from "@/components/dashboard/PieChart";
 import Stat from "@/components/dashboard/Stat";
@@ -8,21 +9,25 @@ const Dashboard = () => {
     {
       title: "Total Users",
       count: 1500,
+      icon:users_icon,
       description: "Total number of registered users",
     },
     {
       title: "Active Users",
       count: 1200,
+      icon:users_icon,
       description: "Users active in the last 30 days",
     },
     {
       title: "New Signups",
       count: 300,
+      icon:users_icon,
       description: "New users signed up this month",
     },
     {
       title: "Total Revenue",
       count: 50000,
+      icon:rupee_icon,
       description: "Total revenue generated this month",
     },
   ];

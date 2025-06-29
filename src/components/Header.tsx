@@ -1,16 +1,15 @@
 'use client'
-// import { open_menu_icon, right_icon } from '@/assets/icons/dashboard';
-import { menu_icon } from '@/assets/icons/website';
+import { left_panel_close, left_panel_open } from '@/assets/icons/dashboard';
 import { useSidebar } from '@/utils/context/SidebarContext';
 import Image from 'next/image'
 import React from 'react'
 
 const Header = () => {
-    const { toggleSidebar} = useSidebar();
+    const { toggleSidebar, collapsed} = useSidebar();
     return (<nav className="bg-white dark:bg-gray-800">
         <div className="mx-auto px-2 sm:pe-6 lg:pe-8">
             <div className="relative flex h-11 items-center justify-between">
-                <button onClick={toggleSidebar} className='bg-indigo-200 p-1 rounded-sm text-indigo-900 text-2xl'>{menu_icon}</button>
+                <button onClick={toggleSidebar} className='bg-indigo-200 p-1 rounded-sm text-indigo-800 text-2xl hover:bg-indigo-300 transition-all duration-300 ease cursor-pointer'>{collapsed ? left_panel_open : left_panel_close}</button>
 
                 <div className="inset-y-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                     <button type="button" className="relative rounded-full bg-indigo-100 p-1 text-indigo-700 hover:bg-indigo-200 hover:text-indigo-900 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">

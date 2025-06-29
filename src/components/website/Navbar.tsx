@@ -5,12 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import avatar from "@/assets/images/user-avatar.png";
-import Modal from "../common/Modal";
-import Button from "../forms/Button";
 
 const Navbar = () => {
   const [navVisible, setNavVisible] = useState<boolean>(false);
-  const [first, setFirst] = useState(true)
   const links = [
     {
       text: "Equipment",
@@ -75,7 +72,6 @@ const Navbar = () => {
           >
             Contact us
           </Link>
-          <button onClick={()=> setFirst(true)}>show</button>
           
         </div>
         {!navVisible ? (
@@ -123,18 +119,7 @@ const Navbar = () => {
         </div>
       </menu>
 
-      <Modal open={first} setOpen={setFirst}>
-        <div>
-          <h1 className="text-xl font-bold mb-4">Lorem, ipsum dolor.</h1>
-          <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, tenetur? amet consectetur adipisicing elit. Facere, tenetur?</h3>
-
-          <div className="flex gap-3 mt-5">
-
-          <Button>Cancel</Button>
-          <Button>Save</Button>
-          </div>
-        </div>
-      </Modal>
+      
     </>
   );
 };

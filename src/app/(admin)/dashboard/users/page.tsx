@@ -1,7 +1,7 @@
 "use client"
 import { delete_icon, edit_icon } from '@/assets/icons/dashboard'
 import Modal from '@/components/common/Modal'
-import Button from '@/components/forms/Button'
+import Button, { CancelButton } from '@/components/forms/Button'
 import PageHeader from '@/components/PageHeader'
 import { ActionTD } from '@/components/table/Common'
 import NoDataFound from '@/components/table/NoDataFound'
@@ -100,7 +100,7 @@ const Users = () => {
     }
 
 
-    return (<div >
+    return (<>
         <PageHeader button_text='Create User' onClick={goToCreate} title='User List' />
          <Table headers={headers}>
             {isLoading ? (<TableLoader cols={headers?.length}/>) : (users?.length > 0 ? users?.map((item: User) => (
@@ -146,24 +146,19 @@ const Users = () => {
                     )) : <NoDataFound colSpan={8}/>)}
         </Table>
 
-        <Modal open ={deleteModal} setOpen={setDeleteModal}>
-            <div className='flex flex-col items-start justify-start h-full md:w-sm lg:w-md'>
-                <h2 className='text-2xl font-bold mb-3 text-gray-700'>Are you absolutely sure?</h2>
+        <Modal open ={deleteModal} setOpen={setDeleteModal} backgroundBlur={true} position='top' title="Are you absolutely sure?">
+            <div className='flex flex-col items-start justify-start h-full md:w-sm'>               
                     <p className='text-gray-600 text-md'>
                         This action will permanently delete the user from the system.
                     </p>
-                                <div className='mt-6 flex justify-end w-full gap-5'>
-                    <button className='text-red-400 font-medium transition-all duration-300 ease-in-out hover:bg-red-100 rounded-sm px-4'>Cancel</button>
+                    <div className='mt-6 flex justify-end w-full gap-3'>
+                    <CancelButton>Cancel</CancelButton>
                     <Button>Confirm</Button>
                 </div>
             </div>
         </Modal>
-        
-        
-        
-       
 
-    </div>
+    </>
 
 
 

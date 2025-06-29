@@ -1,6 +1,8 @@
 "use client"
 
 import { delete_icon, edit_icon } from '@/assets/icons/dashboard'
+import Modal from '@/components/common/Modal'
+import Button, { CancelButton } from '@/components/forms/Button'
 import PageHeader from '@/components/PageHeader'
 import { ActionTD } from '@/components/table/Common'
 import NoDataFound from '@/components/table/NoDataFound'
@@ -23,7 +25,8 @@ interface Package {
 const Users = () => {
 
     const [users, setUsers] = useState<Package[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(true);    
+    const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
     const fetchData = async () => {
         const res = await fetch(`${API_URL}/api/v1/gym-package`, {
@@ -106,7 +109,7 @@ const Users = () => {
         },
     ];
 
-    return (<div >
+    return (< >
         <PageHeader button_text='Create Package' onClick={goToCreate} title='Package List' />
         <Table headers={headers}>
             {isLoading ? (<TableLoader cols={headers?.length}/>) : users?.length > 0 ? users?.map((item: Package) => (
@@ -139,7 +142,19 @@ const Users = () => {
                 </tr>
             )) : <NoDataFound colSpan={headers?.length}/>}
         </Table>
-    </div>
+
+        <Modal open ={deleteModal} setOpen={setDeleteModal} backgroundBlur={true} position='top' title="Are you absolutely sure?">
+            <div className='flex flex-col items-start justify-start h-full md:w-sm'>               
+                    <p className='text-gray-600 text-md'>
+                        This action will permanently delete the user from the system.
+                    </p>
+                    <div className='mt-6 flex justify-end w-full gap-3'>
+                    <CancelButton>Cancel</CancelButton>
+                    <Button>Confirm</Button>
+                </div>
+            </div>
+        </Modal>
+    </>
     )
 }
 
