@@ -19,6 +19,7 @@ interface User {
     name?: string;
     email?: string;
     mob?: string;
+    contact?: string;
     username?: string;
     role?: string;
 }
@@ -46,10 +47,15 @@ const Users = () => {
         }
 
         // Parse the JSON response into product data
-        const users = await res.json();
-        setUsers(users)
+        console.log('res==>', res)
+        const users = await res?.json();
+
+        console.log('users= inside=>', users.users)
+        setUsers(users?.users)
         setIsLoading(false);
     }
+    console.log('users= outside=>', users)
+
 
      const headers = [
         {
@@ -120,7 +126,7 @@ const Users = () => {
                                 {item?.name || "--"}
                             </th>
                             <td className="px-6 py-4">
-                                {item?.mob || "--"}
+                                {item?.contact || "--"}
                             </td>
                             <td className="px-6 py-4">
                                 {item?.role || "--"}

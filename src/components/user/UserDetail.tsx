@@ -89,8 +89,8 @@ function UserDetail({ data }: {data?: FormTypes}) {
       }
 
       const url = isEdit
-        ? `${API_URL}/api/v1/user/update`
-        : `${API_URL}/api/v1/user/create`;
+        ? `${API_URL}/api/v1/user`
+        : `${API_URL}/api/v1/user`;
       const method = isEdit ? "PUT" : "POST";
 
       const res = await fetch(url, {
