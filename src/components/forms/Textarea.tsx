@@ -4,7 +4,7 @@ import React, { ChangeEventHandler } from 'react'
 
 interface InputProps {
     label?: string,
-    onChange?: ChangeEventHandler<HTMLTextAreaElement> | undefined,
+    onChange?: ChangeEventHandler<HTMLTextAreaElement>,
     placeholder?: string,
     rows?: number | undefined ,
     value?: string | number ,

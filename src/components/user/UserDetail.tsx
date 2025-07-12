@@ -8,6 +8,7 @@ import { API_URL, get } from "@/utils/services";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import ImageSelector from "../forms/ImageSelector";
+import Textarea from "../forms/Textarea";
 
 interface FormTypes {
   name?: string | undefined;
@@ -15,7 +16,11 @@ interface FormTypes {
   username?: string;
   address?: string;
   photo?: string;
-  mob?: string;
+  contact?: string;
+  dob?: string;
+  paid_fees?: string;
+  role?: string;
+  joining_date?: string;
   pkgStartDate?: string;
   pkgId?: string;
   workoutPlanId?: string | number;
@@ -42,6 +47,13 @@ function UserDetail({ data }: {data?: FormTypes}) {
   const router = useRouter();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({
       ...prev,
@@ -77,9 +89,12 @@ function UserDetail({ data }: {data?: FormTypes}) {
       formData.append("email", form?.email || "");
       formData.append("username", form?.username || "hello");
       formData.append("address", form?.address || "");
-      formData.append("mob", form?.mob || "");
+      formData.append("contact", form?.contact || "");
+      formData.append("dob", form?.dob || "");
+      formData.append("paid_fees", form?.paid_fees || "");
+      formData.append("gender", 'Male');
       formData.append("pkgId", form?.pkgId || "");
-      formData.append("pkgStartDate", form?.pkgStartDate || "");
+      formData.append("joining_date", form?.joining_date || "");
       if (isEdit) {
         formData.append("id", form?.id || "");
       }
@@ -162,12 +177,12 @@ function UserDetail({ data }: {data?: FormTypes}) {
           
           <Input
             label="Enter Mobile"
-            value={form?.mob}
+            value={form?.contact}
             placeholder="Enter Mobile Number"
             type="tel"
-            name="mob"
+            name="contact"
             onChange={handleInputChange}
-            error={error?.mob || ""}
+            error={error?.contact || ""}
           />
           <Input
             label="Enter Email"
@@ -178,31 +193,50 @@ function UserDetail({ data }: {data?: FormTypes}) {
             onChange={handleInputChange}
             error={error?.email || ""}
           />
-           <Input
+        
+           <Textarea
             label="Enter Address"
             value={form?.address}
             placeholder="Enter Address"
             name="address"
-            onChange={handleInputChange}
+            onChange={handleTextareaChange}
             error={error?.address || ""}
           />
+          
           <Input
             label="Enter Start Date"
-            value={form?.pkgStartDate}
-            placeholder="Enter pkgStartDate"
+            value={form?.joining_date}
+            placeholder="Enter joining_date"
             type="date"
-            name="pkgStartDate"
+            name="joining_date"
             onChange={handleInputChange}
-            error={error?.pkgStartDate || ""}
+            error={error?.joining_date || ""}
+          />
+          <div>
+            <label htmlFor="" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
+            <div className="flex gap-2 pl-1 pt-2">
+            <input type="radio" value={'male'} name="gender" id="" />
+            <input type="radio" value={'female'} name="gender" id="" />
+            <input type="radio" value={'other'} name="gender" id="" />
+            </div>
+          </div>
+          <Input
+            label="Enter DOB"
+            value={form?.dob}
+            placeholder="Enter dob"
+            type="date"
+            name="dob"
+            onChange={handleInputChange}
+            error={error?.dob || ""}
           />
           <Input
             label="Enter Paid Fees"
-            value={form?.pkgStartDate}
+            value={form?.paid_fees}
             placeholder="Enter Paid Fees"
             type="number"            
-            name="pkgStartDate"
+            name="paid_fees"
             onChange={handleInputChange}
-            error={error?.pkgStartDate || ""}
+            error={error?.paid_fees || ""}
           />
           <Select
             onChange={handleSelectChange}
@@ -214,6 +248,7 @@ function UserDetail({ data }: {data?: FormTypes}) {
               label: item?.pkgName,
             }))}
           />
+         
           <Select
             onChange={handleSelectChange}
             label="Workout Plan"
@@ -223,6 +258,23 @@ function UserDetail({ data }: {data?: FormTypes}) {
               value: item?.id,
               label: item?.pkgName,
             }))}
+          />
+           <Select
+            onChange={handleSelectChange}
+            label="Role"
+            name="role"
+            value={form?.role}
+            options={[
+              {label: "User",
+                value: "user"
+              },
+              {label: "Trainer",
+                value: "trainer"
+              },
+              {label: "Admin",
+                value: "admin"
+              }
+            ]}
           />
           {/* <Select
             onChange={handleInputChange}

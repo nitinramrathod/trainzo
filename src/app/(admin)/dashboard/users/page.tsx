@@ -19,6 +19,8 @@ interface User {
     name?: string;
     email?: string;
     mob?: string;
+    expiry_date?: string;
+    joining_date?: string;
     contact?: string;
     username?: string;
     role?: string;
@@ -45,12 +47,7 @@ const Users = () => {
             setIsLoading(false);
             throw new Error("Failed to fetch products");
         }
-
-        // Parse the JSON response into product data
-        console.log('res==>', res)
         const users = await res?.json();
-
-        console.log('users= inside=>', users.users)
         setUsers(users?.users)
         setIsLoading(false);
     }
@@ -132,10 +129,10 @@ const Users = () => {
                                 {item?.role || "--"}
                             </td>
                             <td className="px-6 py-4">
-                                {item?.email || "--"}
+                                {item?.joining_date || "--"}
                             </td>
                             <td className="px-6 py-4">
-                                {item?.email || "--"}
+                                {item?.expiry_date || "--"}
                             </td>
                             <td className="px-6 py-4">
                                 {item?.username || "--"}
