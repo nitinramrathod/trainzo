@@ -116,8 +116,8 @@ const MyProfile: React.FC = () => {
           <Button>{save_icon}Update</Button>
         </div>
       </div>
-      <div className='bg-indigo-400 max-h-[400px] shadow rounded-lg p-5 pe-3 mt-16 flex-1'>
-          <h2 className='text-white text-xl font-bold mb-4'>Activity</h2>
+      <div className='bg-white max-h-[400px] shadow-md border-1 border-slate-300 rounded-lg p-5 pe-3 mt-16 flex-1'>
+          <h2 className='text-indigo-500 text-xl font-bold mb-4'>My Activity</h2>
         <div className='flex flex-col pe-2 gap-2 max-h-[315px] overflow-y-auto'>
 
             <div className='bg-amber-100 px-2 py-1 rounded-sm'>
