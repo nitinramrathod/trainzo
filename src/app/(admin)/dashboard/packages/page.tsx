@@ -14,11 +14,11 @@ import React, { useEffect, useState } from 'react'
 
 interface Package {
     id: string;
-    pkgName?: string;
+    name?: string;
     duration?: string;
-    pkgDesc?: string;
-    pkgPrice?: number;
-    pkgDiscount?: number;
+    description?: string;
+    price?: number;
+    discount_price?: number;
     pkgDiscountedPrice?: number;
 }
 
@@ -29,7 +29,7 @@ const Users = () => {
     const [deleteModal, setDeleteModal] = useState<boolean>(false);
 
     const fetchData = async () => {
-        const res = await fetch(`${API_URL}/api/v1/gym-package`, {
+        const res = await fetch(`${API_URL}/api/v1/membership`, {
             method: "GET",
             cache: 'no-cache',
             headers: {
@@ -46,7 +46,7 @@ const Users = () => {
 
         // Parse the JSON response into product data
         const users = await res.json();
-        setUsers(users);
+        setUsers(users.data);
         setIsLoading(false);
     }
 
@@ -97,14 +97,6 @@ const Users = () => {
             input: "text"
         },
         {
-            title: "Discount",
-            input: "text"
-        },
-        {
-            title: "Discount Price",
-            input: "text"
-        },
-        {
             title: "Action"
         },
     ];
@@ -117,22 +109,22 @@ const Users = () => {
                 <tr key={item?.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
 
                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {item?.pkgName || "--"}
+                        {item?.name || "--"}
                     </th>
                     <td className="px-6 py-4">
                         {item?.duration || "--"}
                     </td>
                     <td className="px-6 py-4">
-                        {item?.pkgDesc || "--"}
+                        {item?.description || "--"}
                     </td>
                     <td className="px-6 py-4">
-                        ₹ {item?.pkgPrice || "--"}
-                    </td>
-                    <td className="px-6 py-4">
-                        {item?.pkgDiscount || "--"}%
-                    </td>
-                    <td className="px-6 py-4">
-                        ₹  {item?.pkgDiscountedPrice || "--"}
+                       <span className='pe-2 font-medium text-lg'>
+                        ₹  {item?.discount_price || "--"}
+                        </span>
+                        <span className='line-through text-red-700'>
+                         ₹ {item?.price || "--"}
+
+                        </span>
                     </td>
 
                     <ActionTD>

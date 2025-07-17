@@ -13,9 +13,9 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 interface Workout{
-    workoutName: string;
-    workoutDesc: string;
-    videoURL: string;
+    name: string;
+    description: string;
+    video_iframe: string;
     id: string;
 }
 
@@ -42,7 +42,7 @@ const Users = () => {
 
         // Parse the JSON response into product data
         const users = await res.json();
-        setUsers(users);
+        setUsers(users?.data);
         setIsLoading(false);
     }
 
@@ -82,13 +82,13 @@ const Users = () => {
                 <tr key={item?.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
 
                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        {item?.workoutName}
+                        {item?.name}
                     </th>
                     <td className="px-6 py-4">
-                        {item?.workoutDesc}
+                        {item?.description}
                     </td>
                     <td className="px-6 py-4">
-                        {item?.videoURL}
+                         <div className='w-30 h-20 overflow-hidden' dangerouslySetInnerHTML={{ __html: item?.video_iframe }}/>                        
                     </td>
 
                     <ActionTD>

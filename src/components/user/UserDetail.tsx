@@ -20,9 +20,10 @@ interface FormTypes {
   dob?: string;
   paid_fees?: string;
   role?: string;
+  gender?: string;
   joining_date?: string;
   pkgStartDate?: string;
-  pkgId?: string;
+  gym_package?: string;
   workoutPlanId?: string | number;
   id?: string;
 }
@@ -34,14 +35,14 @@ interface ErrorObject {
   address?: string;
   [key: string]: string | undefined;
 }
-function UserDetail({ data }: {data?: FormTypes}) {
+function UserDetail({ data }: { data?: FormTypes }) {
   const [form, setForm] = useState<FormTypes>({});
   const [isEdit, setIsEdit] = useState(false);
   interface Package {
-    id: string;
-    pkgName: string;
+    _id: string;
+    name: string;
   }
-  
+
   const [dropdown, setDropdown] = useState<{ packages?: Package[] }>({});
   const [error, setError] = useState<ErrorObject>({});
   const router = useRouter();
@@ -77,9 +78,17 @@ function UserDetail({ data }: {data?: FormTypes}) {
     }));
   };
 
+  const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   const getOptions = async () => {
-    const data = await get("/api/v1/gym-package");
-    setDropdown({ packages: data });
+    const data = await get("/api/v1/membership");
+    setDropdown({ packages: data?.data });
   };
 
   const handleSubmit = async () => {
@@ -92,8 +101,9 @@ function UserDetail({ data }: {data?: FormTypes}) {
       formData.append("contact", form?.contact || "");
       formData.append("dob", form?.dob || "");
       formData.append("paid_fees", form?.paid_fees || "");
-      formData.append("gender", 'Male');
-      formData.append("pkgId", form?.pkgId || "");
+      formData.append("gender", form?.gender || "");
+      formData.append("gym_package", form?.gym_package || "");
+      formData.append("role", form?.role || "");
       formData.append("joining_date", form?.joining_date || "");
       if (isEdit) {
         formData.append("id", form?.id || "");
@@ -103,9 +113,7 @@ function UserDetail({ data }: {data?: FormTypes}) {
         formData.append("photo", form.photo);
       }
 
-      const url = isEdit
-        ? `${API_URL}/api/v1/user`
-        : `${API_URL}/api/v1/user`;
+      const url = isEdit ? `${API_URL}/api/v1/user` : `${API_URL}/api/v1/user`;
       const method = isEdit ? "PUT" : "POST";
 
       const res = await fetch(url, {
@@ -117,9 +125,8 @@ function UserDetail({ data }: {data?: FormTypes}) {
         setForm({});
         router.push("/dashboard/users");
       } else {
-        const errorText = await res.text(); // Try to get error details
-        console.log("Error Response:", errorText); // Log the actual error
-        setError(JSON.parse(errorText));
+        const errorText = await res.text();
+        setError(JSON.parse(errorText)?.errors);
       }
     } catch (error) {
       console.log(error);
@@ -153,18 +160,17 @@ function UserDetail({ data }: {data?: FormTypes}) {
       />
       <div className="bg-white shadow-md py-8 px-5 rounded-md">
         <div className="mb-5">
-           <ImageSelector
+          {/* <ImageSelector
           name="photo"
           defaultSrc={
             (form?.photo && typeof form.photo === "string")
               ? `${API_URL}/${form?.photo}`
-              : ''
+              : 'ddd'
           }
           onChange={handleImageChange}
-          /> 
+          />  */}
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-4">
-                
           <Input
             label="Enter Name"
             value={form?.name}
@@ -174,12 +180,11 @@ function UserDetail({ data }: {data?: FormTypes}) {
             error={error?.name || ""}
           />
 
-          
           <Input
             label="Enter Mobile"
             value={form?.contact}
             placeholder="Enter Mobile Number"
-            type="tel"
+            type="text"
             name="contact"
             onChange={handleInputChange}
             error={error?.contact || ""}
@@ -193,8 +198,8 @@ function UserDetail({ data }: {data?: FormTypes}) {
             onChange={handleInputChange}
             error={error?.email || ""}
           />
-        
-           <Textarea
+
+          <Textarea
             label="Enter Address"
             value={form?.address}
             placeholder="Enter Address"
@@ -202,7 +207,7 @@ function UserDetail({ data }: {data?: FormTypes}) {
             onChange={handleTextareaChange}
             error={error?.address || ""}
           />
-          
+
           <Input
             label="Enter Start Date"
             value={form?.joining_date}
@@ -213,11 +218,46 @@ function UserDetail({ data }: {data?: FormTypes}) {
             error={error?.joining_date || ""}
           />
           <div>
-            <label htmlFor="" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gender</label>
+            <label
+              htmlFor=""
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Gender
+            </label>
             <div className="flex gap-2 pl-1 pt-2">
-            <input type="radio" value={'male'} name="gender" id="" />
-            <input type="radio" value={'female'} name="gender" id="" />
-            <input type="radio" value={'other'} name="gender" id="" />
+              <div className="flex gap-1 items-center">
+                <input
+                  onChange={handleRadioChange}
+                  type="radio"
+                  value={"male"}
+                  name="gender"
+                  id="male"
+                />
+                <label htmlFor="male">Male</label>
+              </div>
+
+              <div className="flex gap-1 items-center">
+                <input
+                  onChange={handleRadioChange}
+                  type="radio"
+                  value={"female"}
+                  checked={form?.gender === 'female'}
+                  name="gender"
+                  id="female"
+                />
+                <label htmlFor="female">Female</label>
+              </div>
+
+              <div className="flex gap-1 items-center">
+                <input
+                  type="radio"
+                  onChange={handleRadioChange}
+                  value={"other"}
+                  name="gender"
+                  id="other"
+                />
+                <label htmlFor="other">Other</label>
+              </div>
             </div>
           </div>
           <Input
@@ -233,47 +273,41 @@ function UserDetail({ data }: {data?: FormTypes}) {
             label="Enter Paid Fees"
             value={form?.paid_fees}
             placeholder="Enter Paid Fees"
-            type="number"            
+            type="number"
             name="paid_fees"
             onChange={handleInputChange}
             error={error?.paid_fees || ""}
           />
           <Select
             onChange={handleSelectChange}
-            label="Gym Plan"
-            name="pkgId"
-            value={form?.pkgId}
+            label="Gym Package"
+            name="gym_package"
+            value={form?.gym_package}
             options={dropdown?.packages?.map((item: Package) => ({
-              value: item?.id,
-              label: item?.pkgName,
+              value: item?._id,
+              label: item?.name,
             }))}
           />
-         
+
           <Select
             onChange={handleSelectChange}
             label="Workout Plan"
             name="workoutPlanId"
             value={form?.workoutPlanId}
             options={dropdown?.packages?.map((item: Package) => ({
-              value: item?.id,
-              label: item?.pkgName,
+              value: item?._id,
+              label: item?.name,
             }))}
           />
-           <Select
+          <Select
             onChange={handleSelectChange}
             label="Role"
             name="role"
             value={form?.role}
             options={[
-              {label: "User",
-                value: "user"
-              },
-              {label: "Trainer",
-                value: "trainer"
-              },
-              {label: "Admin",
-                value: "admin"
-              }
+              { label: "User", value: "user" },
+              { label: "Trainer", value: "trainer" },
+              { label: "Admin", value: "admin" },
             ]}
           />
           {/* <Select

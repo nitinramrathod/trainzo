@@ -20,10 +20,11 @@ interface User {
     email?: string;
     mob?: string;
     expiry_date?: string;
-    joining_date?: string;
+    joining_date?: {formatted: string};
     contact?: string;
-    username?: string;
+    gym_package?: {name:string};
     role?: string;
+    gender: string;
 }
 
 const Users = () => {
@@ -70,12 +71,17 @@ const Users = () => {
             title: "Role",
             input: 'text'
         },
+       
         {
             title: "Start Date",
             input: 'text'
         },
         {
             title: "End Date",
+            input: 'text'
+        },
+         {
+            title: "Gender",
             input: 'text'
         },
         {
@@ -125,20 +131,24 @@ const Users = () => {
                             <td className="px-6 py-4">
                                 {item?.contact || "--"}
                             </td>
+                            
                             <td className="px-6 py-4">
                                 {item?.role || "--"}
                             </td>
                             <td className="px-6 py-4">
-                                {item?.joining_date || "--"}
+                                {item?.joining_date?.formatted || "--"}
                             </td>
                             <td className="px-6 py-4">
                                 {item?.expiry_date || "--"}
                             </td>
                             <td className="px-6 py-4">
-                                {item?.username || "--"}
+                                {item?.gender || "--"}
                             </td>
                             <td className="px-6 py-4">
-                                {item?.username || "--"}
+                                {item?.gym_package?.name || "--"}
+                            </td>
+                            <td className="px-6 py-4">
+                                {item?.gym_package?.name || "--"}
                             </td>
 
                             <ActionTD>

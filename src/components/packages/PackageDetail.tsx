@@ -58,30 +58,28 @@ const PackageDetail = ({ data }: {data?: FormTypes}) => {
     const handleSubmit = async () => {
         try {
             const formData = new FormData();
-            formData.append('pkgName', form?.pkgName || '')
+            formData.append('name', form?.pkgName || '')
             formData.append('duration', form?.duration || '')
-            formData.append('pkgDesc', form?.pkgDesc || '')
-            formData.append('pkgPrice', form?.pkgPrice ? String(form?.pkgPrice) : '')
-            formData.append('pkgDiscount', form?.pkgDiscount || '')
+            formData.append('description', form?.pkgDesc || '')
+            formData.append('price', form?.pkgPrice ? String(form?.pkgPrice) : '')
+            formData.append('discount_price', form?.pkgDiscount || '')
             if(isEdit){
                 formData.append('id', form?.id || '')
 
             }
+
             // formData.append('pkgDiscountedPrice', form?.pkgDiscountedPrice || '')
 
 
 
-            const url = isEdit ? `${API_URL}/api/v1/gym-package/update` : `${API_URL}/api/v1/gym-package/create`
+            // const url = isEdit ? `${API_URL}/api/v1/gym-package/update` : `${API_URL}/api/v1/gym-package/create`
+            const url = `${API_URL}/api/v1/membership`;
             const method = isEdit ? 'PUT' : 'POST'
 
             const res = await fetch(url,
                 {
                     method: method,
-                    body: JSON.stringify(form),
-                    headers:{
-                        "Content-Type": "application/json"
-
-                    }
+                    body: formData                    
                 })
 
             if (res.ok) {
