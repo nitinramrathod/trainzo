@@ -16,14 +16,19 @@ interface Workout{
     name: string;
     description: string;
     video_iframe: string;
-    id: string;
+    _id: string;
+}
+
+type TModals = {
+    delete_id: string| undefined | null
 }
 
 const Users = () => {
 
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const [deleteModal, setDeleteModal] = useState<boolean>(false);    
+    const [modals, setModals] = useState<TModals>({delete_id:null })
+    
 
     const fetchData = async () => {
         const res = await fetch(`${API_URL}/api/v1/workout`, {
@@ -45,6 +50,27 @@ const Users = () => {
         setUsers(users?.data);
         setIsLoading(false);
     }
+
+     const handleDelete = (id:string)=>{
+            setModals({delete_id: id})
+        }
+    
+        const hideDeleteModal =()=>{
+            setModals({delete_id: null})
+        }
+    
+        const confirmDelete = async()=>{
+            const res = await fetch(`${API_URL}/api/v1/workout/${modals.delete_id}`, {
+                method: "DELETE"
+            });
+          
+            if (!res.ok) {
+                setIsLoading(false);
+                throw new Error("Failed to fetch products");
+            }
+            hideDeleteModal();
+            fetchData();
+        }
 
 
     useEffect(() => {
@@ -79,7 +105,7 @@ const Users = () => {
         <Table headers={headers}>
             {isLoading ? (<TableLoader cols={headers?.length}/>) : users?.length > 0 ? users?.map((item: Workout) => (
 
-                <tr key={item?.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <tr key={item?._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
 
                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {item?.name}
@@ -92,20 +118,20 @@ const Users = () => {
                     </td>
 
                     <ActionTD>
-                        <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">{edit_icon}</a>
-                        <a href="#" className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">{delete_icon}</a>
+                        <a href={`/dashboard/workouts/${item._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">{edit_icon}</a>
+                        <button onClick={()=>handleDelete(item?._id)} className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">{delete_icon}</button>
                     </ActionTD>
                 </tr>
             )) : <NoDataFound colSpan={headers?.length}/>}
         </Table>
-         <Modal open ={deleteModal} setOpen={setDeleteModal} backgroundBlur={true} position='top' title="Are you absolutely sure?">
+         <Modal open={modals?.delete_id ? true: false} setOpen={hideDeleteModal} backgroundBlur={true} position='top' title="Are you absolutely sure?">
             <div className='flex flex-col items-start justify-start h-full md:w-sm'>               
                     <p className='text-gray-600 text-md'>
                         This action will permanently delete the user from the system.
                     </p>
                     <div className='mt-6 flex justify-end w-full gap-3'>
-                    <CancelButton>Cancel</CancelButton>
-                    <Button>Confirm</Button>
+                    <CancelButton onClick={hideDeleteModal}>Cancel</CancelButton>
+                    <Button onClick={confirmDelete} >Confirm</Button>
                 </div>
             </div>
         </Modal>

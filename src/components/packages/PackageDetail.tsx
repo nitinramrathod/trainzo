@@ -9,21 +9,20 @@ import FormWrapper from '../forms/FormWrapper'
 import { save_icon } from '@/assets/icons/dashboard'
 
 interface FormTypes {
-    pkgName?: string | undefined,
+    name?: string | undefined,
     duration?: string,
-    pkgDesc?: string,
-    pkgPrice?: number | string,
-    pkgDiscount?: string,
-    pkgDiscountedPrice?: string,
-    id? : string
+    description?: string,
+    price?: number | string,
+    discount_price?: string,
+    _id? : string
 }
 
 interface ErrorObject {
     duration?:string,
-    pkgPrice?:string,
-    pkgName?:string
-   
-
+    price?:string,
+    name?:string
+    discount_price?:string
+    description?:string
 }
 
 const PackageDetail = ({ data }: {data?: FormTypes}) => {
@@ -57,25 +56,16 @@ const PackageDetail = ({ data }: {data?: FormTypes}) => {
 
     const handleSubmit = async () => {
         try {
-            const formData = new FormData();
-            formData.append('name', form?.pkgName || '')
+            const formData = new FormData();            
+
+            formData.append('name', form?.name || '')
             formData.append('duration', form?.duration || '')
-            formData.append('description', form?.pkgDesc || '')
-            formData.append('price', form?.pkgPrice ? String(form?.pkgPrice) : '')
-            formData.append('discount_price', form?.pkgDiscount || '')
-            if(isEdit){
-                formData.append('id', form?.id || '')
+            formData.append('description', form?.description || '')
+            formData.append('price', form?.price ? String(form?.price) : '')
+            formData.append('discount_price', form?.discount_price || '')           
 
-            }
-
-            // formData.append('pkgDiscountedPrice', form?.pkgDiscountedPrice || '')
-
-
-
-            // const url = isEdit ? `${API_URL}/api/v1/gym-package/update` : `${API_URL}/api/v1/gym-package/create`
-            const url = `${API_URL}/api/v1/membership`;
-            const method = isEdit ? 'PUT' : 'POST'
-
+            const url = isEdit ? `${API_URL}/api/v1/membership/${form?._id}` : `${API_URL}/api/v1/membership`
+            const method = isEdit ? 'PUT' : 'POST';
             const res = await fetch(url,
                 {
                     method: method,
@@ -86,10 +76,10 @@ const PackageDetail = ({ data }: {data?: FormTypes}) => {
                 setForm({})
                 router.push('/dashboard/packages')
             } else {
-                const errorText = await res.text(); // Try to get error details
+                const errorText = await res.json(); // Try to get error details
                 console.log('Error Response:', errorText); 
                 // alert('Error while creating package.');
-                setError(JSON.parse(errorText)); 
+                setError(errorText?.errors); 
 
             }
 
@@ -124,50 +114,50 @@ const PackageDetail = ({ data }: {data?: FormTypes}) => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-4">
                         <Input
                             label="Package Name"
-                            value={form?.pkgName}
+                            value={form?.name}
                             placeholder='Enter Package Name'
-                            name="pkgName"
+                            name="name"
                             onChange={handleInputChange}
-                            error={error?.pkgName || ''}
+                            error={error?.name || ''}
 
                         />
                         <Input
-                            label="Duration"
+                            label="Duration (Month)"
                             value={form?.duration}
-                            placeholder='Enter Duration e.g.. 3 months' 
+                            placeholder='Enter Duration e.g. 3' 
                             name="duration"
                             onChange={handleInputChange}
                             error={error?.duration || ''}
                         />
                         <Input
                             label="Package Desc"
-                            value={form?.pkgDesc}
+                            value={form?.description}
                             placeholder='Enter Package Desc'
-                            name="pkgDesc"
+                            name="description"
                             type='text'
                             onChange={handleInputChange}
                             
                         />
                         <Input
                             label="Price"
-                            value={form?.pkgPrice}
+                            value={form?.price}
                             placeholder='Enter Price'
                             type="number"
-                            name="pkgPrice"
+                            name="price"
                             onChange={handleInputChange}
-                            error={error?.pkgPrice || ''}
+                            error={error?.price || ''}
                         />
                         <Input
                             label="Price Discount"
-                            value={form?.pkgDiscount}
+                            value={form?.discount_price}
                             placeholder='Enter Price Discount'
                             type="number"
-                            name="pkgDiscount"
+                            name="discount_price"
                             onChange={handleInputChange}
                         />
                     </div>
                     <div className='mt-8'>
-                        <Button onClick={handleSubmit}>{save_icon} Submit</Button>
+                        <Button onClick={handleSubmit}>{save_icon} {form?._id ? "Update": "Submit"}</Button>
                     </div>
                 </FormWrapper>
           

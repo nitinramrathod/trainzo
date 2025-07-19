@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 interface Package {
-    id: string;
+    _id: string;
     name?: string;
     duration?: string;
     description?: string;
@@ -22,11 +22,15 @@ interface Package {
     pkgDiscountedPrice?: number;
 }
 
+type TModals = {
+    delete_id: string| undefined | null
+}
+
 const Users = () => {
 
     const [users, setUsers] = useState<Package[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);    
-    const [deleteModal, setDeleteModal] = useState<boolean>(false);
+    const [modals, setModals] = useState<TModals>({delete_id:null })
 
     const fetchData = async () => {
         const res = await fetch(`${API_URL}/api/v1/membership`, {
@@ -40,8 +44,8 @@ const Users = () => {
 
         // If the response is not successful, handle the error
         if (!res.ok) {
-            throw new Error("Failed to fetch products");            
             setIsLoading(false);
+            throw new Error("Failed to fetch products");            
         }
 
         // Parse the JSON response into product data
@@ -50,25 +54,27 @@ const Users = () => {
         setIsLoading(false);
     }
 
-    // const goToCreate = () => {
-    //     router.push('/admin/products/create')
-    // }
-    // const goToEdit = (id) => {
-    //     router.push(`/admin/products/${id}`)
-    // }
+    
+    const handleDelete = (id:string)=>{
+        setModals({delete_id: id})
+    }
 
-    // const handleDelete = async (id) => {
-    //     const res = await fetch(`${API_URL}/products/${id}`, {
-    //         method: "Delete"
-    //     });
+    const hideDeleteModal =()=>{
+        setModals({delete_id: null})
+    }
 
-    //     if (!res.ok) {
-    //         throw new Error("Failed to delete product");
-    //     } else {
-    //         fetchData()
-
-    //     }
-    // }
+    const confirmDelete = async()=>{
+        const res = await fetch(`${API_URL}/api/v1/membership/${modals.delete_id}`, {
+            method: "DELETE"
+        });
+      
+        if (!res.ok) {
+            setIsLoading(false);
+            throw new Error("Failed to fetch products");
+        }
+        hideDeleteModal();
+        fetchData();
+    }
 
     useEffect(() => {
         fetchData()
@@ -106,13 +112,13 @@ const Users = () => {
         <Table headers={headers}>
             {isLoading ? (<TableLoader cols={headers?.length}/>) : users?.length > 0 ? users?.map((item: Package) => (
 
-                <tr key={item?.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <tr key={item?._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
 
                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {item?.name || "--"}
                     </th>
                     <td className="px-6 py-4">
-                        {item?.duration || "--"}
+                        {`${item?.duration} ${Number(item?.duration) > 1 ? 'Months' : 'Month'}`  || "--"}
                     </td>
                     <td className="px-6 py-4">
                         {item?.description || "--"}
@@ -121,28 +127,27 @@ const Users = () => {
                        <span className='pe-2 font-medium text-lg'>
                         ₹  {item?.discount_price || "--"}
                         </span>
-                        <span className='line-through text-red-700'>
+                       {item?.price && <span className='line-through text-red-700'>
                          ₹ {item?.price || "--"}
-
-                        </span>
+                        </span>}
                     </td>
 
                     <ActionTD>
-                        <a href={`/dashboard/packages/${item.id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">{edit_icon}</a>
-                        <button className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">{delete_icon}</button>
+                        <a href={`/dashboard/packages/${item._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">{edit_icon}</a>
+                        <button onClick={()=>handleDelete(item?._id)} className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">{delete_icon}</button>
                     </ActionTD>
                 </tr>
             )) : <NoDataFound colSpan={headers?.length}/>}
         </Table>
 
-        <Modal open ={deleteModal} setOpen={setDeleteModal} backgroundBlur={true} position='top' title="Are you absolutely sure?">
+        <Modal open={modals?.delete_id ? true: false} setOpen={hideDeleteModal} backgroundBlur={true} position='top' title="Are you absolutely sure?">
             <div className='flex flex-col items-start justify-start h-full md:w-sm'>               
                     <p className='text-gray-600 text-md'>
                         This action will permanently delete the user from the system.
                     </p>
                     <div className='mt-6 flex justify-end w-full gap-3'>
-                    <CancelButton>Cancel</CancelButton>
-                    <Button>Confirm</Button>
+                    <CancelButton onClick={hideDeleteModal}>Cancel</CancelButton>
+                    <Button onClick={confirmDelete} >Confirm</Button>
                 </div>
             </div>
         </Modal>

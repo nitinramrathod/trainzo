@@ -7,12 +7,13 @@ import PageHeader from '@/components/PageHeader'
 import { API_URL } from '@/utils/services'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import Textarea from '../forms/Textarea'
 
 interface FormTypes {
-    workoutName?: string | undefined,
-    workoutDesc?: string,
-    videoURL?: string,
-    id?: string | number
+    name?: string | undefined,
+    description?: string,
+    video_iframe?: string,
+    _id?: string | number
 }
 
 interface CreateUserProps {
@@ -25,45 +26,28 @@ const WorkoutForm = ({ data }: CreateUserProps) => {
     // const [dropdown, setDropdown] = useState<{ packages?: any[] }>({});
     const router = useRouter();
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setForm(prev => ({
             ...prev,
             [name]: value
-
         }))
     };
-
-    // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //     const file = e.target.files?.[0];
-    //     setForm((prev) => ({
-    //         ...prev,
-    //         [e.target.name]: file || null
-    //     }));
-    // }
-
-    // const getOptions = async ()=>{
-    //     const data = await get('/api/v1/workout/create')
-    //     setDropdown({packages: data})
-    // }
 
     const handleSubmit = async () => {
         try {
             const formData = new FormData();
-            formData.append('workoutName', form?.workoutName || '')
-            formData.append('workoutDesc', form?.workoutDesc || '')
-            formData.append('videoURL', form?.videoURL || '')
+            formData.append('name', form?.name || '')
+            formData.append('description', form?.description || '')
+            formData.append('video_iframe', form?.video_iframe || '')
 
-            const url = isEdit ? `${API_URL}/api/v1/workout/${data?.id}` : `${API_URL}/api/v1/workout/create`
+            const url = isEdit ? `${API_URL}/api/v1/workout/${data?._id}` : `${API_URL}/api/v1/workout`
             const method = isEdit ? 'PUT' : 'POST'
 
             const res = await fetch(url,
                 {
                     method: method,
-                    body: JSON.stringify(form),
-                    headers:{
-                        "Content-Type": "application/json"
-                    }
+                    body: formData,
                 })
 
             if (res.ok) {
@@ -75,7 +59,6 @@ const WorkoutForm = ({ data }: CreateUserProps) => {
 
         } catch (error) {
             console.log('error', error)
-
         }
     }
 
@@ -91,11 +74,6 @@ const WorkoutForm = ({ data }: CreateUserProps) => {
         }
     }, [data])
 
-    // useEffect(() => {
-    //     getOptions()
-    // }, [])
-    
-
     return (
         <div>
             <div>
@@ -105,25 +83,24 @@ const WorkoutForm = ({ data }: CreateUserProps) => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-4">
                         <Input
                             label="Workout Name"
-                            value={form?.workoutName}
+                            value={form?.name}
                             placeholder='Enter Workout Name'
-                            name="workoutName"
+                            name="name"
                             onChange={handleInputChange}
 
                         />
                         <Input
                             label="Description"
-                            value={form?.workoutDesc}
+                            value={form?.description}
                             placeholder='Enter Description'
-                            name="workoutDesc"
+                            name="description"
                             onChange={handleInputChange}
                         />
-                        <Input
-                            label="Video URL"
-                            value={form?.videoURL}
-                            placeholder='Enter Video URL'
-                            name="videoURL"
-                            type='text'
+                        <Textarea
+                            label="Video Iframe"
+                            value={form?.video_iframe}
+                            placeholder='Enter Video Iframe'
+                            name="video_iframe"
                             onChange={handleInputChange}
                         />
                         

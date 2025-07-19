@@ -7,40 +7,31 @@ export const metadata: Metadata = {
   description: "Update package information",
 };
 
-
-const EditPackage = async ({params}) => {
-  console.log('===>',params?.id)
-  // let user;
-  let packageinfo;
+const EditPackage = async ({ params }) => {
+  const id = await params?.id;
+  let membership;
 
   try {
-    const res = await fetch(`${API_URL}/api/v1/gym-package/${params?.id}`,{
+    const res = await fetch(`${API_URL}/api/v1/membership/${id}`, {
       method: "GET",
-      cache: 'no-cache',
+      cache: "no-cache",
       headers: {
         "Content-Type": "application/json",
         // Add any other necessary headers here (e.g., authentication tokens)
       },
     });
 
-    console.log('res===>',res)
-  
     // If the response is not successful, handle the error
     if (!res.ok) {
       throw new Error("Failed to fetch products");
     }
-  
-   
-   packageinfo = await res.json();
-   console.log("user", packageinfo)
-    
+
+    membership = await res.json();
   } catch (error) {
-    console.log('error', error)
+    console.log("error", error);
   }
- 
-    
 
-   return <PackageDetail data={packageinfo}/>
-}
+  return <PackageDetail data={membership.data} />;
+};
 
-export default EditPackage
+export default EditPackage;

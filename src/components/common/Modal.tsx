@@ -43,7 +43,7 @@ const Modal = ({ open, setOpen, title, children, backgroundBlur, position }: Mod
   
 
   return (
-    <div onClick={() => setOpen && setOpen(false)}
+    <div
       className={`fixed inset-0 z-50 flex w-full transition-all duration-300 ease-in-out overflow-auto p-10 h-full bg-black/50 bg-opacity-50 ${positionClass} ${backgroundBlur ? "backdrop-blur-md" : ""} ${
         open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
       }`}

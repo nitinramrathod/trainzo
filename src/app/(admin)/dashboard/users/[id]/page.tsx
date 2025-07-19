@@ -9,11 +9,11 @@ export const metadata: Metadata = {
 };
 
 const EditUser = async ({params}) => {
-  console.log('===>',params?.id)
   let user;
+  const id = await params.id
 
   try {
-    const res = await fetch(`${API_URL}/api/v1/user/${params?.id}`,{
+    const res = await fetch(`${API_URL}/api/v1/user/${id}`,{
       method: "GET",
       cache: 'no-cache',
       headers: {
@@ -30,16 +30,17 @@ const EditUser = async ({params}) => {
     }
   
    
-     user = await res.json();
-   console.log("user", user)
+    user = await res.json();
     
   } catch (error) {
     console.log('error', error)
   }
+
+  console.log('user.data', user?.data)
  
     
 
-   return <UserDetail data={user}/>
+   return <UserDetail data={user?.data} id={id}/>
 }
 
 export default EditUser

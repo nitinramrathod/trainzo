@@ -7,7 +7,7 @@ import PageHeader from "@/components/PageHeader";
 import { API_URL, get } from "@/utils/services";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import ImageSelector from "../forms/ImageSelector";
+// import ImageSelector from "../forms/ImageSelector";
 import Textarea from "../forms/Textarea";
 
 interface FormTypes {
@@ -35,7 +35,7 @@ interface ErrorObject {
   address?: string;
   [key: string]: string | undefined;
 }
-function UserDetail({ data }: { data?: FormTypes }) {
+function UserDetail({ data, id }: {id?:string, data?: FormTypes }) {
   const [form, setForm] = useState<FormTypes>({});
   const [isEdit, setIsEdit] = useState(false);
   interface Package {
@@ -47,14 +47,7 @@ function UserDetail({ data }: { data?: FormTypes }) {
   const [error, setError] = useState<ErrorObject>({});
   const router = useRouter();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-  const handleTextareaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setForm((prev) => ({
       ...prev,
@@ -62,13 +55,14 @@ function UserDetail({ data }: { data?: FormTypes }) {
     }));
   };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    setForm((prev) => ({
-      ...prev,
-      [e.target.name]: file || null,
-    }));
-  };
+
+  // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0];
+  //   setForm((prev) => ({
+  //     ...prev,
+  //     [e.target.name]: file || null,
+  //   }));
+  // };
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -113,7 +107,7 @@ function UserDetail({ data }: { data?: FormTypes }) {
         formData.append("photo", form.photo);
       }
 
-      const url = isEdit ? `${API_URL}/api/v1/user` : `${API_URL}/api/v1/user`;
+      const url = isEdit ? `${API_URL}/api/v1/user/${id}` : `${API_URL}/api/v1/user`;
       const method = isEdit ? "PUT" : "POST";
 
       const res = await fetch(url, {
@@ -140,7 +134,6 @@ function UserDetail({ data }: { data?: FormTypes }) {
 
   useEffect(() => {
     if (data) {
-      console.log("data", data);
       setIsEdit(true);
       setForm(data);
     }
@@ -204,7 +197,7 @@ function UserDetail({ data }: { data?: FormTypes }) {
             value={form?.address}
             placeholder="Enter Address"
             name="address"
-            onChange={handleTextareaChange}
+            onChange={handleInputChange}
             error={error?.address || ""}
           />
 
@@ -230,6 +223,7 @@ function UserDetail({ data }: { data?: FormTypes }) {
                   onChange={handleRadioChange}
                   type="radio"
                   value={"male"}
+                  checked={form?.gender === 'male'}
                   name="gender"
                   id="male"
                 />
@@ -252,6 +246,7 @@ function UserDetail({ data }: { data?: FormTypes }) {
                 <input
                   type="radio"
                   onChange={handleRadioChange}
+                  checked={form?.gender === 'other'}
                   value={"other"}
                   name="gender"
                   id="other"
