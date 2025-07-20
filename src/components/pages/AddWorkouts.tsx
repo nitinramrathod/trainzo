@@ -27,13 +27,13 @@ const headers = [
   },
 ];
 
-const data = { uniqueId: 0, workoutId : "", setCount: 0, repsCount: "", gapBwSet: "" };
+const data = { uniqueId: 0, workout_id : "", sets: 0, repetition: "", gap: "" };
 export interface Exercise {
   uniqueId?: string | number;
-  workoutId?: string | number;
-  setCount?: number;
-  repsCount?: string;
-  gapBwSet?: string;
+  workout_id?: string | number;
+  sets?: number;
+  repetition?: string;
+  gap?: string;
   [key: string]: string | number | undefined;
 }
 
@@ -55,13 +55,13 @@ const AddWorkouts = ({ day, setOpen, workoutPlanDays, setWorkoutPlan }: AddWorko
     setExercises(dataForDay?.exercises || []);
   }, [day, workoutPlanDays]);
 
-
   useEffect(() => {
     get("/api/v1/workout").then((res) => {
-      const options = res.map((item) => {
+      
+      const options = res.data.map((item) => {
         return {
-          value: String(item.id),
-          label: item.workoutName,
+          value: String(item._id),
+          label: item.name,
         };
       });
       setWorkoutOptions(options);
@@ -70,7 +70,7 @@ const AddWorkouts = ({ day, setOpen, workoutPlanDays, setWorkoutPlan }: AddWorko
 
 
   const handleInput = (e, exerciseNumber) => {
-    debugger;
+    
     const { name, value } = e.target;
 
     setExercises((prev) =>
@@ -87,7 +87,24 @@ const AddWorkouts = ({ day, setOpen, workoutPlanDays, setWorkoutPlan }: AddWorko
     );
   };
 
-  console.log("exercises", exercises);
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>, exerciseNumber) => {
+    
+    
+    const { name, value } = e.target;
+
+    setExercises((prev) =>
+      prev.map((item) => {
+        if (item.uniqueId == exerciseNumber) {
+         return{
+            ...item,
+            [name]:value
+         }
+        }
+
+        return item;
+      })
+    );
+  };
 
   const addNewRow = () => {
     const row: Exercise = {
@@ -101,7 +118,7 @@ const AddWorkouts = ({ day, setOpen, workoutPlanDays, setWorkoutPlan }: AddWorko
   setWorkoutPlan((prev) => {
     if (!prev) return prev;
 
-    const updatedDays = prev?.days?.map((item) => {
+    const updatedDays = prev?.workouts?.map((item) => {
       if (item.day === day) {
         return {
           ...item,
@@ -113,14 +130,14 @@ const AddWorkouts = ({ day, setOpen, workoutPlanDays, setWorkoutPlan }: AddWorko
 
     return {
       ...prev,
-      days: updatedDays,
+      workouts: updatedDays,
     };
   });
   setOpen(false)
 };
 
   return (
-    <div className="w-full">
+    <div className="w-full pt-7">
       <div className="flex justify-between items-center mb-5">
         <h2 className="mb-5">
           Day: <span> {day} </span>
@@ -128,18 +145,18 @@ const AddWorkouts = ({ day, setOpen, workoutPlanDays, setWorkoutPlan }: AddWorko
         <Button onClick={addNewRow}>{create_icon} Add Workout</Button>
       </div>
 
-      <Table headers={headers}>
+      <Table searchable={false} pagination={false} headers={headers}>
         {exercises?.length > 0 ? (
           exercises?.map((item, index) => (
             <TR key={`exercise-${index}-day-${day}`}>
               <TD>
-                <Select options={workoutOptions} noLabel={true}></Select>
+                <Select value={item?.workout_id} name="workout_id" onChange={ (e)=>handleSelect(e, ++index)} options={workoutOptions} noLabel={true}></Select>
               </TD>
               <TD>
                 <Input
                   onChange={(e) => handleInput(e, ++index)}
-                  value={item?.setCount || ""}
-                  name="setCount"
+                  value={item?.sets || ""}
+                  name="sets"
                   noLabel={true}
                   type="number"
                   placeholder="Eg. 2"
@@ -148,8 +165,8 @@ const AddWorkouts = ({ day, setOpen, workoutPlanDays, setWorkoutPlan }: AddWorko
               <TD>
                 <Input
                   onChange={(e) => handleInput(e, ++index)}
-                  value={item.repsCount || ""}
-                  name="repsCount"
+                  value={item.repetition || ""}
+                  name="repetition"
                   noLabel={true}
                   type="text"
                   placeholder="Eg. 1st set 16, 2nd set 12"
@@ -158,8 +175,8 @@ const AddWorkouts = ({ day, setOpen, workoutPlanDays, setWorkoutPlan }: AddWorko
               <TD>
                 <Input
                   onChange={(e) => handleInput(e, ++index)}
-                  value={item.gapBwSet || ""}
-                  name="gapBwSet"
+                  value={item.gap || ""}
+                  name="gap"
                   noLabel={true}
                   type="text"
                   placeholder="Eg. 2 Minutes"

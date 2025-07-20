@@ -4,6 +4,11 @@ interface TrProps {
   className?: string;
 }
 
+type TDProps = React.TdHTMLAttributes<HTMLTableCellElement> & {
+  children?: React.ReactNode;
+  className?: string;
+};
+
 function TR({ children, className }: TrProps) {
   return (
     <tr
@@ -15,15 +20,15 @@ function TR({ children, className }: TrProps) {
     </tr>
   );
 }
-function TD({
-  children,
-  className,
-}: {
-  children: React.ReactNode;
-  className?: string;
-}) {
-  return <td className={`px-6 py-4 ${className}`}>{children || "--"}</td>;
+
+function TD({ children, className, ...rest }: TDProps) {
+  return (
+    <td className={`px-6 py-4 ${className || ''}`} {...rest}>
+      {children || '--'}
+    </td>
+  );
 }
+
 function ActionTD({
   children,
   className,

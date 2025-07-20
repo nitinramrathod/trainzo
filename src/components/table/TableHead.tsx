@@ -14,9 +14,10 @@ const Input = ({placeholder})=>{
 
 interface TableHeadProps {
   headers: { title: string }[];
+  searchable: boolean
 }
 
-const TableHead = ({ headers }: TableHeadProps) => {
+const TableHead = ({ headers, searchable }: TableHeadProps) => {
   return (
     <thead >
       <tr className="text-xs bg-indigo-400 sticky top-0 z-10 text-gray-700 uppercase dark:bg-gray-700 dark:text-gray-400">
@@ -32,6 +33,7 @@ const TableHead = ({ headers }: TableHeadProps) => {
           </th>
         ))}
       </tr>
+      {searchable &&
       <tr className="bg-indigo-100">
         {headers?.map((item: { title: string, input?: string }, index: number) => (
           <th
@@ -39,10 +41,11 @@ const TableHead = ({ headers }: TableHeadProps) => {
             scope="col"
             className={`px-2 text-[.8rem] py-2 ${item?.title == "Action" ? "sticky right-0 bg-indigo-100" : ""}`}
           >
-            {item?.input == 'text' && <Input placeholder={`Enter ${item.title}`}></Input>}
+            {item?.input == 'text' && <Input placeholder={`Search ${item.title}`}></Input>}
           </th>
         ))}
       </tr>
+      }
     </thead>
   );
 };

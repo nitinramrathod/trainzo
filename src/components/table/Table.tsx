@@ -6,19 +6,21 @@ import { backward_arrow_icon, forward_arrow_icon } from "@/assets/icons/dashboar
 interface TableProps {
   children: React.ReactNode;
   headers: { title: string }[];
+  pagination?: boolean;
+  searchable?: boolean;
 }
 
-const Table = ({ children, headers }: TableProps) => {
+const Table = ({ children, headers, searchable=true, pagination = true }: TableProps) => {
   return (
     <>
       <div className="relative w-full overflow-auto max-h-[calc(73vh)] shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <TableHead headers={headers} />
-          <tbody>{children}</tbody>
+          <TableHead searchable={searchable} headers={headers} />
+          <tbody>{children}</tbody> 
         </table>
       </div>
-
-      <Pagination />
+      {pagination && <Pagination />}
+      
     </>
   );
 };

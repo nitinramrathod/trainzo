@@ -9,6 +9,7 @@ import NoDataFound from '@/components/table/NoDataFound'
 import Table from '@/components/table/Table'
 import TableLoader from '@/components/table/TableLoader'
 import { API_URL } from '@/utils/services'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
@@ -118,7 +119,7 @@ const Users = () => {
                     </td>
 
                     <ActionTD>
-                        <a href={`/dashboard/workouts/${item._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">{edit_icon}</a>
+                        <Link href={`/dashboard/workouts/${item._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">{edit_icon}</Link>
                         <button onClick={()=>handleDelete(item?._id)} className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">{delete_icon}</button>
                     </ActionTD>
                 </tr>

@@ -9,6 +9,7 @@ import Table from '@/components/table/Table'
 import TableLoader from '@/components/table/TableLoader'
 import { API_URL } from '@/utils/services'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
@@ -111,12 +112,8 @@ const Users = () => {
             throw new Error("Failed to fetch products");
         }
         hideDeleteModal();
-        fetchData()
-
+        fetchData();
     }
-  
-
-
 
     const handleDelete = (id:string)=>{
         console.log('modals', modals)
@@ -131,7 +128,6 @@ const Users = () => {
         deleteUser(modals.delete_id)
     }
 
-
     useEffect(() => {
         fetchData()
     }, [])
@@ -140,8 +136,6 @@ const Users = () => {
     const goToCreate = () => {
         route.push('/dashboard/users/create')
     }
-
-    
 
     return (<>
         <PageHeader button_text='Create User' onClick={goToCreate} title='User List' />
@@ -167,7 +161,10 @@ const Users = () => {
                             </td>
                             
                             <td className="px-6 py-4">
+                            <span className='bg-indigo-400 text-slate-50 px-3 rounded-xl py-1 text-xs capitalize'>
+
                                 {item?.role || "--"}
+                            </span>
                             </td>
                             <td className="px-6 py-4">
                                 {item?.joining_date?.formatted || "--"}
@@ -175,18 +172,18 @@ const Users = () => {
                             <td className="px-6 py-4">
                                 {item?.expiry_date?.formatted || "--"}
                             </td>
-                            <td className="px-6 py-4">
+                            <td className="px-6 py-4 capitalize">
                                 {item?.gender || "--"}
                             </td>
                             <td className="px-6 py-4">
-                                {item?.remaining_fees || "--"}
+                                {`${item?.remaining_fees}/-` || "--"}
                             </td>
                             <td className="px-6 py-4">
                                 {item?.gym_package?.name || "--"}
                             </td>
 
                             <ActionTD>
-                                <a href={`/dashboard/users/${item._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">{edit_icon}</a>
+                                <Link href={`/dashboard/users/${item._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">{edit_icon}</Link>
                                 <button onClick={()=>item._id && handleDelete(item._id)} className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">{delete_icon}</button>
                             </ActionTD>
                         </tr>

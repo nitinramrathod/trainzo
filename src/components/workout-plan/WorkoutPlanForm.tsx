@@ -12,25 +12,30 @@ import { API_URL } from "@/utils/services";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Modal from "../common/Modal";
+import Textarea from "../forms/Textarea";
 
 // Define Exercise type here if the import fails
 interface FormTypes {
-  workoutPlanName?: string | undefined;
-  id?: string;
+  name?: string | undefined;
+  _id?: string;
   days?: number;
   exercises?: Exercise[] | undefined;
 }
 interface ErrorObject {
-  workoutPlanName?: string;
+  name?: string;
+  description?: string;
+  days?: string;
+  workouts?: string;
 }
 export interface WorkoutDay {
   day: number;
   exercises: Exercise[];
 }
 export interface WorkoutPlan {
-  workoutPlanName?: string;
-  daysCount?: number | string;
-  days?: WorkoutDay[];
+  name?: string;
+  days?: number | string;
+  description?: string;
+  workouts?: WorkoutDay[];
 }
 
 const WorkoutPlanForm = ({ data }: { data?: FormTypes }) => {
@@ -41,10 +46,10 @@ const WorkoutPlanForm = ({ data }: { data?: FormTypes }) => {
   const [day, setDay] = useState<number | undefined>();
   const [workoutPlan, setWorkoutPlan] = useState<WorkoutPlan>({});
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
 
-    if (name == "daysCount" && Number(value) > 90 || Number(value)< 1) {
+    if (name == "days" && Number(value) > 90 || Number(value)< 1) {
       alert("Days cannot be less than 1 or more than 90");
       return;
     }
@@ -57,8 +62,8 @@ const WorkoutPlanForm = ({ data }: { data?: FormTypes }) => {
   const handleSubmit = async () => {
     try {
       const url = isEdit
-        ? `${API_URL}/api/v1/workout-plan/update`
-        : `${API_URL}/api/v1/workout-plan/create`;
+        ? `${API_URL}/api/v1/workout-plan/${data?._id}`
+        : `${API_URL}/api/v1/workout-plan`;
       const method = isEdit ? "PUT" : "POST";
 
       const res = await fetch(url, {
@@ -90,7 +95,7 @@ const WorkoutPlanForm = ({ data }: { data?: FormTypes }) => {
   useEffect(() => {
     if (data) {
       setIsEdit(true);
-    //   setForm(data);
+      setWorkoutPlan(data);
     }
   }, [data]);
 
@@ -115,31 +120,33 @@ const WorkoutPlanForm = ({ data }: { data?: FormTypes }) => {
     const generateDays = () => {
       const arr: WorkoutDay[] = [];
 
-      const daysCount = Number(workoutPlan?.daysCount ?? 0);
-      for (let i = 1; i <= daysCount; i++) {
+      const days = Number(workoutPlan?.days ?? 0);
+      for (let i = 1; i <= days; i++) {
         arr.push({
           day: i,
           exercises: [
             {
               uniqueId: 1,
-              setCount: 0,
-              repsCount: "",
-              gapBwSet: "",
-              workoutId: 1,
+              sets: 0,
+              repetition: "",
+              gap: "",
+              workout_id: "",
             },
           ],
         });
       }
       setWorkoutPlan((prev) => ({
         ...prev,
-        days: arr,
+        workouts: arr,
       }));
     };
 
-    generateDays();
-  }, [workoutPlan?.daysCount]);
+    if(!data){
+      generateDays();
+    }
+  }, [workoutPlan?.days, data]);
 
-  console.log("workoutPlan", workoutPlan);
+  console.log('workoutPlan==>', workoutPlan)
 
   return (
     <div>
@@ -147,39 +154,47 @@ const WorkoutPlanForm = ({ data }: { data?: FormTypes }) => {
         onClick={gotoList}
         detail={true}
         button_text="Back to List"
-        title="Create Plan"
+        title={`${isEdit ? 'Edit Workout Plan': 'Create Workout Plan'}`}
       />
       <FormWrapper>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-4">
           <Input
             label="Plan Name"
-            value={workoutPlan?.workoutPlanName}
+            value={workoutPlan?.name}
             placeholder="Enter Plan Name"
-            name="workoutPlanName"
+            name="name"
             onChange={handleInputChange}
-            error={error?.workoutPlanName || ""}
+            error={error?.name || ""}
           />
 
           <Input
             label="Enter Days"
-            value={workoutPlan?.daysCount}
-            placeholder="Enter daysCount"
-            name="daysCount"
+            value={workoutPlan?.days}
+            placeholder="Enter days"
+            disabled={isEdit}
+            name="days"
             type="number"
+            onChange={handleInputChange}
+          />
+          <Textarea
+            label="Enter Description"
+            value={workoutPlan?.description}
+            placeholder="Enter description"
+            name="description"
             onChange={handleInputChange}
           />
         </div>
 
         <div>
-          <Table headers={headers}>
-            { workoutPlan?.days && workoutPlan?.days?.length > 0 ?
-              workoutPlan?.days?.map((item) => {
+          <Table searchable={false} pagination={false} headers={headers}>
+            { workoutPlan?.workouts && workoutPlan?.workouts?.length > 0 ?
+              workoutPlan?.workouts?.map((item) => {
                 return (
                   <TR key={item.day}>
                     <TD>{item.day}</TD>
                     <TD>
                       {item?.exercises?.map((exercise) => (
-                        <p key={exercise?.uniqueId}>{exercise?.workoutId}</p>
+                        <p key={exercise?.uniqueId}>{exercise?.workout_id}</p>
                       ))}
                     </TD>{" "}
                     <ActionTD>
@@ -189,7 +204,10 @@ const WorkoutPlanForm = ({ data }: { data?: FormTypes }) => {
                     </ActionTD>
                   </TR>
                 );
-              }): <TR> <TD>Add Days to edit</TD></TR>}
+              }): <TR> 
+                <TD colSpan={headers.length} className="text-center text-lg font-bold" >
+                Add Days to Edit</TD>
+                </TR>}
           </Table>
         </div>
         <div className="mt-8">
@@ -199,7 +217,7 @@ const WorkoutPlanForm = ({ data }: { data?: FormTypes }) => {
 
       <Modal open={open} setOpen={setOpen}>
         <AddWorkouts
-          workoutPlanDays={workoutPlan?.days || []}
+          workoutPlanDays={workoutPlan?.workouts || []}
           setWorkoutPlan={setWorkoutPlan}
           day={day ?? 1}
           setOpen={setOpen}
