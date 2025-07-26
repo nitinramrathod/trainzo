@@ -1,5 +1,5 @@
 import UserDetail from "@/components/user/UserDetail";
-import { API_URL } from "@/utils/services";
+import { API_URL } from "@/utils/services/services";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

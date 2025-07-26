@@ -4,10 +4,10 @@ import Button from "@/components/forms/Button";
 import Input from "@/components/forms/Input";
 import Select from "@/components/forms/Select";
 import PageHeader from "@/components/PageHeader";
-import { API_URL, get } from "@/utils/services";
+import { API_URL, get } from "@/utils/services/services";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-// import ImageSelector from "../forms/ImageSelector";
+import ImageSelector from "../forms/ImageSelector";
 import Textarea from "../forms/Textarea";
 
 interface FormTypes {
@@ -56,13 +56,13 @@ function UserDetail({ data, id }: {id?:string, data?: FormTypes }) {
   };
 
 
-  // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = e.target.files?.[0];
-  //   setForm((prev) => ({
-  //     ...prev,
-  //     [e.target.name]: file || null,
-  //   }));
-  // };
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: file || null,
+    }));
+  };
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -87,18 +87,14 @@ function UserDetail({ data, id }: {id?:string, data?: FormTypes }) {
 
   const handleSubmit = async () => {
     try {
-      const formData = new FormData();
-      formData.append("name", form?.name || "");
-      formData.append("email", form?.email || "");
-      formData.append("username", form?.username || "hello");
-      formData.append("address", form?.address || "");
-      formData.append("contact", form?.contact || "");
-      formData.append("dob", form?.dob || "");
-      formData.append("paid_fees", form?.paid_fees || "");
-      formData.append("gender", form?.gender || "");
-      formData.append("gym_package", form?.gym_package || "");
-      formData.append("role", form?.role || "");
-      formData.append("joining_date", form?.joining_date || "");
+      const formData = new FormData();      
+
+      Object.entries(form).forEach(([key, value]) => {
+        if (value !== undefined && value !== null && key !== "photo") {
+          formData.append(key, value);
+        }
+      });
+
       if (isEdit) {
         formData.append("id", form?.id || "");
       }
@@ -153,15 +149,15 @@ function UserDetail({ data, id }: {id?:string, data?: FormTypes }) {
       />
       <div className="bg-white shadow-md py-8 px-5 rounded-md">
         <div className="mb-5">
-          {/* <ImageSelector
+          <ImageSelector
           name="photo"
           defaultSrc={
             (form?.photo && typeof form.photo === "string")
               ? `${API_URL}/${form?.photo}`
-              : 'ddd'
+              : '/images/form/avatar.jpg'
           }
           onChange={handleImageChange}
-          />  */}
+          /> 
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-4">
           <Input
@@ -190,12 +186,14 @@ function UserDetail({ data, id }: {id?:string, data?: FormTypes }) {
             type="email"
             onChange={handleInputChange}
             error={error?.email || ""}
+            optional={true}
           />
 
           <Textarea
             label="Enter Address"
             value={form?.address}
             placeholder="Enter Address"
+            optional={true}
             name="address"
             onChange={handleInputChange}
             error={error?.address || ""}
@@ -215,7 +213,7 @@ function UserDetail({ data, id }: {id?:string, data?: FormTypes }) {
               htmlFor=""
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Gender
+              Gender <span className='text-indigo-600 text-xs'>(optional)</span>
             </label>
             <div className="flex gap-2 pl-1 pt-2">
               <div className="flex gap-1 items-center">
@@ -259,6 +257,7 @@ function UserDetail({ data, id }: {id?:string, data?: FormTypes }) {
             label="Enter DOB"
             value={form?.dob}
             placeholder="Enter dob"
+            optional={true}
             type="date"
             name="dob"
             onChange={handleInputChange}
@@ -282,17 +281,20 @@ function UserDetail({ data, id }: {id?:string, data?: FormTypes }) {
               value: item?._id,
               label: item?.name,
             }))}
+            error={error?.gym_package || ""}
           />
 
           <Select
             onChange={handleSelectChange}
             label="Workout Plan"
             name="workoutPlanId"
+            optional={true}
             value={form?.workoutPlanId}
             options={dropdown?.packages?.map((item: Package) => ({
               value: item?._id,
               label: item?.name,
             }))}
+            error={error?.workoutPlanId || ""}
           />
           <Select
             onChange={handleSelectChange}
@@ -304,6 +306,8 @@ function UserDetail({ data, id }: {id?:string, data?: FormTypes }) {
               { label: "Trainer", value: "trainer" },
               { label: "Admin", value: "admin" },
             ]}
+            error={error?.role || ""}
+
           />
           {/* <Select
             onChange={handleInputChange}

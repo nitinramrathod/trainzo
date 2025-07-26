@@ -1,5 +1,5 @@
 import WorkoutPlanForm from "@/components/workout-plan/WorkoutPlanForm"
-import { API_URL } from "@/utils/services";
+import { API_URL } from "@/utils/services/services";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

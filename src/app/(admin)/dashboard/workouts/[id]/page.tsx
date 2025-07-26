@@ -1,5 +1,5 @@
 import WorkoutForm from "@/components/workouts/WorkoutForm";
-import { API_URL } from "@/utils/services";
+import { API_URL } from "@/utils/services/services";
 
 const EditWorkout = async({params}) => {
     const id = await params?.id;

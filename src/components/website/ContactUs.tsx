@@ -25,7 +25,6 @@ const ContactUs = () => {
 
         <div className="bg-indigo-100/30 backdrop-blur-lg shadow-lg border-1 py-12 px-8 rounded-2xl w-full lg:max-w-[450px] grid grid-cols-1 gap-x-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-
           <Input label="Name" placeholder="Enter your name" />
           <Input label="Mobile" placeholder="Enter mobile number" />
           </div>

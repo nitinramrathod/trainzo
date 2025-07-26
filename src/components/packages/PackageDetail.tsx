@@ -2,7 +2,7 @@
 import Button from '@/components/forms/Button'
 import Input from '@/components/forms/Input'
 import PageHeader from '@/components/PageHeader'
-import { API_URL} from '@/utils/services'
+import { API_URL} from '@/utils/services/services'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import FormWrapper from '../forms/FormWrapper'

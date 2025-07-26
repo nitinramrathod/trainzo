@@ -4,7 +4,7 @@ import { ActionTD } from '@/components/table/Common'
 import NoDataFound from '@/components/table/NoDataFound'
 import Table from '@/components/table/Table'
 import TableLoader from '@/components/table/TableLoader'
-import { API_URL } from '@/utils/services'
+import { API_URL } from '@/utils/services/services'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 

@@ -7,7 +7,7 @@ import { ActionTD } from '@/components/table/Common'
 import NoDataFound from '@/components/table/NoDataFound'
 import Table from '@/components/table/Table'
 import TableLoader from '@/components/table/TableLoader'
-import { API_URL } from '@/utils/services'
+import { API_URL, get } from '@/utils/services/services'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -44,32 +44,32 @@ type TModals = {
     },             
     {
         title: "Mobile",
-        input: 'text'
+        // input: 'text'
     },
     {
         title: "Role",
-        input: 'text'
+        // input: 'text'
     },
 
     {
         title: "Start Date",
-        input: 'text'
+        // input: 'text'
     },
     {
         title: "End Date",
-        input: 'text'
+        // input: 'text'
     },
         {
         title: "Gender",
-        input: 'text'
+        // input: 'text'
     },
     {
         title: "Remaining Fees",
-        input: 'text'
+        // input: 'text'
     },
     {
         title: "Gym Plan",
-        input: 'text'
+        // input: 'text'
     },
     {
         title: "Action"
@@ -83,22 +83,14 @@ const Users = () => {
     const [modals, setModals] = useState<TModals>({delete_id:null })
 
     const fetchData = async () => {
-        const res = await fetch(`${API_URL}/api/v1/user`, {
-            method: "GET",
-            cache: 'no-cache',
-            headers: {
-                "Content-Type": "application/json"
-            },
-        });
 
-        // If the response is not successful, handle the error
-        if (!res.ok) {
+        get("/api/v1/user").then((res) => {
+            setUsers(res?.data)
             setIsLoading(false);
-            throw new Error("Failed to fetch products");
-        }
-        const users = await res?.json();
-        setUsers(users?.data)
-        setIsLoading(false);
+        }).catch((error) => {
+            setIsLoading(false);
+            console.error("Error fetching users:", error);  
+        });
     }
 
     const deleteUser = async (id)=>{
@@ -145,7 +137,7 @@ const Users = () => {
                             
                             <td className="px-6 py-4">
                                    <Image
-                                    src={item.photo ? `${API_URL}/${item.photo}` : '/default-user.png'}
+                                    src={item.photo ? `${API_URL}/${item.photo}` : '/images/form/avatar.jpg'}
                                     alt={item?.name || "--"}
                                     width={50}
                                     height={50}

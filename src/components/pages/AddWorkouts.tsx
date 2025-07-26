@@ -4,7 +4,7 @@ import Table from "../table/Table";
 import { ActionTD, TD, TR } from "../table/Common";
 import Input from "../forms/Input";
 import Select from "../forms/Select";
-import { get } from "@/utils/services";
+import { get } from "@/utils/services/services";
 import Button from "../forms/Button";
 import { WorkoutDay, WorkoutPlan } from "../workout-plan/WorkoutPlanForm";
 import { create_icon, delete_icon, save_icon } from "@/assets/icons/dashboard";

@@ -8,7 +8,7 @@ import PageHeader from "@/components/PageHeader";
 import AddWorkouts, { Exercise } from "@/components/pages/AddWorkouts";
 import { TR, TD, ActionTD } from "@/components/table/Common";
 import Table from "@/components/table/Table";
-import { API_URL } from "@/utils/services";
+import { API_URL } from "@/utils/services/services";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Modal from "../common/Modal";
