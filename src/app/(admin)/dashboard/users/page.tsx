@@ -129,8 +129,13 @@ const Users = () => {
         route.push('/dashboard/users/create')
     }
 
+    const tables = [
+        {title: "Active Users", value: "Nitin Rathod"},
+        {title: "Expiring Users", value: "9876543210"},
+    ]
+
     return (<>
-        <PageHeader button_text='Create User' onClick={goToCreate} title='User List' />
+        <PageHeader button_text='Create User' onClick={goToCreate} title={tables} />
          <Table headers={headers}>
             {isLoading ? (<TableLoader cols={headers?.length}/>) : (users?.length > 0 ? users?.map((item: User) => (
                         <tr key={item?._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
@@ -167,7 +172,7 @@ const Users = () => {
                             <td className="px-6 py-4 capitalize">
                                 {item?.gender || "--"}
                             </td>
-                            <td className="px-6 py-4">
+                            <td className="px-6 py-4 text-red-600">
                                 {`${item?.remaining_fees}/-` || "--"}
                             </td>
                             <td className="px-6 py-4">

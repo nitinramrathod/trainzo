@@ -25,7 +25,7 @@ const TableHead = ({ headers, searchable }: TableHeadProps) => {
           <th
             key={item?.title + index}
             scope="col"
-            className={`px-2 text-[.8rem] min-w-[60px] py-3 font-bold text-white ${
+            className={`px-2 min-w-[60px] text-[.8rem] whitespace-nowrap py-3 font-bold text-white ${
               item?.title == "Action" ? "sticky right-0 bg-indigo-400" : ""
             }`}
           >
