@@ -23,9 +23,7 @@ const nextConfig: NextConfig = {
     ],
 
   },
-  env: {
-    API_URL: process.env.BACKEND_URL,
-  },
+  env: {},
 };
 
 export default nextConfig;

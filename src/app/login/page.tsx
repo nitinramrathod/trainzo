@@ -6,14 +6,15 @@ import React, { useState } from "react";
 import landingImage from "@/assets/images/landing-image-1.png";
 import { mail_icon } from "@/assets/icons/dashboard";
 import { lock_icon } from "@/assets/icons/website";
+import { API_URL } from "@/utils/services/services";
 
 interface FormTypes {
   password?: string | undefined;
-  email_id?: string;
+  email?: string;
 }
 
 // interface ErrorObject {
-//     email_id?: string,
+//     email?: string,
 //     password?: string,
 
 // }
@@ -33,12 +34,11 @@ const Page = () => {
   const handleSubmit = async () => {
     try {
       const formData = new FormData();
-      formData.append("email_id", form?.email_id || "");
+      formData.append("email", form?.email || "");
       formData.append("password", form?.password || "");
 
       const res = await fetch(
-        "https://admin-timely.tantra-gyan.com/api/v1/login",
-        // const res = await fetch('http://127.0.0.1:3700/api/v1/login',
+        `${API_URL}/api/v1/auth/login`,
         {
           method: "POST",
           body: formData,
@@ -51,7 +51,6 @@ const Page = () => {
       } else {
         const errorText = await res.text(); // Try to get error details
         console.log("Error Response:", errorText); // Log the actual error
-        // setError(JSON.parse(errorText));
       }
     } catch (error) {
       console.log(error);
@@ -79,7 +78,7 @@ const Page = () => {
             <span className="text-lg"> {mail_icon}</span>
             <input
               type="text"
-              name="email_id"
+              name="email"
               onChange={handleInputChange}
               id="email"
               placeholder="Enter email"
