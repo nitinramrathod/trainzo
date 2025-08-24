@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const protectedApi = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
@@ -11,14 +12,26 @@ const protectedApi = axios.create({
 protectedApi.interceptors.request.use(
   (config) => {
     if (typeof window !== "undefined") {
-      const token = localStorage.getItem("token");
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
+       const token = Cookies.get("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
     }
     return config;
   },
   (error) => Promise.reject(error)
+);
+
+protectedApi.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 403) {
+      Cookies.remove("token");
+      window.location.reload();
+    }
+    return Promise.reject(error);
+  }
 );
 
 export default protectedApi;
