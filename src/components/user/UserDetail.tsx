@@ -87,8 +87,10 @@ function UserDetail({ data, id }: {id?:string, data?: FormTypes }) {
   };
 
   const handleSubmit = async () => {
+    debugger;
     try {
-      const formData = new FormData();      
+      const formData = new FormData();  
+          
 
       Object.entries(form).forEach(([key, value]) => {
         if (value !== undefined && value !== null && key !== "photo") {
@@ -116,7 +118,8 @@ function UserDetail({ data, id }: {id?:string, data?: FormTypes }) {
         setForm({});
         router.push("/dashboard/users");
       }).catch(error => {
-        setError(error.errors);
+        console.log('error', error)
+        setError(error?.response?.data?.errors);
       });
       
     } catch (error) {

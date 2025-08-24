@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const protectedApi = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_URL
   // headers: {
   //   "Content-Type": "application/json",
   // },
@@ -13,15 +13,14 @@ protectedApi.interceptors.request.use(
   (config) => {
     if (typeof window !== "undefined") {
       const token = Cookies.get("token");
-      if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-       if (config.data instanceof FormData) {
+      if (token) config.headers.Authorization = `Bearer ${token}`;
+
+      // Handle JSON vs FormData
+      if (config.data instanceof FormData) {
         delete config.headers["Content-Type"];
       } else {
         config.headers["Content-Type"] = "application/json";
       }
-    return config;
     }
     return config;
   },
