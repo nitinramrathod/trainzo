@@ -7,6 +7,7 @@ import { ActionTD } from '@/components/table/Common'
 import NoDataFound from '@/components/table/NoDataFound'
 import Table from '@/components/table/Table'
 import TableLoader from '@/components/table/TableLoader'
+import protectedApi from '@/utils/services/protectedAxios'
 import { API_URL, get } from '@/utils/services/services'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -93,19 +94,20 @@ const Users = () => {
         });
     }
 
-    const deleteUser = async (id)=>{
-        const res = await fetch(`${API_URL}/api/v1/user/${id}`, {
-            method: "DELETE"
-        });
+    const deleteUser = async (id) => {
+        try {
+            const res = await protectedApi.delete(`/api/v1/user/${id}`);
 
-        // If the response is not successful, handle the error
-        if (!res.ok) {
+            // Axios throws an error automatically for non-2xx responses, so no need to check res.ok
+
+            hideDeleteModal();
+            fetchData();
+        } catch (error) {
             setIsLoading(false);
-            throw new Error("Failed to fetch products");
+            console.error("Failed to delete user:", error);
+            throw new Error("Failed to delete user");
         }
-        hideDeleteModal();
-        fetchData();
-    }
+        };
 
     const handleDelete = (id:string)=>{
         console.log('modals', modals)

@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import ImageSelector from "../forms/ImageSelector";
 import Textarea from "../forms/Textarea";
+import protectedApi from "@/utils/services/protectedAxios";
 
 interface FormTypes {
   name?: string | undefined;
@@ -106,18 +107,18 @@ function UserDetail({ data, id }: {id?:string, data?: FormTypes }) {
       const url = isEdit ? `${API_URL}/api/v1/user/${id}` : `${API_URL}/api/v1/user`;
       const method = isEdit ? "PUT" : "POST";
 
-      const res = await fetch(url, {
+      await protectedApi({
+        url: url,
         method: method,
-        body: formData,
-      });
-
-      if (res.ok) {
+        data: formData
+        
+      }).then(response => {
         setForm({});
         router.push("/dashboard/users");
-      } else {
-        const errorText = await res.text();
-        setError(JSON.parse(errorText)?.errors);
-      }
+      }).catch(error => {
+        setError(error.errors);
+      });
+      
     } catch (error) {
       console.log(error);
     }

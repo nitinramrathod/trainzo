@@ -3,11 +3,18 @@ import { left_panel_close, left_panel_open } from "@/assets/icons/dashboard";
 import { useSidebar } from "@/utils/context/SidebarContext";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import Cookies from "js-cookie";
 
 type TPopover = {
     menu: boolean;
     notification: boolean;
+}
+
+type TUser = {
+    name: string;
+    email: string;
+    id: string;
 }
 
 const Header = () => {
@@ -15,6 +22,11 @@ const Header = () => {
   const [showMenu, setShowMenu] = useState<TPopover>({
     menu: false,
     notification: false
+  });
+  const [user, setUser] = useState<TUser>({
+    name: '',
+    email: '',
+    id: ''
   });
 
   const handleShowMenu = (name: string): void => {
@@ -32,7 +44,21 @@ const Header = () => {
         }));
     }
   };
-  console.log(showMenu);
+  
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    window.location.href = "/login";
+    Cookies.remove("token");
+  };
+
+  useEffect(() => {
+   const user = JSON.parse(localStorage.getItem("user") || '{}');
+   if(user){
+     setUser(user);
+   }
+  }, [])
+  
+
   return (
     <nav className="bg-white dark:bg-gray-800">
       <div className="mx-auto px-2 sm:pe-6 lg:pe-8">
@@ -83,14 +109,17 @@ const Header = () => {
             </div>
 
             <div className="relative ml-4">
-              <Image
+              <div onClick={()=>handleShowMenu('menu')}>
+                { user?.name ? <h2 className="bg-indigo-50 w-[35px] h-[35px] rounded-full flex items-center justify-center text-indigo-500 font-bold aspect-square]"> {user.name.split('')[0]} </h2>:  <Image
                 width={"100"}
                 height={"100"}
                 className="size-8 rounded-full"
                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                 alt=""
-                onClick={()=>handleShowMenu('menu')}
-              />
+                
+              />}
+              </div>
+             
               <div
                 className={`absolute p-5 bg-[white]/80 border-1 border-slate-300 backdrop-blur-sm shadow-md top-[120%] w-fit right-0 min-w-[16rem] rounded-lg transition-all duration-200 ease-in z-30 ${
                   showMenu.menu
@@ -99,18 +128,18 @@ const Header = () => {
                 }`}
               >
                 <div className="flex gap-3 items-center">
-                  <Image
+                  { user?.name ? <h2 className="bg-indigo-50 w-[35px] h-[35px] rounded-full flex items-center justify-center text-indigo-500 font-bold aspect-square]"> {user.name.split('')[0]} </h2>: <Image
                     width={"140"}
                     height={"140"}
                     className="size-12 rounded-full border-1 border-indigo-600"
                     src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                     alt=""
-                  />
+                  />}
 
                   <div>
-                    <h2 className="text-indigo-800 text-lg">Nitin Rathod</h2>
+                    <h2 className="text-indigo-800 text-lg">{user?.name ? user.name : "No User"}</h2>
                     <p className="text-gray-500 text-xs">
-                      rathod173ram@gmail.com
+                      {user?.email ? user.email : "No Email"}
                     </p>
                   </div>
                 </div>
@@ -133,7 +162,7 @@ const Header = () => {
                   >
                     Go to website
                   </Link>
-                  <button className="text-sm hover:text-indigo-500 transition-all duration-200 ease-in">
+                  <button onClick={handleLogout} className="text-sm cursor-pointer hover:text-indigo-500 transition-all duration-200 ease-in">
                     Logout
                   </button>
                 </div>
@@ -153,7 +182,7 @@ const NotificationItem = () => {
         R
       </h3>
       <div>
-        <h3 className="text-sm">New user created Rohan Rathod</h3>
+        <h3 className="text-sm">New user created Naresh</h3>
         <p className="text-xs text-slate-600">12 July 2025 Friday 03:35PM</p>
       </div>
     </div>

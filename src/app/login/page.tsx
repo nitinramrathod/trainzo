@@ -56,6 +56,7 @@ const Page = () => {
           expires: 1,
           secure: false,
         });
+        localStorage.setItem("user", JSON.stringify(data?.user));
         router.push("/dashboard");
       } else {
         const errorText = await res.text(); // Try to get error details
