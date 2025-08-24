@@ -123,6 +123,13 @@ const Page = () => {
         <Button className="w-full mt-10 py-3 rounded-lg" onClick={handleSubmit}>
           Login
         </Button>
+         <Link
+          href="/"
+          className="text-center pt-4 text-indigo-600 block text-sm"
+        >
+          Back to Home
+        </Link>
+        
       </div>
     </div>
   );
