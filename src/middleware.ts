@@ -2,9 +2,10 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { jwtVerify } from "jose";
 
-const SECRET = new TextEncoder().encode(process.env.NEXT_PUBLIC_JWT_SECRET);
+const SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
 
 export async function middleware(req: NextRequest) {
+  console.log('SECRET', SECRET);
   
   const token = req.cookies.get("token")?.value;
   const { pathname } = req.nextUrl;
