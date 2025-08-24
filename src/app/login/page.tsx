@@ -7,6 +7,8 @@ import landingImage from "@/assets/images/landing-image-1.png";
 import { mail_icon } from "@/assets/icons/dashboard";
 import { lock_icon } from "@/assets/icons/website";
 import { API_URL } from "@/utils/services/services";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 interface FormTypes {
   password?: string | undefined;
@@ -21,6 +23,7 @@ interface FormTypes {
 
 const Page = () => {
   const [form, setForm] = useState<FormTypes>({});
+  const router = useRouter();
   // const [error, setError] = useState<ErrorObject>({});
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,6 +51,12 @@ const Page = () => {
 
       if (res.ok) {
         setForm({});
+        const data = await res.json();
+        Cookies.set("token", data?.token, {
+          expires: 1,
+          secure: false,
+        });
+        router.push("/dashboard");
       } else {
         const errorText = await res.text(); // Try to get error details
         console.log("Error Response:", errorText); // Log the actual error
