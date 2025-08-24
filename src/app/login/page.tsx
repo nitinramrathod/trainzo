@@ -15,16 +15,15 @@ interface FormTypes {
   email?: string;
 }
 
-// interface ErrorObject {
-//     email?: string,
-//     password?: string,
-
-// }
+interface ErrorObject {
+  email?: string,
+  password?: string
+}
 
 const Page = () => {
   const [form, setForm] = useState<FormTypes>({});
   const router = useRouter();
-  // const [error, setError] = useState<ErrorObject>({});
+  const [error, setError] = useState<ErrorObject>({});
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -36,6 +35,7 @@ const Page = () => {
 
   const handleSubmit = async () => {
     try {
+      setError({});
       const formData = new FormData();
       formData.append("email", form?.email || "");
       formData.append("password", form?.password || "");
@@ -44,8 +44,7 @@ const Page = () => {
         `${API_URL}/api/v1/auth/login`,
         {
           method: "POST",
-          body: formData,
-          credentials: "include",
+          body: formData
         }
       );
 
@@ -59,8 +58,9 @@ const Page = () => {
         localStorage.setItem("user", JSON.stringify(data?.user));
         router.push("/dashboard");
       } else {
-        const errorText = await res.text(); // Try to get error details
-        console.log("Error Response:", errorText); // Log the actual error
+        const error = await res?.json(); // Try to get error details
+        console.log("Error Response:", error?.errors); // Log the actual error
+        setError(error?.errors);
       }
     } catch (error) {
       console.log(error);
@@ -78,6 +78,7 @@ const Page = () => {
         </h2>
         <p className="text-center text-gray-500">Login with email</p>
         <div className="flex mt-12 flex-col gap-10 mb-4">
+          <div>
           <div className="relative flex items-center gap-2 px-3 py-2 bg-transparent rounded-lg border-1 border-indigo-500">
             <label
               htmlFor="email"
@@ -93,9 +94,12 @@ const Page = () => {
               id="email"
               placeholder="Enter email"
               className="bg-transparent w-full outline-0"
+              
             />
           </div>
-
+            {error?.email && <p className="text-red-500 text-sm">{error?.email}</p>}
+            </div>
+<div>
           <div className="relative flex items-center gap-2 px-3 py-2 bg-transparent rounded-lg border-1 border-indigo-500">
             <label
               htmlFor="email"
@@ -113,6 +117,8 @@ const Page = () => {
               className="bg-transparent w-full outline-0"
             />
           </div>
+            {error?.password && <p className="text-red-500 text-sm">{error?.password}</p>}
+            </div>
         </div>
         <Link
           href="/forgot-password"
