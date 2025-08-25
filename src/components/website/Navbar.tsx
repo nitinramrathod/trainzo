@@ -112,7 +112,7 @@ const Navbar = () => {
                 className="text-slate-100 text-2xl font-medium"
                 href={"/login"}
               >
-                Login
+                Login 
               </Link>
             </li>
           </ul>
