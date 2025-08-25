@@ -7,36 +7,17 @@ import Stat from "@/components/dashboard/Stat";
 import protectedApi from "@/utils/services/protectedAxios";
 import React, { useEffect } from "react";
 
-const dummyStat = [
-  {
-      title: "Total Users",
-      count: 1500,
-      icon:users_icon,
-      description: "Total number of registered users",
-    },
-    {
-      title: "Active Users",
-      count: 1200,
-      icon:users_icon,
-      description: "Users active in the last 30 days",
-    },
-    {
-      title: "New Signups",
-      count: 300,
-      icon:users_icon,
-      description: "New users signed up this month",
-    },
-    {
-      title: "Total Revenue",
-      count: 50000,
-      icon:rupee_icon,
-      description: "Total revenue generated this month",
-    },
-  ];
-  const Dashboard = () => {
-    const [stats, setStats] = React.useState(dummyStat);
+export interface ItemProps {    
+    title?: string;
+    count?: number | string;
+    description?: string;  
+    period?: string;
+    type?: string;
+    icon?: React.ReactNode;
+  }
 
-  // /api/v1/analytics/stats
+  const Dashboard = () => {
+    const [stats, setStats] = React.useState<ItemProps[] | []>([]);
 
     const fetchData = async () => {
       protectedApi.get('/api/v1/analytics/stats').then((res)=>{
@@ -49,30 +30,37 @@ const dummyStat = [
                 count: data?.totalUsers || 0,
                 icon:users_icon,
                 description: "Total number of registered users",
+                period: "Overall",
               },
               {
                 title: "Active Users",
                 count: data?.activeUsers || 0,
                 icon:users_icon,
-                description: "Users active in the last 30 days",
+                description: "Current active users",
+                period: "Overall",
               },
               {
-                title: "New Signups this month",
+                title: "New Users",
                 count: data?.newUsers || 0,
                 icon:users_icon,
                 description: "New users signed up this month",
+                period: "This month",
               },
               {
-                title: "Total Revenue this month",
-                count: data?.totalRevenue || 0,
+                title: "Revenue",
+                count: `${data?.totalRevenue || 0}/-`,
                 icon:rupee_icon,
                 description: "Total revenue generated this month",
+                period: "This month",
               },
               {
-                title: "Remaining Fees this month",
-                count: data?.remainingFees || 0,
+                title: "Pending Fees",
+                count: `${data?.remainingFees || 0}/-`,
                 icon:rupee_icon,
                 description: "Total remaining fees to be collected",
+                period: "This month",
+                type: "warning"
+
               },
             ];
             setStats(updatedStats);
@@ -91,9 +79,9 @@ const dummyStat = [
     <div className="w-full">
       <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-        {stats.map((stat, index) => (
+        {stats.length > 0 ? stats?.map((stat, index) => (
           <Stat key={index + "stats"} stat={stat} />
-        ))}
+        )) : Array.from({length: 5}).map((_, index) => <div key={index+'loader'} className="text-gray-500 shadow border-1 border-white p-10 bg-gradient-to-br from-indigo-200 to-indigo-300 rounded-md"></div>)} 
       </div>
       <div className="flex flex-col lg:flex-row gap-6 mt-7 w-full">
         <div className="bg-white rounded-lg lg:flex-1 shadow-lg p-4">

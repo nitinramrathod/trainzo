@@ -13,9 +13,7 @@ const Testimonials = () => {
         <div className='flex flex-col justify-center items-center max-w-[500px]'>
            <Image src={image} className='w-[160px] rounded-full border-3 border-orange-400 aspect-[1] object-cover' alt="Coach Image"></Image>
            <p className='text-gray-900 text-2xl font-medium mb-4 mt-4'>Sandesh Jadhav</p>
-           <p className='text-gray-700 text-center'> &quot; Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam 
-            nulla earum doloribus saepe modi nihil, necessitatibus libero repellendus non 
-            corporis facilis soluta excepturi dolor, quasi tempore quas perspiciatis sapiente vitae.
+           <p className='text-gray-700 text-center'> &quot; I joined this gym six months ago and the results have been amazing! The trainers are really supportive, the equipment is always well-maintained, and the customized workout plan helped me lose 8 kg in 4 months. Highly recommend their 6-month plan for anyone serious about fitness.
             &quot;
             </p>
         </div>

@@ -8,47 +8,48 @@ interface SectionHeadingProps {
 
 const plans = [
     {
-        title: "3 Month Plan",
-        price: "1800/-",
-        description: "Lorem ipsum dolor sit amet consectetur adipisicing labore magni ullam",
+        title: "1 Month Plan",
+        price: "₹700",
+        description: "Affordable plan for short-term fitness needs.",
         features: [
-            "Lorem ipsum dolor.",
-            "Lorem  dolor sit amet .",
-            "Lorem ipsum  consectetur."
+            "Unlimited gym access",
+            "Access to all equipment",
+            "Locker facility"
+        ]
+    },
+    {
+        title: "3 Month Plan",
+        price: "₹1,800",
+        description: "Great choice for building workout consistency.",
+        features: [
+            "Unlimited gym access",
+            "1 free diet consultation",
+            "Locker facility"
         ]
     },
     {
         title: "6 Month Plan",
-        price: "3200/-",
+        price: "₹3,500",
         isPopular: true,
-        description: "Lorem ipsum dolor sit amet consectetur adipisicing labore magni ullam",
+        description: "Best value for regular fitness enthusiasts.",
         features: [
-            "Lorem ipsum dolor.",
-            "Lorem  dolor sit amet .",
-            "Lorem ipsum  consectetur."
+            "Unlimited gym access",
+            "Customized workout plan",
+            "2 free diet consultations"
         ]
     },
     {
         title: "12 Month Plan",
-        price: "6000/-",
-        description: "Lorem ipsum dolor sit amet consectetur adipisicing labore magni ullam",
+        price: "₹6,000",
+        description: "Ideal for long-term commitment and maximum savings.",
         features: [
-            "Lorem ipsum dolor.",
-            "Lorem  dolor sit amet .",
-            "Lorem ipsum  consectetur."
-        ]
-    },
-    {
-        title: "1 Month Plan",
-        price: "700/-",
-        description: "Lorem ipsum dolor sit amet consectetur adipisicing labore magni ullam",
-        features: [
-            "Lorem ipsum dolor.",
-            "Lorem  dolor sit amet .",
-            "Lorem ipsum  consectetur."
+            "Unlimited gym access",
+            "4 free personal training sessions",
+            "Monthly diet consultation"
         ]
     }
-]
+];
+
 
 export const SectionHeading = ({children, className}: SectionHeadingProps) => {
  return   <h2 className={`text-center z-10 relative text-gray-600 uppercase text-shadow-sm text-3xl mb-10 font-medium ${className ? className : ''}`}>{children}</h2>

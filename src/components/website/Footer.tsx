@@ -40,7 +40,7 @@ const Footer = () => {
       <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
       <p className="text-sm text-gray-300">Dawdigaon, Dombivli East, Thane MH</p>
       <p className="text-sm text-gray-300">Email: contact@trainzo.com</p>
-      <p className="text-sm text-gray-300">Phone: +91 98765 43210</p>
+      <p className="text-sm text-gray-300">Phone: +91 89739 15555</p>
       <div className="mt-4 flex space-x-4">
         <Link href="#" className="hover:text-blue-400">Facebook</Link>
         <Link href="#" className="hover:text-pink-400">Instagram</Link>
