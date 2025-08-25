@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import { getInitials } from "@/utils/initialGenerator";
 
 type TPopover = {
     menu: boolean;
@@ -16,6 +17,12 @@ type TUser = {
     email: string;
     id: string;
 }
+
+export const handleLogout = () => {
+    localStorage.removeItem("user");
+    window.location.href = "/login";
+    Cookies.remove("token");
+  };
 
 const Header = () => {
   const { toggleSidebar, collapsed } = useSidebar();
@@ -45,18 +52,14 @@ const Header = () => {
     }
   };
   
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    window.location.href = "/login";
-    Cookies.remove("token");
-  };
+ 
 
   useEffect(() => {
    const user = JSON.parse(localStorage.getItem("user") || '{}');
    if(user){
      setUser(user);
    }
-  }, [])
+  }, []);
   
 
   return (
@@ -128,7 +131,7 @@ const Header = () => {
                 }`}
               >
                 <div className="flex gap-3 items-center">
-                  { user?.name ? <h2 className="bg-indigo-50 w-[35px] h-[35px] rounded-full flex items-center justify-center text-indigo-500 font-bold aspect-square]"> {user.name.split('')[0]} </h2>: <Image
+                  { user?.name ? <h2 className="bg-indigo-50 w-[35px] h-[35px] rounded-full flex items-center justify-center text-indigo-500 font-bold aspect-square]"> {getInitials(user?.name)} </h2>: <Image
                     width={"140"}
                     height={"140"}
                     className="size-12 rounded-full border-1 border-indigo-600"

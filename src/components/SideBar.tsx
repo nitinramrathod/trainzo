@@ -14,13 +14,15 @@ import {
   workout_plan_icon,
 } from "@/assets/icons/dashboard";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { usePathname } from "next/navigation";
 import { useSidebar } from "@/utils/context/SidebarContext";
 import { useDeviceWidth } from "@/utils/hooks/useDeviceWidth";
 import Modal from "./common/Modal";
 import Button, { CancelButton } from "./forms/Button";
+import { getInitials } from "@/utils/initialGenerator";
+import { handleLogout } from "./Header";
 // import { cross_icon, menu_icon } from "@/assets/icons/website";
 
 interface SideBarProps {
@@ -29,11 +31,22 @@ interface SideBarProps {
   url: string;
 }
 
+type TUser = {
+    name: string;
+    email: string;
+    id: string;
+}
+
 const SideBar = () => {
   const pathname = usePathname();
   const { collapsed, toggleSidebar } = useSidebar();
   const width = useDeviceWidth();
-  const [deleteModal, setDeleteModal] = useState<boolean>(false)
+  const [deleteModal, setDeleteModal] = useState<boolean>(false);
+    const [user, setUser] = useState<TUser>({
+      name: '',
+      email: '',
+      id: ''
+    });
 
   const sidebarLinks = [
     {
@@ -78,6 +91,13 @@ const SideBar = () => {
     },
   ];
 
+    useEffect(() => {
+     const user = JSON.parse(localStorage.getItem("user") || '{}');
+     if(user){
+       setUser(user);
+     }
+    }, []);
+
   
 
   return (
@@ -92,14 +112,14 @@ const SideBar = () => {
           <div>
             {width <= 768 ? <div className="flex flex-col items-center mt-7">
               <div className="shadow-lg border-2 border-slate-100 bg-red-400 w-15 h-15 rounded-full flex items-center justify-center mb-4">
-                <p className="text-white font-bold" >NR</p>
+                <p className="text-white font-bold" >{user?.name ? getInitials(user?.name) : "N"}</p>
               </div>
               <div className="mb-6 flex flex-col items-center">
-                <h3 className="text-center text-white text-lg">Nitin Rathod</h3>
-                <p className="px-4  py-1 rounded-3xl mt-3 bg-red-200 text-[12px]">Member</p>
+                <h3 className="text-center text-white text-lg">{user?.name ? user.name : "No User"}</h3>
+                <p className="px-4  py-1 rounded-3xl mt-3 bg-red-200 text-[12px]">Admin</p>
               </div>
                 <hr className="mb-4 bg-indigo-800 w-[90%]"/>
-            </div> : <h3 className="text-white text-2xl text-center mb-8 mt-4">{collapsed ? 'P' : 'Protonity'}</h3>}
+            </div> : <h3 className="text-white text-2xl text-center mb-8 mt-4">{collapsed ? 'T' : 'Trainzo'}</h3>}
             <ul className="space-y-2 mt-5">
               {sidebarLinks?.map((item: SideBarProps) => (
                 <li key={item?.url}>
@@ -119,6 +139,7 @@ const SideBar = () => {
             icon={logout_icon}
             isCollapsed={collapsed}
             title="Logout"
+            // onClick={handleLogout}
           />
         </div>
       </aside>
