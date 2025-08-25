@@ -113,7 +113,7 @@ const Header = () => {
 
             <div className="relative ml-4">
               <div onClick={()=>handleShowMenu('menu')}>
-                { user?.name ? <h2 className="bg-indigo-50 w-[35px] h-[35px] rounded-full flex items-center justify-center text-indigo-500 font-bold aspect-square]"> {user.name.split('')[0]} </h2>:  <Image
+                { user?.name ? <h2 className="bg-indigo-50 w-[35px] h-[35px] rounded-full flex items-center justify-center text-indigo-500 font-bold aspect-square]"> {getInitials(user?.name)} </h2>:  <Image
                 width={"100"}
                 height={"100"}
                 className="size-8 rounded-full"
