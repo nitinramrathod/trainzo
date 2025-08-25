@@ -58,6 +58,7 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({
         accept="image/*"
         onChange={handleImageChange}
         className="hidden"
+        capture="environment"
       />
     </div>
   );
