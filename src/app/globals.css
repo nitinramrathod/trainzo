@@ -126,3 +126,25 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* Width of the scrollbar */
+::-webkit-scrollbar {
+  width: 5px; /* Vertical scrollbar */
+  height: 5px; /* Horizontal scrollbar */
+}
+
+/* Scrollbar track (background) */
+::-webkit-scrollbar-track {
+  background: #f0f0f0; 
+}
+
+/* Scrollbar thumb (handle) */
+::-webkit-scrollbar-thumb {
+  background: #ff8c5f;
+  border-radius: 6px;
+}
+
+/* Scrollbar thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #eb8158;
+}

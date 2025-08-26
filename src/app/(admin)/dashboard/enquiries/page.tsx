@@ -114,7 +114,7 @@ const Users = () => {
                                     <label htmlFor="checkbox-table-search-1" className="sr-only">checkbox</label>
                                 </div>
                             </td> */}
-                            <td className="px-6 py-4">
+                            <td className="px-4 py-3">
                                 {/* {item?.photo || 'image'} */}
                                    <Image
                                     src={item.photo ? `${API_URL}/${item.photo}` : '/default-user.png'}
@@ -128,13 +128,13 @@ const Users = () => {
                             <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {item?.name || "--"}
                             </th>
-                            <td className="px-6 py-4">
+                            <td className="px-4 py-3">
                                 {item?.email || "--"}
                             </td>
-                            <td className="px-6 py-4">
+                            <td className="px-4 py-3">
                                 {item?.mob || "--"}
                             </td>
-                            <td className="px-6 py-4">
+                            <td className="px-4 py-3">
                                 {item?.username || "--"}
                             </td>                        
 

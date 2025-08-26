@@ -111,10 +111,10 @@ const Users = () => {
                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {item?.name}
                     </th>
-                    <td className="px-6 py-4">
+                    <td className="px-4 py-3">
                         {item?.description}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-4 py-3">
                          <div className='w-30 h-20 overflow-hidden' dangerouslySetInnerHTML={{ __html: item?.video_iframe }}/>                        
                     </td>
 

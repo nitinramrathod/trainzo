@@ -8,9 +8,19 @@ interface TableProps {
   headers: { title: string }[];
   pagination?: boolean;
   searchable?: boolean;
+  metaData?: TableMetaData;
 }
 
-const Table = ({ children, headers, searchable=true, pagination = true }: TableProps) => {
+export type TableMetaData = {
+    current_page?: number;
+    first_page?: number;
+    last_page?: number;
+    limit?: number;
+    total_items?: number;
+    total_pages?: number;
+};
+
+const Table = ({ children, headers, searchable=true, pagination = true, metaData={} }: TableProps) => {
   return (
     <>
       <div className="relative w-full overflow-auto max-h-[calc(73vh)] shadow-md sm:rounded-lg">
@@ -19,7 +29,7 @@ const Table = ({ children, headers, searchable=true, pagination = true }: TableP
           <tbody>{children}</tbody> 
         </table>
       </div>
-      {pagination && <Pagination />}
+      {pagination && <Pagination metaData={metaData} />}
       
     </>
   );
@@ -46,18 +56,19 @@ const pageCount = [
     }
 ]
 
-const Pagination = ({currentPage = 2}) => {
+const Pagination = ({ metaData }: { metaData: TableMetaData }) => {
   return (
     <div className="flex justify-between items-center mt-3">
       <div className="w-[90px]">
-        <Select placeholder='Pages' noLabel={true} options={pageCount} />
+        <Select placeholder='Pages' value={metaData?.limit?.toString() || '10'} noLabel={true} options={pageCount} />
       </div>
 
       <div className="flex rounded-md overflow-hidden gap-3 w-fit">
         <button className="p-3 border-r-1 rounded-full w-[40px] bg-white px-3 text-gray-500 hover:bg-indigo-300 cursor-pointer hover:text-white">{backward_arrow_icon}</button>
-        <button className={` px-3 aspect-square w-[40px] border-r-1 rounded-full hover:bg-indigo-300 cursor-pointer hover:text-white ${currentPage == 1 ? 'bg-indigo-400 text-white hover:bg-indigo-400' :'bg-white'}`}>1</button>
-        <button className={` px-3 aspect-square w-[40px] border-r-1 rounded-full hover:bg-indigo-300 cursor-pointer hover:text-white ${currentPage == 2 ? 'bg-indigo-400 text-white hover:bg-indigo-400' :'bg-white'}`}>2</button>
-        <button className={` px-3 aspect-square w-[40px] border-r-1 rounded-full hover:bg-indigo-300 cursor-pointer hover:text-white ${currentPage == 3 ? 'bg-indigo-400 text-white hover:bg-indigo-400' :'bg-white'}`}>3</button>
+       
+        {Array.from({length: metaData?.total_pages || 1}).map((_, index) => (
+          <button key={index + '-pagination-page'} className={` px-3 aspect-square w-[40px] border-r-1 rounded-full hover:bg-indigo-300 cursor-pointer hover:text-white ${metaData?.current_page == index+1 ? 'bg-indigo-400 text-white hover:bg-indigo-400' :'bg-white'}`}>{index+1}</button>
+        ))}
         <button className="p-3 bg-white rounded-full w-[40px] px-3 text-gray-500 hover:bg-indigo-300 cursor-pointer hover:text-white">{forward_arrow_icon}</button>
       </div>
     </div>

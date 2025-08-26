@@ -107,13 +107,13 @@ const Users = () => {
                             <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {item?.name || "--"}
                             </td>
-                            <td className="px-6 py-4">
+                            <td className="px-4 py-3">
                                 {item?.email || "--"}
                             </td>
-                            <td className="px-6 py-4">
+                            <td className="px-4 py-3">
                                 {item?.mob || "--"}
                             </td>
-                            <td className="px-6 py-4">
+                            <td className="px-4 py-3">
                                 {item?.username || "--"}
                             </td>                        
 

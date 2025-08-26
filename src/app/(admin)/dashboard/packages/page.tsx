@@ -93,15 +93,15 @@ const Users = () => {
         },
         {
             title: "Duration",
-            input: "text"
+            // input: "text"
         },
         {
             title: "Description",
-            input: "text"
+            // input: "text"
         },
         {
             title: " Actual Price",
-            input: "text"
+            // input: "text"
         },
         {
             title: "Action"
@@ -118,13 +118,13 @@ const Users = () => {
                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {item?.name || "--"}
                     </th>
-                    <td className="px-6 py-4">
+                    <td className="px-4 py-3">
                         {`${item?.duration} ${Number(item?.duration) > 1 ? 'Months' : 'Month'}`  || "--"}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-4 py-3">
                         {item?.description || "--"}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-4 py-3">
                        <span className='pe-2 font-medium text-lg'>
                         ₹  {item?.discount_price || "--"}
                         </span>

@@ -211,13 +211,14 @@ function UserDetail({ data, id }: {id?:string, data?: FormTypes }) {
             name="joining_date"
             onChange={handleInputChange}
             error={error?.joining_date || ""}
+            optional={true}
           />
           <div>
             <label
               htmlFor=""
               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >
-              Gender <span className='text-indigo-600 text-xs'>(optional)</span>
+              Gender
             </label>
             <div className="flex gap-2 pl-1 pt-2">
               <div className="flex gap-1 items-center">
@@ -256,6 +257,7 @@ function UserDetail({ data, id }: {id?:string, data?: FormTypes }) {
                 <label htmlFor="other">Other</label>
               </div>
             </div>
+            {error?.gender ? <p className="text-red-400 text-[13px]">{error?.gender}</p> : ""}
           </div>
           <Input
             label="Enter DOB"
@@ -270,6 +272,7 @@ function UserDetail({ data, id }: {id?:string, data?: FormTypes }) {
           <Input
             label="Enter Paid Fees"
             value={form?.paid_fees}
+            optional={true}
             placeholder="Enter Paid Fees"
             type="number"
             name="paid_fees"

@@ -5,7 +5,7 @@ import Button, { CancelButton } from '@/components/forms/Button'
 import PageHeader from '@/components/PageHeader'
 import { ActionTD } from '@/components/table/Common'
 import NoDataFound from '@/components/table/NoDataFound'
-import Table from '@/components/table/Table'
+import Table, { TableMetaData } from '@/components/table/Table'
 import TableLoader from '@/components/table/TableLoader'
 import protectedApi from '@/utils/services/protectedAxios'
 import { API_URL, get } from '@/utils/services/services'
@@ -55,6 +55,7 @@ type TModals = {
     {
         title: "Start Date",
         // input: 'text'
+        width: 'w-32'
     },
     {
         title: "End Date",
@@ -76,18 +77,24 @@ type TModals = {
         title: "Action"
     }
     ];
+    
+   
 
 const Users = () => {
 
-    const [users, setUsers] = useState([])
-    const [isLoading, setIsLoading] = useState<boolean>(true)
-    const [modals, setModals] = useState<TModals>({delete_id:null })
+    const [users, setUsers] = useState([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [modals, setModals] = useState<TModals>({delete_id:null });
+    const [metaData, setMetaData] = useState<TableMetaData>({ current_page: 1, first_page: 1, last_page: 1, limit: 10, total_items: 1, total_pages: 1 });
+
+
 
     const fetchData = async () => {
 
         get("/api/v1/user").then((res) => {
             setUsers(res?.data)
             setIsLoading(false);
+            setMetaData(res?.meta);
         }).catch((error) => {
             setIsLoading(false);
             console.error("Error fetching users:", error);  
@@ -97,9 +104,6 @@ const Users = () => {
     const deleteUser = async (id) => {
         try {
             const res = await protectedApi.delete(`/api/v1/user/${id}`);
-
-            // Axios throws an error automatically for non-2xx responses, so no need to check res.ok
-
             hideDeleteModal();
             fetchData();
         } catch (error) {
@@ -107,10 +111,9 @@ const Users = () => {
             console.error("Failed to delete user:", error);
             throw new Error("Failed to delete user");
         }
-        };
+    };
 
     const handleDelete = (id:string)=>{
-        console.log('modals', modals)
         setModals({delete_id: id})
     }
 
@@ -132,53 +135,59 @@ const Users = () => {
     }
 
     const tables = [
-        {title: "Active Users", value: "Nitin Rathod"},
-        {title: "Expiring Users", value: "9876543210"},
+        {title: "Active Users", value: "active"},
+        {title: "Expiring Users", value: "expiring"}
     ]
 
     return (<>
         <PageHeader button_text='Create User' onClick={goToCreate} title={tables} />
-         <Table headers={headers}>
+         <Table headers={headers} metaData={metaData}>
             {isLoading ? (<TableLoader cols={headers?.length}/>) : (users?.length > 0 ? users?.map((item: User) => (
                         <tr key={item?._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                             
-                            <td className="px-6 py-4">
+                            <td className="px-4 py-3">
                                    <Image
                                     src={item.photo ? `${API_URL}/${item.photo}` : '/images/form/avatar.jpg'}
                                     alt={item?.name || "--"}
-                                    width={50}
-                                    height={50}
-                                    className='object-contain h-[45px] w-[45px] min-w-[45px] border-1 border-blue-400 rounded-full'
+                                    width={40}
+                                    height={40}
+                                    className='object-contain h-[40px] w-[40px] min-w-[40px] border-1 border-blue-400 rounded-full'
                                 />                              
 
                             </td>
-                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <th scope="row" className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {item?.name || "--"}
                             </th>
-                            <td className="px-6 py-4">
+                            <td className="px-4 py-3">
                                 {item?.contact || "--"}
                             </td>
                             
-                            <td className="px-6 py-4">
+                            <td className="px-4 py-3">
                             <span className='bg-indigo-400 text-slate-50 px-3 rounded-xl py-1 text-xs capitalize'>
 
                                 {item?.role || "--"}
                             </span>
                             </td>
-                            <td className="px-6 py-4">
-                                {item?.joining_date?.formatted || "--"}
+                            <td className="px-4 py-3">
+                                <div className='w-40'>
+                                    {item?.joining_date?.formatted || "--"}
+                                </div>
                             </td>
-                            <td className="px-6 py-4">
-                                {item?.expiry_date?.formatted || "--"}
+                            <td className="px-4 py-3">
+                                <div className='w-50'>
+                                    {item?.expiry_date?.formatted || "--"}
+                                </div>
                             </td>
-                            <td className="px-6 py-4 capitalize">
+                            <td className="px-4 py-3 capitalize">
                                 {item?.gender || "--"}
                             </td>
-                            <td className="px-6 py-4 text-red-600">
+                            <td className="px-4 py-3 text-red-600">
                                 {`${item?.remaining_fees}/-` || "--"}
                             </td>
-                            <td className="px-6 py-4">
-                                {item?.gym_package?.name || "--"}
+                            <td className="px-4 py-3">
+                                <div className='w-20'>
+                                    {item?.gym_package?.name || "--"}
+                                </div>
                             </td>
 
                             <ActionTD>
