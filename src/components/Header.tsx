@@ -6,6 +6,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import { getInitials } from "@/utils/initialGenerator";
+import useLoggedInUser from "@/utils/hooks/useLoggedInUser";
 
 type TPopover = {
     menu: boolean;
@@ -30,11 +31,7 @@ const Header = () => {
     menu: false,
     notification: false
   });
-  const [user, setUser] = useState<TUser>({
-    name: '',
-    email: '',
-    id: ''
-  });
+  const user = useLoggedInUser()
 
   const handleShowMenu = (name: string): void => {
     if(name == 'menu'){
@@ -54,12 +51,7 @@ const Header = () => {
   
  
 
-  useEffect(() => {
-   const user = JSON.parse(localStorage.getItem("user") || '{}');
-   if(user){
-     setUser(user);
-   }
-  }, []);
+
   
 
   return (

@@ -24,6 +24,7 @@ const Page = () => {
   const [form, setForm] = useState<FormTypes>({});
   const router = useRouter();
   const [error, setError] = useState<ErrorObject>({});
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -35,6 +36,7 @@ const Page = () => {
 
   const handleSubmit = async () => {
     try {
+      setLoading(true);
       setError({});
       const formData = new FormData();
       formData.append("email", form?.email || "");
@@ -62,7 +64,9 @@ const Page = () => {
         console.log("Error Response:", error?.errors); // Log the actual error
         setError(error?.errors);
       }
+      setLoading(false);
     } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -126,8 +130,8 @@ const Page = () => {
         >
           Forgot Password?
         </Link>
-        <Button className="w-full mt-10 py-3 rounded-lg" onClick={handleSubmit}>
-          Login
+        <Button disabled={loading} className="w-full mt-10 py-3 rounded-lg" onClick={handleSubmit}>
+          {loading ? "Wait Login...":"Login"}
         </Button>
          <Link
           href="/"

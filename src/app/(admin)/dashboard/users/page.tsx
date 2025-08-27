@@ -7,6 +7,7 @@ import { ActionTD } from '@/components/table/Common'
 import NoDataFound from '@/components/table/NoDataFound'
 import Table, { TableMetaData } from '@/components/table/Table'
 import TableLoader from '@/components/table/TableLoader'
+import useLoggedInUser from '@/utils/hooks/useLoggedInUser'
 import protectedApi from '@/utils/services/protectedAxios'
 import { API_URL, get } from '@/utils/services/services'
 import Image from 'next/image'
@@ -85,9 +86,8 @@ const Users = () => {
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [modals, setModals] = useState<TModals>({delete_id:null });
+    const user = useLoggedInUser();
     const [metaData, setMetaData] = useState<TableMetaData>({ current_page: 1, first_page: 1, last_page: 1, limit: 10, total_items: 1, total_pages: 1 });
-
-
 
     const fetchData = async () => {
 
@@ -192,7 +192,9 @@ const Users = () => {
 
                             <ActionTD>
                                 <Link href={`/dashboard/users/${item._id}`} className="font-medium text-blue-600 dark:text-blue-500 hover:underline">{edit_icon}</Link>
+                                {user?.id != item?._id &&
                                 <button onClick={()=>item._id && handleDelete(item._id)} className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">{delete_icon}</button>
+                                }
                             </ActionTD>
                         </tr>
                     )) : <NoDataFound colSpan={8}/>)}

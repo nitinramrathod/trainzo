@@ -23,6 +23,7 @@ import Modal from "./common/Modal";
 import Button, { CancelButton } from "./forms/Button";
 import { getInitials } from "@/utils/initialGenerator";
 import { handleLogout } from "./Header";
+import useLoggedInUser from "@/utils/hooks/useLoggedInUser";
 // import { cross_icon, menu_icon } from "@/assets/icons/website";
 
 interface SideBarProps {
@@ -42,11 +43,7 @@ const SideBar = () => {
   const { collapsed, toggleSidebar } = useSidebar();
   const width = useDeviceWidth();
   const [deleteModal, setDeleteModal] = useState<boolean>(false);
-    const [user, setUser] = useState<TUser>({
-      name: '',
-      email: '',
-      id: ''
-    });
+  const user = useLoggedInUser()
 
   const sidebarLinks = [
     {
@@ -91,12 +88,7 @@ const SideBar = () => {
     },
   ];
 
-    useEffect(() => {
-     const user = JSON.parse(localStorage.getItem("user") || '{}');
-     if(user){
-       setUser(user);
-     }
-    }, []);
+
 
   
 

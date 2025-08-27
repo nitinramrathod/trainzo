@@ -81,7 +81,7 @@ export interface ItemProps {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
         {stats.length > 0 ? stats?.map((stat, index) => (
           <Stat key={index + "stats"} stat={stat} />
-        )) : Array.from({length: 5}).map((_, index) => <div key={index+'loader'} className="text-gray-500 shadow border-1 border-white p-10 bg-gradient-to-br from-indigo-200 to-indigo-300 rounded-md"></div>)} 
+        )) : Array.from({length: 5}).map((_, index) => <div key={index+'loader'} className="text-gray-500 shadow border-1  border-white p-10  bg-indigo-200 animate-pulse rounded-md"></div>)} 
       </div>
       <div className="flex flex-col lg:flex-row gap-6 mt-7 w-full">
         <div className="bg-white rounded-lg lg:flex-1 shadow-lg p-4">
