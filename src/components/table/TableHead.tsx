@@ -3,12 +3,15 @@ import React, { useRef } from "react";
 // import Input from "../forms/Input";
 
 
-const Input = ({...rest})=>{
+const Input = ({className, ...rest})=>{
   return(
-  <div className="flex items-center bg-indigo-50 px-2 rounded-md shadow-sm border-1 hover:border-1 hover:border-indigo-300">
+    <div className={`min-w-[200px] ${className}`}>
+
+  <div  className={`flex items-center bg-indigo-50 px-2 rounded-md shadow-sm border-1 hover:border-1 w-full hover:border-indigo-300`}>
     <span className="text-xl text-indigo-500">{search_icon}</span>
     <input type="text" className="w-full font-medium p-2 outline-0" {...rest} />
   </div>
+    </div>
   )
 }
 
@@ -54,13 +57,13 @@ const TableHead = ({ headers, searchable, setFilter }: TableHeadProps) => {
       </tr>
       {searchable &&
       <tr className="bg-indigo-100">
-        {headers?.map((item: { title: string, input?: string, name?: string }, index: number) => (
+        {headers?.map((item: { title: string, input?: string,  width?: string, name?: string }, index: number) => (
           <th
             key={item?.title + index}
             scope="col"
             className={`px-2 text-[.8rem] py-2 ${item?.title == "Action" ? "sticky right-0 bg-indigo-100" : ""}`}
           >
-            {item?.input == 'text' && <Input name={item?.name} onChange={handleInputChange} placeholder={`Search ${item.title}`}></Input>}
+            {item?.input == 'text' && <Input className={`min-w-[${item?.width}px]`} name={item?.name} onChange={handleInputChange} placeholder={`Search ${item.title}`}></Input>}
           </th>
         ))}
       </tr>

@@ -7,9 +7,9 @@ const getUsers=async(params)=>{
         params
     })
 
-    if(response.statusText == "OK"){
-        return response?.data;
-    }
+    if(response.status)
+    return response?.data;
+    
 }
 const getPackages=async(params)=>{
     const response = await protectedApi({
@@ -17,9 +17,9 @@ const getPackages=async(params)=>{
         params
     })
 
-    if(response.statusText == "OK"){
-        return response?.data;
-    }
+    
+    return response?.data;
+    
 }
 
 export {

@@ -44,7 +44,8 @@ type TModals = {
     {
         title: "Name",
         input: 'text',
-        name: 'name'
+        name: 'name',
+        width: '200'
     },             
     {
         title: "Mobile",
