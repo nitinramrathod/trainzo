@@ -6,8 +6,9 @@ import Button, { CancelButton } from '@/components/forms/Button'
 import PageHeader from '@/components/PageHeader'
 import { ActionTD } from '@/components/table/Common'
 import NoDataFound from '@/components/table/NoDataFound'
-import Table from '@/components/table/Table'
+import Table, { TableMetaData } from '@/components/table/Table'
 import TableLoader from '@/components/table/TableLoader'
+import { getPackages } from '@/utils/services/dashboard.services'
 import { API_URL } from '@/utils/services/services'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -27,32 +28,48 @@ type TModals = {
     delete_id: string| undefined | null
 }
 
+ const headers = [
+        {
+            title: "Name",
+            input: "text",
+            name: 'name'
+        },
+        {
+            title: "Duration",
+            // input: "text"
+        },
+        {
+            title: "Description",
+            // input: "text"
+        },
+        {
+            title: " Actual Price",
+            // input: "text"
+        },
+        {
+            title: "Action"
+        },
+    ];
+
 const Users = () => {
 
     const [users, setUsers] = useState<Package[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);    
     const [modals, setModals] = useState<TModals>({delete_id:null })
+    const [initialMetaData, setInitialMetaData] = useState<TableMetaData>({ current_page: 1, first_page: 1, last_page: 1, limit: 10, total_items: 1, total_pages: 1 });
+    const [filter, setFilter]=useState({});
 
-    const fetchData = async () => {
-        const res = await fetch(`${API_URL}/api/v1/membership`, {
-            method: "GET",
-            cache: 'no-cache',
-            headers: {
-                "Content-Type": "application/json",
-                // Add any other necessary headers here (e.g., authentication tokens)
-            },
-        });
-
-        // If the response is not successful, handle the error
-        if (!res.ok) {
+    const fetchData = async () => {        
+        setIsLoading(true);
+        
+        getPackages(filter).then(res=>{
+            setUsers(res.data);
+            setInitialMetaData(res?.meta);
+        }).catch(err=>{
+            console.error("Error fetching users:", err);
+        }).finally(()=>{
             setIsLoading(false);
-            throw new Error("Failed to fetch products");            
-        }
-
-        // Parse the JSON response into product data
-        const users = await res.json();
-        setUsers(users.data);
-        setIsLoading(false);
+        });
     }
 
     
@@ -79,38 +96,16 @@ const Users = () => {
 
     useEffect(() => {
         fetchData()
-    }, [])
+    }, [filter])
 
     const route = useRouter()
     const goToCreate = () => {
         route.push('/dashboard/packages/create')
-    }
+    }   
 
-    const headers = [
-        {
-            title: "Name",
-            input: "text"
-        },
-        {
-            title: "Duration",
-            // input: "text"
-        },
-        {
-            title: "Description",
-            // input: "text"
-        },
-        {
-            title: " Actual Price",
-            // input: "text"
-        },
-        {
-            title: "Action"
-        },
-    ];
-
-    return (< >
+    return (<>
         <PageHeader button_text='Create Package' onClick={goToCreate} title='Package List' />
-        <Table headers={headers}>
+        <Table setFilter={setFilter} initialMetaData={initialMetaData} headers={headers}>
             {isLoading ? (<TableLoader cols={headers?.length}/>) : users?.length > 0 ? users?.map((item: Package) => (
 
                 <tr key={item?._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">

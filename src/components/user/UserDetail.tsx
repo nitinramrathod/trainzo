@@ -38,7 +38,8 @@ interface ErrorObject {
 }
 function UserDetail({ data, id }: {id?:string, data?: FormTypes }) {
   const [form, setForm] = useState<FormTypes>({});
-  const [isEdit, setIsEdit] = useState(false);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [submitting, setSubmitting]=useState<boolean>(false);
   interface Package {
     _id: string;
     name: string;
@@ -87,7 +88,7 @@ function UserDetail({ data, id }: {id?:string, data?: FormTypes }) {
   };
 
   const handleSubmit = async () => {
-    debugger;
+    setSubmitting(true);
     try {
       const formData = new FormData();  
           
@@ -120,7 +121,7 @@ function UserDetail({ data, id }: {id?:string, data?: FormTypes }) {
       }).catch(error => {
         console.log('error', error)
         setError(error?.response?.data?.errors);
-      });
+      }).finally(()=>setSubmitting(false));
       
     } catch (error) {
       console.log(error);
@@ -316,17 +317,9 @@ function UserDetail({ data, id }: {id?:string, data?: FormTypes }) {
             error={error?.role || ""}
 
           />
-          {/* <Select
-            onChange={handleInputChange}
-            name="gymPkgId"
-            options={dropdown?.packages?.map((item: Package) => ({
-              value: item?.id,
-              label: item?.pkgName,
-            }))}
-          /> */}
         </div>
         <div className="mt-8">
-          <Button onClick={handleSubmit}>{save_icon}Submit</Button>
+          <Button disabled={submitting} onClick={handleSubmit}>{save_icon}{submitting ? "Submitting...": "Submit"}</Button>
         </div>
       </div>
     </div>

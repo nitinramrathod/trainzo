@@ -3,9 +3,6 @@ import Cookies from "js-cookie";
 
 const protectedApi = axios.create({
   baseURL: process.env.NEXT_PUBLIC_BACKEND_URL
-  // headers: {
-  //   "Content-Type": "application/json",
-  // },
 });
 
 // Add request interceptor to include token

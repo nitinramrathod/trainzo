@@ -10,6 +10,7 @@ import TableLoader from '@/components/table/TableLoader'
 import useLoggedInUser from '@/utils/hooks/useLoggedInUser'
 import protectedApi from '@/utils/services/protectedAxios'
 import { API_URL, get } from '@/utils/services/services'
+import { getUsers } from '@/utils/services/dashboard.services'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -42,7 +43,8 @@ type TModals = {
     },
     {
         title: "Name",
-        input: 'text'
+        input: 'text',
+        name: 'name'
     },             
     {
         title: "Mobile",
@@ -87,18 +89,20 @@ const Users = () => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [modals, setModals] = useState<TModals>({delete_id:null });
     const user = useLoggedInUser();
-    const [metaData, setMetaData] = useState<TableMetaData>({ current_page: 1, first_page: 1, last_page: 1, limit: 10, total_items: 1, total_pages: 1 });
+    const [initialMetaData, setInitialMetaData] = useState<TableMetaData>({ current_page: 1, first_page: 1, last_page: 1, limit: 10, total_items: 1, total_pages: 1 });
+    const [filter, setFilter]=useState({});
 
-    const fetchData = async () => {
-
-        get("/api/v1/user").then((res) => {
+    const fetchData = () => {   
+        setIsLoading(true);    
+        getUsers(filter).then(res=>{
+            console.log('res==>', res)
             setUsers(res?.data)
+            setInitialMetaData(res?.meta);
+        }).catch(err=>{
+            console.error("Error fetching users:", err);
+        }).finally(()=>{
             setIsLoading(false);
-            setMetaData(res?.meta);
-        }).catch((error) => {
-            setIsLoading(false);
-            console.error("Error fetching users:", error);  
-        });
+        });        
     }
 
     const deleteUser = async (id) => {
@@ -125,9 +129,9 @@ const Users = () => {
         deleteUser(modals.delete_id)
     }
 
-    useEffect(() => {
-        fetchData()
-    }, [])
+    useEffect(() => {             
+        fetchData();
+    }, [filter]);
 
     const route = useRouter()
     const goToCreate = () => {
@@ -137,11 +141,12 @@ const Users = () => {
     const tables = [
         {title: "Active Users", value: "active"},
         {title: "Expiring Users", value: "expiring"}
-    ]
+    ];
+
 
     return (<>
         <PageHeader button_text='Create User' onClick={goToCreate} title={tables} />
-         <Table headers={headers} metaData={metaData}>
+         <Table setFilter={setFilter} headers={headers} initialMetaData={initialMetaData}>
             {isLoading ? (<TableLoader cols={headers?.length}/>) : (users?.length > 0 ? users?.map((item: User) => (
                         <tr key={item?._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                             
@@ -163,7 +168,7 @@ const Users = () => {
                             </td>
                             
                             <td className="px-4 py-3">
-                            <span className='bg-indigo-400 text-slate-50 px-3 rounded-xl py-1 text-xs capitalize'>
+                            <span className='bg-indigo-400 text-slate-50 px-3 rounded-2xl py-1 text-xs capitalize'>
 
                                 {item?.role || "--"}
                             </span>
@@ -181,8 +186,17 @@ const Users = () => {
                             <td className="px-4 py-3 capitalize">
                                 {item?.gender || "--"}
                             </td>
-                            <td className="px-4 py-3 text-red-600">
-                                {`${item?.remaining_fees}/-` || "--"}
+                            <td className="px-4 py-3"
+                                >
+                                {Number(item?.remaining_fees) <= 0 ? (
+                                    <span className="bg-green-100 text-green-700 px-3 py-1 rounded-2xl text-xs">
+                                    Nill
+                                    </span>
+                                ) : (
+                                    <span className="text-red-600">
+                                    ₹{item?.remaining_fees}/-
+                                    </span>
+                                )}
                             </td>
                             <td className="px-4 py-3">
                                 <div className='w-20'>
