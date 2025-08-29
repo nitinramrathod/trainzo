@@ -153,7 +153,7 @@ const Users = () => {
                             
                             <td className="px-4 py-3">
                                    <Image
-                                    src={item.photo ? `${API_URL}/${item.photo}` : '/images/form/avatar.jpg'}
+                                    src={item?.photo ? `${item?.photo}` : '/images/form/avatar.jpg'}
                                     alt={item?.name || "--"}
                                     width={40}
                                     height={40}

@@ -10,6 +10,7 @@ import React, { useEffect, useState } from "react";
 import ImageSelector from "../forms/ImageSelector";
 import Textarea from "../forms/Textarea";
 import protectedApi from "@/utils/services/protectedAxios";
+import WebcamCapture from "../common/Webcame";
 
 interface FormTypes {
   name?: string | undefined;
@@ -58,13 +59,25 @@ function UserDetail({ data, id }: {id?:string, data?: FormTypes }) {
   };
 
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+const handleImageChange = (
+  e: React.ChangeEvent<HTMLInputElement> | File, 
+  name?: string
+) => {
+  if (e instanceof File) {
+    // case: webcam capture (we pass File directly)
+    setForm((prev) => ({
+      ...prev,
+      [name || "image"]: e,
+    }));
+  } else {
+    // case: input[type=file]
     const file = e.target.files?.[0];
     setForm((prev) => ({
       ...prev,
       [e.target.name]: file || null,
     }));
-  };
+  }
+};
 
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -158,7 +171,7 @@ function UserDetail({ data, id }: {id?:string, data?: FormTypes }) {
           name="photo"
           defaultSrc={
             (form?.photo && typeof form.photo === "string")
-              ? `${API_URL}/${form?.photo}`
+              ? `${form?.photo}`
               : '/images/form/avatar.jpg'
           }
           onChange={handleImageChange}

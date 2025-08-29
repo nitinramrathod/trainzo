@@ -20,6 +20,11 @@ const nextConfig: NextConfig = {
         hostname: 'trainzo-backend.onrender.com',
         pathname: '/**', // Match all paths
       },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '/**', // Match all paths
+      },
     ],
 
   },
