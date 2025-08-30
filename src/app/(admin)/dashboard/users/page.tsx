@@ -142,10 +142,7 @@ const Users = () => {
         route.push('/dashboard/users/create')
     }
 
-    const tables = [
-        {title: "Active Users", value: "active"},
-        {title: "Expiring Users", value: "expiring"}
-    ];
+    const tables = "All Users";
 
 
     return (<>

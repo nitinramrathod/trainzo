@@ -14,6 +14,7 @@ import protectedApi from "@/utils/services/protectedAxios";
 interface FormTypes {
   name?: string | undefined;
   email?: string;
+  password?: string;
   username?: string;
   address?: string;
   photo?: string;
@@ -329,6 +330,18 @@ const handleImageChange = (
             error={error?.role || ""}
 
           />
+          {form?.role == "admin" &&
+          <Input
+            label="Enter Password"
+            value={form?.password}
+            placeholder="Enter password"
+            type="text"
+            name="password"
+            onChange={handleInputChange}
+            error={error?.password || ""}
+            />
+          }
+
         </div>
         <div className="mt-8">
           <Button disabled={submitting} onClick={handleSubmit}>{save_icon}{submitting ? "Submitting...": "Submit"}</Button>

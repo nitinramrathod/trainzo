@@ -9,6 +9,7 @@ import { lock_icon } from "@/assets/icons/website";
 import { API_URL } from "@/utils/services/services";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import { Eye, EyeOff } from "lucide-react";
 
 interface FormTypes {
   password?: string | undefined;
@@ -25,6 +26,7 @@ const Page = () => {
   const router = useRouter();
   const [error, setError] = useState<ErrorObject>({});
   const [loading, setLoading] = useState<boolean>(false);
+  const [inputType, setInputType] = useState<string>('password');  
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -106,7 +108,7 @@ const Page = () => {
 <div>
           <div className="relative flex items-center gap-2 px-3 py-2 bg-transparent rounded-lg border-1 border-indigo-500">
             <label
-              htmlFor="email"
+              htmlFor="password"
               className="absolute top-[-11px] bg-white px-1 text-sm text-indigo-500"
             >
               Password
@@ -114,12 +116,13 @@ const Page = () => {
             <span className="text-lg"> {lock_icon}</span>
             <input
               name="password"
-              type="password"
+              type={inputType}
               onChange={handleInputChange}
-              id="email"
+              id="password"
               placeholder="Enter password"
               className="bg-transparent w-full outline-0"
             />
+            <button onClick={()=>setInputType(inputType == 'password' ? 'text':'password')}>{inputType == "password"?<Eye className="text-indigo-600" size={18} />:<EyeOff className="text-indigo-600" size={18}/>} </button>
           </div>
             {error?.password && <p className="text-red-500 text-sm">{error?.password}</p>}
             </div>
