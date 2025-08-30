@@ -10,6 +10,7 @@ import Table, { TableMetaData } from '@/components/table/Table'
 import TableLoader from '@/components/table/TableLoader'
 import { getPackages } from '@/utils/services/dashboard.services'
 import { API_URL } from '@/utils/services/services'
+import { CalendarSearch } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -133,7 +134,7 @@ const Users = () => {
                         <button onClick={()=>handleDelete(item?._id)} className="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">{delete_icon}</button>
                     </ActionTD>
                 </tr>
-            )) : <NoDataFound colSpan={headers?.length}/>}
+            )) : <NoDataFound icon={CalendarSearch} title='No Gym Packages Found' colSpan={headers?.length}/>}
         </Table>
 
         <Modal open={modals?.delete_id ? true: false} setOpen={hideDeleteModal} backgroundBlur={true} position='top' title="Are you absolutely sure?">

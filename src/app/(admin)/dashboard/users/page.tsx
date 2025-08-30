@@ -9,12 +9,12 @@ import Table, { TableMetaData } from '@/components/table/Table'
 import TableLoader from '@/components/table/TableLoader'
 import useLoggedInUser from '@/utils/hooks/useLoggedInUser'
 import protectedApi from '@/utils/services/protectedAxios'
-import { API_URL, get } from '@/utils/services/services'
 import { getUsers } from '@/utils/services/dashboard.services'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
+import { Users2 } from 'lucide-react'
 
 
 interface User {
@@ -215,7 +215,7 @@ const Users = () => {
                                 }
                             </ActionTD>
                         </tr>
-                    )) : <NoDataFound colSpan={8}/>)}
+                    )) : <NoDataFound icon={Users2} title='No User found' colSpan={8}/>)}
         </Table>
 
         <Modal open={modals?.delete_id ? true: false} setOpen={hideDeleteModal} backgroundBlur={true} position='top' title="Are you absolutely sure?">
