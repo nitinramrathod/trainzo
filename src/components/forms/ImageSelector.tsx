@@ -22,7 +22,6 @@ const ImageSelector: React.FC<ImageSelectorProps> = ({
   const [showCamera, setShowCamera] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const [capturedBlob, setCapturedBlob] = useState<Blob | null>(null);
 
   useEffect(() => {
     if (defaultSrc) {
@@ -73,11 +72,11 @@ const capturePhoto = () => {
   }
 };
 
- const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
   const file = event.target.files?.[0];
   if (file) {
     setPreviewUrl(URL.createObjectURL(file));
-    if (onChange) onChange(event); // <-- works with your existing handler
+    if (onChange) onChange(event);
   }
 };
 
@@ -86,7 +85,7 @@ const capturePhoto = () => {
       {/* Avatar Preview */}
       <label
         htmlFor={`${name}-input`}
-        className="cursor-pointer block w-[100px] h-[100px] rounded-full border border-gray-300 relative"
+        className="cursor-pointer block w-[130px] h-[130px] rounded-full border border-gray-300 relative"
       >
         <Image
           src={previewUrl || ""}

@@ -48,14 +48,15 @@ type TModals = {
         width: '200'
     },             
     {
-        title: "Mobile",
-        // input: 'text'
+        title: "Contact",
+        input: 'text',
+        name: 'contact',
     },
     {
         title: "Role",
-        // input: 'text'
+        input: 'text',
+        name: 'role',
     },
-
     {
         title: "Start Date",
         // input: 'text'
@@ -65,17 +66,19 @@ type TModals = {
         title: "End Date",
         // input: 'text'
     },
-        {
+    {
         title: "Gender",
-        // input: 'text'
+        input: 'text',
+        name: 'gender',
     },
     {
         title: "Remaining Fees",
         // input: 'text'
     },
     {
-        title: "Gym Plan",
-        // input: 'text'
+        title: "Gym Package",
+        // input: 'text',
+        // name: 'gym_package',
     },
     {
         title: "Action"
@@ -157,7 +160,7 @@ const Users = () => {
                                     alt={item?.name || "--"}
                                     width={40}
                                     height={40}
-                                    className='object-contain h-[40px] w-[40px] min-w-[40px] border-1 border-blue-400 rounded-full'
+                                    className='object-cover h-[45px] w-[45px] min-w-[45px] border-1 border-blue-400 rounded-full'
                                 />                              
 
                             </td>

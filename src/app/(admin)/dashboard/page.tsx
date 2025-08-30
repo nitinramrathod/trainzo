@@ -81,9 +81,9 @@ export interface ItemProps {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
         {stats.length > 0 ? stats?.map((stat, index) => (
           <Stat key={index + "stats"} stat={stat} />
-        )) : Array.from({length: 5}).map((_, index) => <div key={index+'loader'} className="text-gray-500 shadow border-1  border-white p-10  bg-indigo-200 animate-pulse rounded-md"></div>)} 
+        )) : Array.from({length: 5}).map((_, index) => <StatCardSkeleton key={`${index}-stat-loader`} />)} 
       </div>
-      <div className="flex flex-col lg:flex-row gap-6 mt-7 w-full">
+      <div className="flex flex-col min-h-[400px] lg:flex-row gap-6 mt-7 w-full">
         <div className="bg-white rounded-lg lg:flex-1 shadow-lg p-4">
           <PieChart />
         </div>
@@ -96,3 +96,21 @@ export interface ItemProps {
 };
 
 export default Dashboard;
+
+const StatCardSkeleton = ()=>{
+  return (
+    <div className="bg-white shadow-sm rounded-lg p-4 flex items-center gap-3 animate-pulse">
+      {/* Circle icon skeleton */}
+      <div className="w-12 aspect-square max-w-12 h-12 min-w-12 flex-1 rounded-full bg-gray-200"></div>
+
+      {/* Text skeleton */}
+      <div className="flex flex-3 flex-col gap-2">
+        {/* Number skeleton */}
+        <div className="h-5 w-8 bg-gray-200 rounded"></div>
+
+        {/* Label skeleton */}
+        <div className="h-4 p-2 bg-gray-200 rounded"></div>
+      </div>
+    </div>
+  );
+}

@@ -10,7 +10,6 @@ import React, { useEffect, useState } from "react";
 import ImageSelector from "../forms/ImageSelector";
 import Textarea from "../forms/Textarea";
 import protectedApi from "@/utils/services/protectedAxios";
-import WebcamCapture from "../common/Webcame";
 
 interface FormTypes {
   name?: string | undefined;
