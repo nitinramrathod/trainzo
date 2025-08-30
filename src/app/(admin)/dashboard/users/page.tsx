@@ -172,7 +172,7 @@ const Users = () => {
                             </td>
                             
                             <td className="px-4 py-3">
-                            <span className='bg-indigo-400 text-slate-50 px-3 rounded-2xl py-1 text-xs capitalize'>
+                            <span className={`  px-3 rounded-2xl py-1 text-xs font-[600] capitalize ${item?.role == 'admin'? 'bg-rose-100 text-rose-600' : item.role == "trainer"?'bg-amber-100 text-amber-600' : 'bg-emerald-100 text-emerald-600'} `}>
 
                                 {item?.role || "--"}
                             </span>
@@ -190,9 +190,9 @@ const Users = () => {
                             <td className="px-4 py-3 capitalize">
                                 {item?.gender || "--"}
                             </td>
-                            <td className="px-4 py-3"
-                                >
-                                {Number(item?.remaining_fees) <= 0 ? (
+                            <td className="px-4 py-3">
+                            {(item?.role == "admin" || item?.role == "trainer" ) ? "N/A":                                    
+                                (Number(item?.remaining_fees) <= 0 ? (
                                     <span className="bg-green-100 text-green-700 px-3 py-1 rounded-2xl text-xs">
                                     Nill
                                     </span>
@@ -200,11 +200,12 @@ const Users = () => {
                                     <span className="text-red-600">
                                     ₹{item?.remaining_fees}/-
                                     </span>
-                                )}
+                                ))}
                             </td>
                             <td className="px-4 py-3">
                                 <div className='w-20'>
-                                    {item?.gym_package?.name || "--"}
+                                     {(item?.role == "admin" || item?.role == "trainer" ) ? "N/A": (
+                                    item?.gym_package?.name || "--")}
                                 </div>
                             </td>
 

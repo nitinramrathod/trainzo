@@ -40,7 +40,7 @@ const plans = [
     },
     {
         title: "12 Month Plan",
-        price: "₹6,000",
+        price: "₹5,500",
         description: "Ideal for long-term commitment and maximum savings.",
         features: [
             "Unlimited gym access",
