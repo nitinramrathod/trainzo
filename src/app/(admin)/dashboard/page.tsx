@@ -28,8 +28,7 @@ const Dashboard = () => {
         protectedApi
           .get("/api/v1/analytics/stats")
           .catch((e) => console.log("Error in stats fetching", e)),
-        protectedApi
-          .get("/api/v1/user/expiring")
+        protectedApi({url: "/api/v1/user/expiring", params: {limit:100 }})
           .catch((e) => console.log("Error in expiring users fetching", e)),
       ]);
 
